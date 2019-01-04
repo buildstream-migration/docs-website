@@ -1,0 +1,20 @@
+stages:
+  - publish
+
+pages:
+  stage: publish
+  variables:
+    ACME_DIR: public/.well-known/acme-challenge
+  script:
+  - wget https://gitlab.com/BuildStream/buildstream/-/jobs/artifacts/master/download?job=pages -O pages.zip
+  - unzip pages.zip
+  - mkdir -p ${ACME_DIR}
+    # Required to finish the creation of the Let's Encrypt certificate,
+    # which allows using https://docs.buildstream.build/ for accessing
+    # the documentation.
+  - echo ${ACME_CHALLENGE} > ${ACME_DIR}/$(echo ${ACME_CHALLENGE} | cut -c1-43)
+  artifacts:
+    paths:
+    - public/
+  only:
+  - master
