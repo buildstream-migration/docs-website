@@ -8,7 +8,7 @@ pages:
   variables:
     ACME_DIR: public/.well-known/acme-challenge
   script:
-  - wget https://gitlab.com/BuildStream/buildstream/-/jobs/artifacts/master/download?job=pages -O pages.zip
+  - wget https://gitlab.com/BuildStream/buildstream/-/jobs/artifacts/bst-1.2/download?job=docs -O pages.zip
   - unzip pages.zip
   - mkdir -p ${ACME_DIR}
     # Required to finish the creation of the Let's Encrypt certificate,
