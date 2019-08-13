@@ -1,22 +1,30 @@
 image: alpine:3.8
 
 stages:
+  - docs
   - publish
+
+generate-docs:
+  stage: docs
+  script:
+    - apk add --update git
+    - chmod a+x generate_pages.sh
+    - ./generate_pages.sh
+  artifacts:
+    paths:
+    - public/
 
 pages:
   stage: publish
   variables:
     ACME_DIR: public/.well-known/acme-challenge
-  script:
-  - wget https://gitlab.com/BuildStream/buildstream/-/jobs/artifacts/bst-1.2/download?job=docs -O pages.zip
-  - unzip pages.zip
-  - mkdir -p ${ACME_DIR}
-    # Required to finish the creation of the Let's Encrypt certificate,
-    # which allows using https://docs.buildstream.build/ for accessing
-    # the documentation.
-  - echo ${ACME_CHALLENGE} > ${ACME_DIR}/$(echo ${ACME_CHALLENGE} | cut -c1-43)
+  dependencies:
+    - generate-docs
   artifacts:
     paths:
-    - public/
+      - public/
+  script:
+    - mkdir -p ${ACME_DIR}
+    - echo ${ACME_CHALLENGE} > ${ACME_DIR}/$(echo ${ACME_CHALLENGE} | cut -c1-43)
   only:
-  - master
+    - master
