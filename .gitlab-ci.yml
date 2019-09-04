@@ -7,9 +7,9 @@ stages:
 generate-docs:
   stage: docs
   script:
-    - apk add --update git
-    - chmod a+x generate_pages.sh
-    - ./generate_pages.sh
+    - apk add --update python3
+    - pip3 install python-gitlab
+    - python3 generate_pages.py
   artifacts:
     paths:
     - public/
