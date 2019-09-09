@@ -49,17 +49,11 @@ def main():
     snapshot = "\n".join(version_tag.format(version=v)
                          for v in downloaded_versions if v == "master" or v.minor % 2 == 1)
 
-    def substitute_version_index(kind, replacement):
-        # FIXME: We should make this a jinja template...
-        with open("public/index.html") as index:
-            lines = index.readlines()
-        with open("public/index.html", "w") as index:
-            for line in lines:
-                substitute = f"<!-- Change this line with the list of available {kind} versions. -->"
-                index.write(re.sub(substitute, replacement, line))
+    with open("index.html.tmpl") as index:
+        template = index.read()
 
-    substitute_version_index("STABLE", stable)
-    substitute_version_index("SNAPSHOT", snapshot)
+    with open(OUTPUT_DIR / "index.html", "w") as index:
+        index.write(template.format(stable_versions=stable, snapshot_versions=snapshot))
 
 
 def download_docs():

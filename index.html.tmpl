@@ -77,13 +77,13 @@
                     <div style="float: left; width: 50%;">
                       <p> Stable versions: </p>
                       <ul>
-                        <!-- Change this line with the list of available STABLE versions. -->
+                        {stable_versions}
                       </ul>
                     </div>
                     <div style="float: right; width: 50%;">
                       <p> Master and development snapshots:</p>
                       <ul>
-                        <!-- Change this line with the list of available SNAPSHOT versions. -->
+                        {snapshot_versions}
                       </ul>
                     </div>
                   </div>
@@ -106,9 +106,9 @@
       </section>
     </div>
     <script type="text/javascript">
-      jQuery(function () {
+      jQuery(function () {{
       SphinxRtdTheme.Navigation.enable(true);
-      });
+      }});
     </script>
   </body>
 </html>
