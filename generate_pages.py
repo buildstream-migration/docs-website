@@ -162,9 +162,17 @@ def get_tag_commit(project, tag):
 
 def get_doc_job(commit):
     """Get the doc job from a commit."""
-    jobs = commit.statuses.list()
+
+    # Search for only the "docs" job for a given commit,
+    # there may be more than one "docs" job for the same
+    # commit (pipeline can be run in different ways).
+    #
+    # Return any of these which was successful.
+    #
+    jobs = commit.statuses.list(name="docs")
+
     for job in jobs:
-        if job.name == "docs" and job.status == "success":
+        if job.status == "success":
             return job
     return None
 
