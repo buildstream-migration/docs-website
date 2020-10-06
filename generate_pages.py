@@ -12,8 +12,8 @@ from zipfile import ZipFile
 import gitlab
 
 
-GITLAB_SERVER = "https://gitlab.com"
-PROJECT = "buildstream/buildstream"
+GITHUB_SERVER = "https://github.com"
+PROJECT = "buildstream-migration/buildstream"
 OUTPUT_DIR = Path.cwd() / "public"
 
 
@@ -59,7 +59,7 @@ def main():
 def download_docs():
     """Query and download the latest pieces of BuildStream documentation."""
     token = os.getenv("API_TOKEN")
-    server = gitlab.Gitlab(GITLAB_SERVER, private_token=token)
+    server = gitlab.Gitlab(GITHUB_SERVER, private_token=token)
     project = server.projects.get(PROJECT)
 
     downloaded_versions = []
