@@ -9,10 +9,10 @@ from typing import NamedTuple
 from pathlib import Path
 from zipfile import ZipFile
 
-import gitlab
+from github import Github
 
 
-GITHUB_SERVER = "https://github.com"
+#GITHUB_SERVER = "https://github.com"
 PROJECT = "buildstream-migration/buildstream"
 OUTPUT_DIR = Path.cwd() / "public"
 
@@ -58,9 +58,9 @@ def main():
 
 def download_docs():
     """Query and download the latest pieces of BuildStream documentation."""
-    token = os.getenv("API_TOKEN")
-    server = gitlab.Gitlab(GITHUB_SERVER, private_token=token)
-    project = server.projects.get(PROJECT)
+    token = os.getenv("GITHUB_APIKEY")
+    g = Github(token) 
+    project = g.get_repo(PROJECT)
 
     downloaded_versions = []
 
