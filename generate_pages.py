@@ -61,7 +61,6 @@ def download_docs():
     token = os.getenv("GITHUB_APIKEY")
     g = Github(token) 
     project = g.get_repo(PROJECT)
-
     downloaded_versions = []
 
     # First, get a nicely ordered list of all minor versions
@@ -141,7 +140,7 @@ class Semver(NamedTuple):
 
 def get_semver_tags(project):
     """Get a mapping between of tags and their semantic versions."""
-    tags = project.tags.list(all=True)
+    tags = project.get_tags()
 
     tags = [tag for tag in tags if Semver.match_semver_string(tag.name)]
     return {Semver.from_string(tag.name): tag for tag in tags}
