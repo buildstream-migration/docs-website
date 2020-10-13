@@ -62,8 +62,19 @@ def get_latest():
 
     return(release, snapshot)
 
+def download_doc(version):
+    # this should take a version tag, get the commit for that tag, and download the 
+    # associated artifact from the docs job. I still can't find a means to do this via
+    # the API from github.
+
+    pass
+
 
 def main():
+    # At the moment, this just prints the most release and snapshot versions. Once
+    # download_doc() is working, we can pass the output of get_latest() into it and it
+    # should download and save the doc.tgz for each. We can then generate the webpage
+    # from those docs.
     print(get_latest())
 
 if __name__ == "__main__":
