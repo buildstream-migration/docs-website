@@ -1,0 +1,41 @@
+name: PR Checks
+on: push
+
+env:
+  CI_IMAGE: registry.gitlab.com/buildstream/buildstream-docker-images/testsuite-debian:10-master-132813612
+
+jobs:
+  docs:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+    - name: Generate website
+      run: |
+
+        cat << EOF > builddocs.sh
+        #!/bin/bash
+
+        # Install deps
+        pip3 install pygithub
+
+        # Build the docs website
+        python3 generate_pages.py
+        EOF
+
+        chmod +x builddocs.sh
+
+        docker run \
+              --privileged \
+              --device /dev/fuse \
+              --env API_TOKEN \
+              --volume /home/runner/work:/__w \
+              --workdir /__w/docs-website/docs-website \
+              $CI_IMAGE \
+              ./builddocs.sh
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: docs
+        path: public
