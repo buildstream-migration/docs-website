@@ -1,0 +1,79 @@
+name: Merge actions
+
+env:
+  CI_IMAGE: registry.gitlab.com/buildstream/buildstream-docker-images/testsuite-debian:10-master-132813612
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  docs:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+    - name: Generate website
+      run: |
+
+        cat << EOF > builddocs.sh
+        #!/bin/bash
+
+        # Install deps
+        pip3 install pygithub
+
+        # Build the docs website
+        python3 generate_pages.py
+        EOF
+
+        chmod +x builddocs.sh
+
+        docker run \
+              --privileged \
+              --device /dev/fuse \
+              --env API_TOKEN \
+              --volume /home/runner/work:/__w \
+              --workdir /__w/docs-website/docs-website \
+              $CI_IMAGE \
+              ./builddocs.sh
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: docs
+        path: public
+
+  publish:
+    needs: docs
+    runs-on: ubuntu-20.04
+    steps:
+
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: docs
+        path: docs
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        ref: gh-pages
+        path: pages
+
+    - name: Update repo
+      run: |
+
+        # Copy the docs asset over and overwrite the orphan gh-pages branch, ensure
+        # that we disable GitHub's jekyll by creating the .nojekyll file, otherwise
+        # it will interfere with the rendering of the site.
+        #
+        cp -a docs/* pages/
+        touch pages/.nojekyll
+
+        cd pages/
+        git add .
+        git config --local user.email "merge-ci@ponyland"
+        git config --local user.name  "Github Actions Nightly Job"
+        git commit -m "Update repo for docs build $GITHUB_RUN_NUMBER"
+        git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" gh-pages
