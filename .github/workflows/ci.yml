@@ -1,5 +1,10 @@
 name: PR Checks
-on: push
+
+on:
+  push:
+    branches-ignore:
+    - gh-pages
+    - master
 
 env:
   CI_IMAGE: registry.gitlab.com/buildstream/buildstream-docker-images/testsuite-debian:10-master-132813612
