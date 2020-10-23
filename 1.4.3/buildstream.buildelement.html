@@ -1,0 +1,489 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>BuildElement - Abstract class for build elements &mdash; BuildStream 1.4.2+20.g89765b75 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ScriptElement - Abstract class for scripting elements" href="buildstream.scriptelement.html" />
+    <link rel="prev" title="Element - Base element class" href="buildstream.element.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BuildStream
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.4.2+20.g89765b75
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="main_about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_using.html">Using</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="main_core.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core_format.html">Project format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core_plugins.html">Plugin specific documentation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="core_framework.html">Plugin API reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="buildstream.plugin.html">Plugin - Base plugin class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.source.html">Source - Base source class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.source.html#sourcefetcher-object-for-fetching-individual-urls">SourceFetcher - Object for fetching individual URLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.element.html">Element - Base element class</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">BuildElement - Abstract class for build elements</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abstract-method-implementations">Abstract method implementations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.scriptelement.html">ScriptElement - Abstract class for scripting elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.sandbox.sandbox.html">Sandbox - The build sandbox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.utils.html">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="core_additional.html">Additional writings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="buildstream.html">buildstream package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="HACKING.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BuildStream</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="main_core.html">Reference</a> &raquo;</li>
+        
+          <li><a href="core_framework.html">Plugin API reference</a> &raquo;</li>
+        
+      <li>BuildElement - Abstract class for build elements</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/buildstream.buildelement.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="module-buildstream.buildelement"></span><div class="section" id="buildelement-abstract-class-for-build-elements">
+<h1>BuildElement - Abstract class for build elements<a class="headerlink" href="#buildelement-abstract-class-for-build-elements" title="Permalink to this headline">¶</a></h1>
+<p>The BuildElement class is a convenience element one can derive from for
+implementing the most common case of element.</p>
+<div class="section" id="abstract-method-implementations">
+<h2>Abstract method implementations<a class="headerlink" href="#abstract-method-implementations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="element-configure-sandbox">
+<h3>Element.configure_sandbox()<a class="headerlink" href="#element-configure-sandbox" title="Permalink to this headline">¶</a></h3>
+<p>In <a class="reference internal" href="buildstream.element.html#buildstream.element.Element.configure_sandbox" title="buildstream.element.Element.configure_sandbox"><code class="xref py py-func docutils literal notranslate"><span class="pre">Element.configure_sandbox()</span></code></a>,
+the BuildElement will ensure that the sandbox locations described by the <code class="docutils literal notranslate"><span class="pre">%{build-root}</span></code>
+and <code class="docutils literal notranslate"><span class="pre">%{install-root}</span></code> variables are marked and will be mounted read-write for the
+<a class="reference internal" href="buildstream.element.html#buildstream.element.Element.configure_sandbox" title="buildstream.element.Element.configure_sandbox"><code class="xref py py-func docutils literal notranslate"><span class="pre">assemble</span> <span class="pre">phase</span></code></a>.</p>
+<p>The working directory for the sandbox will be configured to be the <code class="docutils literal notranslate"><span class="pre">%{build-root}</span></code>,
+unless the <code class="docutils literal notranslate"><span class="pre">%{command-subdir}</span></code> variable is specified for the element in question,
+in which case the working directory will be configured as <code class="docutils literal notranslate"><span class="pre">%{build-root}/%{command-subdir}</span></code>.</p>
+</div>
+<div class="section" id="element-stage">
+<h3>Element.stage()<a class="headerlink" href="#element-stage" title="Permalink to this headline">¶</a></h3>
+<p>In <a class="reference internal" href="buildstream.element.html#buildstream.element.Element.stage" title="buildstream.element.Element.stage"><code class="xref py py-func docutils literal notranslate"><span class="pre">Element.stage()</span></code></a>, the BuildElement
+will do the following operations:</p>
+<ul class="simple">
+<li>Stage all the dependencies in the <a class="reference internal" href="buildstream.element.html#buildstream.element.Scope.BUILD" title="buildstream.element.Scope.BUILD"><code class="xref py py-func docutils literal notranslate"><span class="pre">Scope.BUILD</span></code></a>
+scope into the sandbox root.</li>
+<li>Run the integration commands for all staged dependencies using
+<a class="reference internal" href="buildstream.element.html#buildstream.element.Element.integrate" title="buildstream.element.Element.integrate"><code class="xref py py-func docutils literal notranslate"><span class="pre">Element.integrate()</span></code></a></li>
+<li>Stage any Source on the given element to the <code class="docutils literal notranslate"><span class="pre">%{build-root}</span></code> location
+inside the sandbox, using
+<a class="reference internal" href="buildstream.element.html#buildstream.element.Element.integrate" title="buildstream.element.Element.integrate"><code class="xref py py-func docutils literal notranslate"><span class="pre">Element.stage_sources()</span></code></a></li>
+</ul>
+</div>
+<div class="section" id="element-prepare">
+<h3>Element.prepare()<a class="headerlink" href="#element-prepare" title="Permalink to this headline">¶</a></h3>
+<p>In <a class="reference internal" href="buildstream.element.html#buildstream.element.Element.prepare" title="buildstream.element.Element.prepare"><code class="xref py py-func docutils literal notranslate"><span class="pre">Element.prepare()</span></code></a>,
+the BuildElement will run <code class="docutils literal notranslate"><span class="pre">configure-commands</span></code>, which are used to
+run one-off preparations that should not be repeated for a single
+build directory.</p>
+</div>
+<div class="section" id="element-assemble">
+<h3>Element.assemble()<a class="headerlink" href="#element-assemble" title="Permalink to this headline">¶</a></h3>
+<p>In <a class="reference internal" href="buildstream.element.html#buildstream.element.Element.assemble" title="buildstream.element.Element.assemble"><code class="xref py py-func docutils literal notranslate"><span class="pre">Element.assemble()</span></code></a>, the
+BuildElement will proceed to run sandboxed commands which are expected to be
+found in the element configuration.</p>
+<p>Commands are run in the following order:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">build-commands</span></code>: Commands to build the element</li>
+<li><code class="docutils literal notranslate"><span class="pre">install-commands</span></code>: Commands to install the results into <code class="docutils literal notranslate"><span class="pre">%{install-root}</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">strip-commands</span></code>: Commands to strip debugging symbols installed binaries</li>
+</ul>
+<p>The result of the build is expected to end up in <code class="docutils literal notranslate"><span class="pre">%{install-root}</span></code>, and
+as such; Element.assemble() method will return the <code class="docutils literal notranslate"><span class="pre">%{install-root}</span></code> for
+artifact collection purposes.</p>
+<dl class="class">
+<dt id="buildstream.buildelement.BuildElement">
+<em class="property">class </em><code class="descname">BuildElement</code><span class="sig-paren">(</span><em>context</em>, <em>project</em>, <em>artifacts</em>, <em>meta</em>, <em>plugin_conf</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="buildstream.element.html#buildstream.element.Element" title="buildstream.element.Element"><code class="xref py py-class docutils literal notranslate"><span class="pre">buildstream.element.Element</span></code></a></p>
+<dl class="method">
+<dt id="buildstream.buildelement.BuildElement.configure">
+<code class="descname">configure</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement.configure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure the Plugin from loaded configuration data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>node</strong> (<em>dict</em>) – The loaded configuration dictionary</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="buildstream.source.html#buildstream.source.SourceError" title="buildstream.source.SourceError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SourceError</span></code></a> – If its a <a class="reference internal" href="buildstream.source.html#buildstream.source.Source" title="buildstream.source.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a> implementation</li>
+<li><a class="reference internal" href="buildstream.element.html#buildstream.element.ElementError" title="buildstream.element.ElementError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementError</span></code></a> – If its an <a class="reference internal" href="buildstream.element.html#buildstream.element.Element" title="buildstream.element.Element"><code class="xref py py-class docutils literal notranslate"><span class="pre">Element</span></code></a> implementation</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Plugin implementors should implement this method to read configuration
+data and store it.</p>
+<p>Plugins should use the <a class="reference internal" href="buildstream.plugin.html#buildstream.plugin.Plugin.node_get_member" title="buildstream.plugin.Plugin.node_get_member"><code class="xref py py-func docutils literal notranslate"><span class="pre">Plugin.node_get_member()</span></code></a>
+and <a class="reference internal" href="buildstream.plugin.html#buildstream.plugin.Plugin.node_get_list_element" title="buildstream.plugin.Plugin.node_get_list_element"><code class="xref py py-func docutils literal notranslate"><span class="pre">Plugin.node_get_list_element()</span></code></a>
+methods to fetch values from the passed <cite>node</cite>. This will ensure that a nice human readable error
+message will be raised if the expected configuration is not found, indicating the filename,
+line and column numbers.</p>
+<p>Further the <a class="reference internal" href="buildstream.plugin.html#buildstream.plugin.Plugin.node_validate" title="buildstream.plugin.Plugin.node_validate"><code class="xref py py-func docutils literal notranslate"><span class="pre">Plugin.node_validate()</span></code></a> method
+should be used to ensure that the user has not specified keys in <cite>node</cite> which are unsupported
+by the plugin.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For Elements, when variable substitution is desirable, the
+<a class="reference internal" href="buildstream.element.html#buildstream.element.Element.node_subst_member" title="buildstream.element.Element.node_subst_member"><code class="xref py py-func docutils literal notranslate"><span class="pre">Element.node_subst_member()</span></code></a>
+and <a class="reference internal" href="buildstream.element.html#buildstream.element.Element.node_subst_list_element" title="buildstream.element.Element.node_subst_list_element"><code class="xref py py-func docutils literal notranslate"><span class="pre">Element.node_subst_list_element()</span></code></a>
+methods can be used.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.buildelement.BuildElement.preflight">
+<code class="descname">preflight</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement.preflight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Preflight Check</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="buildstream.source.html#buildstream.source.SourceError" title="buildstream.source.SourceError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SourceError</span></code></a> – If its a <a class="reference internal" href="buildstream.source.html#buildstream.source.Source" title="buildstream.source.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a> implementation</li>
+<li><a class="reference internal" href="buildstream.element.html#buildstream.element.ElementError" title="buildstream.element.ElementError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementError</span></code></a> – If its an <a class="reference internal" href="buildstream.element.html#buildstream.element.Element" title="buildstream.element.Element"><code class="xref py py-class docutils literal notranslate"><span class="pre">Element</span></code></a> implementation</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method is run after <a class="reference internal" href="buildstream.plugin.html#buildstream.plugin.Plugin.configure" title="buildstream.plugin.Plugin.configure"><code class="xref py py-func docutils literal notranslate"><span class="pre">Plugin.configure()</span></code></a>
+and after the pipeline is fully constructed.</p>
+<p>Implementors should simply raise <a class="reference internal" href="buildstream.source.html#buildstream.source.SourceError" title="buildstream.source.SourceError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SourceError</span></code></a> or <a class="reference internal" href="buildstream.element.html#buildstream.element.ElementError" title="buildstream.element.ElementError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementError</span></code></a>
+with an informative message in the case that the host environment is
+unsuitable for operation.</p>
+<p>Plugins which require host tools (only sources usually) should obtain
+them with <a class="reference internal" href="buildstream.utils.html#buildstream.utils.get_host_tool" title="buildstream.utils.get_host_tool"><code class="xref py py-func docutils literal notranslate"><span class="pre">utils.get_host_tool()</span></code></a> which
+will raise an error automatically informing the user that a host tool is needed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.buildelement.BuildElement.get_unique_key">
+<code class="descname">get_unique_key</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement.get_unique_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return something which uniquely identifies the plugin input</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A string, list or dictionary which uniquely identifies the input</td>
+</tr>
+</tbody>
+</table>
+<p>This is used to construct unique cache keys for elements and sources,
+sources should return something which uniquely identifies the payload,
+such as an sha256 sum of a tarball content.</p>
+<p>Elements and Sources should implement this by collecting any configurations
+which could possibly effect the output and return a dictionary of these settings.</p>
+<p>For Sources, this is guaranteed to only be called if
+<a class="reference internal" href="buildstream.source.html#buildstream.source.Source.get_consistency" title="buildstream.source.Source.get_consistency"><code class="xref py py-func docutils literal notranslate"><span class="pre">Source.get_consistency()</span></code></a>
+has not returned <a class="reference internal" href="buildstream.source.html#buildstream.source.Consistency.INCONSISTENT" title="buildstream.source.Consistency.INCONSISTENT"><code class="xref py py-func docutils literal notranslate"><span class="pre">Consistency.INCONSISTENT</span></code></a>
+which is to say that the Source is expected to have an exact <em>ref</em> indicating
+exactly what source is going to be staged.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.buildelement.BuildElement.configure_sandbox">
+<code class="descname">configure_sandbox</code><span class="sig-paren">(</span><em>sandbox</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement.configure_sandbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configures the the sandbox for execution</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sandbox</strong> (<a class="reference internal" href="buildstream.sandbox.sandbox.html#buildstream.sandbox.sandbox.Sandbox" title="buildstream.sandbox.sandbox.Sandbox"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sandbox</span></code></a>) – The build sandbox</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">(<a class="reference internal" href="buildstream.element.html#buildstream.element.ElementError" title="buildstream.element.ElementError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementError</span></code></a>) – When the element raises an error</td>
+</tr>
+</tbody>
+</table>
+<p>Elements must implement this method to configure the sandbox object
+for execution.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.buildelement.BuildElement.stage">
+<code class="descname">stage</code><span class="sig-paren">(</span><em>sandbox</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement.stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stage inputs into the sandbox directories</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sandbox</strong> (<a class="reference internal" href="buildstream.sandbox.sandbox.html#buildstream.sandbox.sandbox.Sandbox" title="buildstream.sandbox.sandbox.Sandbox"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sandbox</span></code></a>) – The build sandbox</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">(<a class="reference internal" href="buildstream.element.html#buildstream.element.ElementError" title="buildstream.element.ElementError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementError</span></code></a>) – When the element raises an error</td>
+</tr>
+</tbody>
+</table>
+<p>Elements must implement this method to populate the sandbox
+directory with data. This is done either by staging <a class="reference internal" href="buildstream.source.html#buildstream.source.Source" title="buildstream.source.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a>
+objects, by staging the artifacts of the elements this element depends
+on, or both.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.buildelement.BuildElement.assemble">
+<code class="descname">assemble</code><span class="sig-paren">(</span><em>sandbox</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement.assemble" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assemble the output artifact</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sandbox</strong> (<a class="reference internal" href="buildstream.sandbox.sandbox.html#buildstream.sandbox.sandbox.Sandbox" title="buildstream.sandbox.sandbox.Sandbox"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sandbox</span></code></a>) – The build sandbox</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An absolute path within the sandbox to collect the artifact from</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(str)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">(<a class="reference internal" href="buildstream.element.html#buildstream.element.ElementError" title="buildstream.element.ElementError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementError</span></code></a>) – When the element raises an error</td>
+</tr>
+</tbody>
+</table>
+<p>Elements must implement this method to create an output
+artifact from its sources and dependencies.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.buildelement.BuildElement.prepare">
+<code class="descname">prepare</code><span class="sig-paren">(</span><em>sandbox</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement.prepare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run one-off preparation commands.</p>
+<p>This is run before assemble(), but is guaranteed to run only
+the first time if we build incrementally - this makes it
+possible to run configure-like commands without causing the
+entire element to rebuild.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sandbox</strong> (<a class="reference internal" href="buildstream.sandbox.sandbox.html#buildstream.sandbox.sandbox.Sandbox" title="buildstream.sandbox.sandbox.Sandbox"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sandbox</span></code></a>) – The build sandbox</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">(<a class="reference internal" href="buildstream.element.html#buildstream.element.ElementError" title="buildstream.element.ElementError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementError</span></code></a>) – When the element raises an error</td>
+</tr>
+</tbody>
+</table>
+<p>By default, this method does nothing, but may be overriden to
+allow configure-like commands.</p>
+<p><em>Since: 1.2</em></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.buildelement.BuildElement.generate_script">
+<code class="descname">generate_script</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement.generate_script" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a build (sh) script to build this element</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A string containing the shell commands required to build the element</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(str)</td>
+</tr>
+</tbody>
+</table>
+<p>BuildStream guarantees the following environment when the
+generated script is run:</p>
+<ul class="simple">
+<li>All element variables have been exported.</li>
+<li>The cwd is <cite>self.get_variable(‘build_root’)/self.normal_name</cite>.</li>
+<li>$PREFIX is set to <cite>self.get_variable(‘install_root’)</cite>.</li>
+<li>The directory indicated by $PREFIX is an empty directory.</li>
+</ul>
+<p>Files are expected to be installed to $PREFIX.</p>
+<p>If the script fails, it is expected to return with an exit
+code != 0.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="buildstream.scriptelement.html" class="btn btn-neutral float-right" title="ScriptElement - Abstract class for scripting elements" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="buildstream.element.html" class="btn btn-neutral float-left" title="Element - Base element class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, The BuildStream Contributors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

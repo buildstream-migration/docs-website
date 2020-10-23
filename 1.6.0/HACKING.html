@@ -1,0 +1,792 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Contributing &mdash; BuildStream 1.6.0+0.gece1192d.dirty documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Foundation types" href="buildstream.types.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> BuildStream
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.6.0+0.gece1192d.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="main_about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_using.html">Using</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_core.html">Reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#feature-additions">Feature additions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#patch-submissions">Patch submissions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#commit-messages">Commit messages</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#coding-style">Coding style</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#style-guide">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imports">Imports</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#policy-for-private-symbols">Policy for private symbols</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ordering">Ordering</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#symbol-naming">Symbol naming</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cases-for-double-underscores">Cases for double underscores</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#documenting-private-symbols">Documenting private symbols</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#documenting-buildstream">Documenting BuildStream</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#documentation-formatting-policy">Documentation formatting policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#building-docs">Building Docs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#regenerating-session-html">Regenerating session html</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#man-pages">Man pages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documenting-conventions">Documenting conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation-examples">Documentation Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-buildstream-command-output">Adding BuildStream command output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#protocol-buffers">Protocol Buffers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#regenerating-code">Regenerating code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#testing-buildstream">Testing BuildStream</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-tests">Running tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-tests">Adding tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#measuring-buildstream-performance">Measuring BuildStream performance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#benchmarking-framework">Benchmarking framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#profiling-tools">Profiling tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#profiling-specific-parts-of-buildstream-with-bst-profile">Profiling specific parts of BuildStream with BST_PROFILE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#profiling-the-artifact-cache-receiver">Profiling the artifact cache receiver</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#the-manifest-in-and-setup-py">The MANIFEST.in and setup.py</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BuildStream</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Contributing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/HACKING.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
+<p>Some tips and guidelines for developers hacking on BuildStream</p>
+<div class="section" id="feature-additions">
+<h2>Feature additions<a class="headerlink" href="#feature-additions" title="Permalink to this headline">¶</a></h2>
+<p>Major feature additions should be proposed on the
+<a class="reference external" href="https://lists.apache.org/list.html?dev&#64;buildstream.apache.org">mailing list</a>
+before being considered for inclusion, we strongly recommend proposing
+in advance of commencing work.</p>
+<p>New features must be well documented and tested either in our main
+test suite if possible, or otherwise in the integration tests.</p>
+<p>It is expected that the individual submitting the work take ownership
+of their feature within BuildStream for a reasonable timeframe of at least
+one release cycle after their work has landed on the master branch. This is
+to say that the submitter is expected to address and fix any side effects and
+bugs which may have fell through the cracks in the review process, giving us
+a reasonable timeframe for identifying these.</p>
+</div>
+<div class="section" id="patch-submissions">
+<h2>Patch submissions<a class="headerlink" href="#patch-submissions" title="Permalink to this headline">¶</a></h2>
+<p>Branches must be submitted as merge requests in gitlab and should usually
+be associated to an issue report on gitlab.</p>
+<p>Commits in the branch which address specific issues must specify the
+issue number in the commit message.</p>
+<p>Merge requests that are not yet ready for review must be prefixed with the
+<code class="docutils literal notranslate"><span class="pre">WIP:</span></code> identifier. A merge request is not ready for review until the
+submitter expects that the patch is ready to actually land.</p>
+<p>Submitted branches must not contain a history of the work done in the
+feature branch. Please use git’s interactive rebase feature in order to
+compose a clean patch series suitable for submission.</p>
+<p>We prefer that test case and documentation changes be submitted
+in separate commits from the code changes which they test.</p>
+<p>Ideally every commit in the history of master passes its test cases. This
+makes bisections more easy to perform, but is not always practical with
+more complex branches.</p>
+<div class="section" id="commit-messages">
+<h3>Commit messages<a class="headerlink" href="#commit-messages" title="Permalink to this headline">¶</a></h3>
+<p>Commit messages must be formatted with a brief summary line, optionally
+followed by an empty line and then a free form detailed description of
+the change.</p>
+<p>The summary line must start with what changed, followed by a colon and
+a very brief description of the change.</p>
+<p>If there is an associated issue, it <strong>must</strong> be mentioned somewhere
+in the commit message.</p>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">element</span><span class="o">.</span><span class="n">py</span><span class="p">:</span> <span class="n">Added</span> <span class="n">the</span> <span class="n">frobnicator</span> <span class="n">so</span> <span class="n">that</span> <span class="n">foos</span> <span class="n">are</span> <span class="n">properly</span> <span class="n">frobbed</span><span class="o">.</span>
+
+<span class="n">The</span> <span class="n">new</span> <span class="n">frobnicator</span> <span class="n">frobnicates</span> <span class="n">foos</span> <span class="nb">all</span> <span class="n">the</span> <span class="n">way</span> <span class="n">throughout</span>
+<span class="n">the</span> <span class="n">element</span><span class="o">.</span> <span class="n">Elements</span> <span class="n">that</span> <span class="n">are</span> <span class="ow">not</span> <span class="n">properly</span> <span class="n">frobnicated</span> <span class="k">raise</span>
+<span class="n">an</span> <span class="n">error</span> <span class="n">to</span> <span class="n">inform</span> <span class="n">the</span> <span class="n">user</span> <span class="n">of</span> <span class="n">invalid</span> <span class="n">frobnication</span> <span class="n">rules</span><span class="o">.</span>
+
+<span class="n">This</span> <span class="n">fixes</span> <span class="n">issue</span> <span class="c1">#123</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="coding-style">
+<h2>Coding style<a class="headerlink" href="#coding-style" title="Permalink to this headline">¶</a></h2>
+<p>Coding style details for BuildStream</p>
+<div class="section" id="style-guide">
+<h3>Style guide<a class="headerlink" href="#style-guide" title="Permalink to this headline">¶</a></h3>
+<p>Python coding style for BuildStream is pep8, which is documented here: <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">https://www.python.org/dev/peps/pep-0008/</a></p>
+<p>We have a couple of minor exceptions to this standard, we dont want to compromise
+code readability by being overly restrictive on line length for instance.</p>
+<p>The pep8 linter will run automatically when running the test suite.</p>
+</div>
+<div class="section" id="imports">
+<h3>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h3>
+<p>Module imports inside BuildStream are done with relative <code class="docutils literal notranslate"><span class="pre">.</span></code> notation</p>
+<p>Good:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.context</span> <span class="kn">import</span> <span class="n">Context</span>
+</pre></div>
+</div>
+<p>Bad:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">buildstream.context</span> <span class="kn">import</span> <span class="n">Context</span>
+</pre></div>
+</div>
+<p>The exception to the above rule is when authoring plugins,
+plugins do not reside in the same namespace so they must
+address buildstream in the imports.</p>
+<p>An element plugin will derive from Element by importing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">buildstream</span> <span class="kn">import</span> <span class="n">Element</span>
+</pre></div>
+</div>
+<p>When importing utilities specifically, dont import function names
+from there, instead import the module itself:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">utils</span>
+</pre></div>
+</div>
+<p>This makes things clear when reading code that said functions
+are not defined in the same file but come from utils.py for example.</p>
+</div>
+<div class="section" id="policy-for-private-symbols">
+<h3>Policy for private symbols<a class="headerlink" href="#policy-for-private-symbols" title="Permalink to this headline">¶</a></h3>
+<p>Private symbols are expressed via a leading <code class="docutils literal notranslate"><span class="pre">_</span></code> single underscore, or
+in some special circumstances with a leading <code class="docutils literal notranslate"><span class="pre">__</span></code> double underscore.</p>
+<p>Before understanding the naming policy, it is first important to understand
+that in BuildStream, there are two levels of privateness which need to be
+considered.</p>
+<p>These are treated subtly differently and thus need to be understood:</p>
+<ul>
+<li><p class="first">API Private</p>
+<p>A symbol is considered to be <em>API private</em> if it is not exposed in the <em>public API</em>.</p>
+<p>Even if a symbol does not have any leading underscore, it may still be <em>API private</em>
+if the containing <em>class</em> or <em>module</em> is named with a leading underscore.</p>
+</li>
+<li><p class="first">Local private</p>
+<p>A symbol is considered to be <em>local private</em> if it is not intended for access
+outside of the defining <em>scope</em>.</p>
+<p>If a symbol has a leading underscore, it might not be <em>local private</em> if it is
+declared on a publicly visible class, but needs to be accessed internally by
+other modules in the BuildStream core.</p>
+</li>
+</ul>
+<div class="section" id="ordering">
+<h4>Ordering<a class="headerlink" href="#ordering" title="Permalink to this headline">¶</a></h4>
+<p>For better readability and consistency, we try to keep private symbols below
+public symbols. In the case of public modules where we may have a mix of
+<em>API private</em> and <em>local private</em> symbols, <em>API private</em> symbols should come
+before <em>local private</em> symbols.</p>
+</div>
+<div class="section" id="symbol-naming">
+<h4>Symbol naming<a class="headerlink" href="#symbol-naming" title="Permalink to this headline">¶</a></h4>
+<p>Any private symbol must start with a single leading underscore for two reasons:</p>
+<ul class="simple">
+<li>So that it does not bleed into documentation and <em>public API</em>.</li>
+<li>So that it is clear to developers which symbols are not used outside of the declaring <em>scope</em></li>
+</ul>
+<p>Remember that with python, the modules (python files) are also symbols
+within their containing <em>package</em>, as such; modules which are entirely
+private to BuildStream are named as such, e.g. <code class="docutils literal notranslate"><span class="pre">_thismodule.py</span></code>.</p>
+</div>
+<div class="section" id="cases-for-double-underscores">
+<h4>Cases for double underscores<a class="headerlink" href="#cases-for-double-underscores" title="Permalink to this headline">¶</a></h4>
+<p>The double underscore in python has a special function. When declaring
+a symbol in class scope which has a leading underscore, it can only be
+accessed within the class scope using the same name. Outside of class
+scope, it can only be accessed with a <em>cheat</em>.</p>
+<p>We use the double underscore in cases where the type of privateness can be
+ambiguous.</p>
+<ul>
+<li><p class="first">For private modules and classes</p>
+<p>We never need to disambiguate with a double underscore</p>
+</li>
+<li><p class="first">For private symbols declared in a public <em>scope</em></p>
+<p>In the case that we declare a private method on a public object, it
+becomes ambiguous whether:</p>
+<ul class="simple">
+<li>The symbol is <em>local private</em>, and only used within the given scope</li>
+<li>The symbol is <em>API private</em>, and will be used internally by BuildStream
+from other parts of the codebase.</li>
+</ul>
+<p>In this case, we use a single underscore for <em>API private</em> methods which
+are not <em>local private</em>, and we use a double underscore for <em>local private</em>
+methods declared in public scope.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="documenting-private-symbols">
+<h4>Documenting private symbols<a class="headerlink" href="#documenting-private-symbols" title="Permalink to this headline">¶</a></h4>
+<p>Any symbol which is <em>API Private</em> (regardless of whether it is also
+<em>local private</em>), should have some documentation for developers to
+better understand the codebase.</p>
+<p>Contrary to many other python projects, we do not use docstrings to
+document private symbols, but prefer to keep <em>API Private</em> symbols
+documented in code comments placed <em>above</em> the symbol (or <em>beside</em> the
+symbol in some cases, such as variable declarations in a class where
+a shorter comment is more desirable), rather than docstrings placed <em>below</em>
+the symbols being documented.</p>
+<p>Other than this detail, follow the same guidelines for documenting
+symbols as described below.</p>
+</div>
+</div>
+</div>
+<div class="section" id="documenting-buildstream">
+<h2>Documenting BuildStream<a class="headerlink" href="#documenting-buildstream" title="Permalink to this headline">¶</a></h2>
+<p>BuildStream starts out as a documented project from day one and uses
+sphinx to document itself.</p>
+<div class="section" id="documentation-formatting-policy">
+<h3>Documentation formatting policy<a class="headerlink" href="#documentation-formatting-policy" title="Permalink to this headline">¶</a></h3>
+<p>The BuildStream documentation style is as follows:</p>
+<ul class="simple">
+<li>Titles and headings require two leading empty lines above them. Only the first word should be capitalized.<ul>
+<li>If there is an <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">_internal_link</span></code> anchor, there should be two empty lines above the anchor, followed by one leading empty line.</li>
+</ul>
+</li>
+<li>Within a section, paragraphs should be separated by one empty line.</li>
+<li>Notes are defined using: <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">note::</span></code> blocks, followed by an empty line and then indented (3 spaces) text.</li>
+<li>Code blocks are defined using: <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">code::</span> <span class="pre">LANGUAGE</span></code> blocks, followed by an empty line and then indented (3 spaces) text. Note that the default language is <cite>python</cite>.</li>
+<li>Cross references should be of the form <code class="docutils literal notranslate"><span class="pre">:role:`target`</span></code>.<ul>
+<li>To cross reference arbitrary locations with, for example, the anchor <code class="docutils literal notranslate"><span class="pre">_anchor_name</span></code>, you must give the link an explicit title: <code class="docutils literal notranslate"><span class="pre">:ref:`Link</span> <span class="pre">text</span> <span class="pre">&lt;anchor_name&gt;`</span></code>. Note that the “_” prefix is not required.</li>
+</ul>
+</li>
+</ul>
+<p>Useful links:</p>
+<p>For further information, please see the <a class="reference external" href="http://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html">Sphinx Documentation</a>.</p>
+</div>
+<div class="section" id="building-docs">
+<h3>Building Docs<a class="headerlink" href="#building-docs" title="Permalink to this headline">¶</a></h3>
+<p>The documentation build is not integrated into the <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> and is
+difficult (or impossible) to do so, so there is a little bit of setup
+you need to take care of first.</p>
+<p>Before you can build the BuildStream documentation yourself, you need
+to first install <code class="docutils literal notranslate"><span class="pre">sphinx</span></code> along with some additional plugins and dependencies,
+using pip or some other mechanism:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install sphinx</span>
+<span class="n">pip3</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">sphinx</span>
+
+<span class="c1"># Install some sphinx extensions</span>
+<span class="n">pip3</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">sphinx</span><span class="o">-</span><span class="n">click</span>
+<span class="n">pip3</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">sphinx_rtd_theme</span>
+
+<span class="c1"># Additional optional dependencies required</span>
+<span class="n">pip3</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">arpy</span>
+</pre></div>
+</div>
+<p>To build the documentation, just run the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">C</span> <span class="n">doc</span>
+</pre></div>
+</div>
+<p>This will give you a <code class="docutils literal notranslate"><span class="pre">doc/build/html</span></code> directory with the html docs which
+you can view in your browser locally to test.</p>
+<div class="section" id="regenerating-session-html">
+<h4>Regenerating session html<a class="headerlink" href="#regenerating-session-html" title="Permalink to this headline">¶</a></h4>
+<p>The documentation build will build the session files if they are missing,
+or if explicitly asked to rebuild. We revision the generated session html files
+in order to reduce the burden on documentation contributors.</p>
+<p>To explicitly rebuild the session snapshot html files, it is recommended that you
+first set the <code class="docutils literal notranslate"><span class="pre">BST_SOURCE_CACHE</span></code> environment variable to your source cache, this
+will make the docs build reuse already downloaded sources:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">BST_SOURCE_CACHE</span><span class="o">=~/.</span><span class="n">cache</span><span class="o">/</span><span class="n">buildstream</span><span class="o">/</span><span class="n">sources</span>
+</pre></div>
+</div>
+<p>To force rebuild session html while building the doc, simply build the docs like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">BST_FORCE_SESSION_REBUILD</span><span class="o">=</span><span class="mi">1</span> <span class="o">-</span><span class="n">C</span> <span class="n">doc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="man-pages">
+<h3>Man pages<a class="headerlink" href="#man-pages" title="Permalink to this headline">¶</a></h3>
+<p>Unfortunately it is quite difficult to integrate the man pages build
+into the <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>, as such, whenever the frontend command line
+interface changes, the static man pages should be regenerated and
+committed with that.</p>
+<p>To do this, first ensure you have <code class="docutils literal notranslate"><span class="pre">click_man</span></code> installed, possibly
+with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">click_man</span>
+</pre></div>
+</div>
+<p>Then, in the toplevel directory of buildstream, run the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">command</span><span class="o">-</span><span class="n">packages</span><span class="o">=</span><span class="n">click_man</span><span class="o">.</span><span class="n">commands</span> <span class="n">man_pages</span>
+</pre></div>
+</div>
+<p>And commit the result, ensuring that you have added anything in
+the <code class="docutils literal notranslate"><span class="pre">man/</span></code> subdirectory, which will be automatically included
+in the buildstream distribution.</p>
+</div>
+<div class="section" id="documenting-conventions">
+<h3>Documenting conventions<a class="headerlink" href="#documenting-conventions" title="Permalink to this headline">¶</a></h3>
+<p>We use the sphinx.ext.napoleon extension for the purpose of having
+a bit nicer docstrings than the default sphinx docstrings.</p>
+<p>A docstring for a method, class or function should have the following
+format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Brief description of entity</span>
+
+<span class="sd">Args:</span>
+<span class="sd">   argument1 (type): Description of arg</span>
+<span class="sd">   argument2 (type): Description of arg</span>
+
+<span class="sd">Returns:</span>
+<span class="sd">   (type): Description of returned thing of the specified type</span>
+
+<span class="sd">Raises:</span>
+<span class="sd">   (SomeError): When some error occurs</span>
+<span class="sd">   (SomeOtherError): When some other error occurs</span>
+
+<span class="sd">A detailed description can go here if one is needed, only</span>
+<span class="sd">after the above part documents the calling conventions.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="documentation-examples">
+<h3>Documentation Examples<a class="headerlink" href="#documentation-examples" title="Permalink to this headline">¶</a></h3>
+<p>The examples section of the documentation contains a series of standalone
+examples, here are the criteria for an example addition.</p>
+<ul class="simple">
+<li>The example has a <code class="docutils literal notranslate"><span class="pre">${name}</span></code></li>
+<li>The example has a project users can copy and use<ul>
+<li>This project is added in the directory <code class="docutils literal notranslate"><span class="pre">doc/examples/${name}</span></code></li>
+</ul>
+</li>
+<li>The example has a documentation component<ul>
+<li>This is added at <code class="docutils literal notranslate"><span class="pre">doc/source/examples/${name}.rst</span></code></li>
+<li>A reference to <code class="docutils literal notranslate"><span class="pre">examples/${name}</span></code> is added to the toctree in <code class="docutils literal notranslate"><span class="pre">doc/source/examples.rst</span></code></li>
+<li>This documentation discusses the project elements declared in the project and may
+provide some BuildStream command examples</li>
+<li>This documentation links out to the reference manual at every opportunity</li>
+</ul>
+</li>
+<li>The example has a CI test component<ul>
+<li>This is an integration test added at <code class="docutils literal notranslate"><span class="pre">tests/examples/${name}</span></code></li>
+<li>This test runs BuildStream in the ways described in the example
+and assert that we get the results which we advertize to users in
+the said examples.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="adding-buildstream-command-output">
+<h3>Adding BuildStream command output<a class="headerlink" href="#adding-buildstream-command-output" title="Permalink to this headline">¶</a></h3>
+<p>As a part of building the docs, BuildStream will run itself and extract
+some html for the colorized output which is produced.</p>
+<p>If you want to run BuildStream to produce some nice html for your
+documentation, then you can do so by adding new <code class="docutils literal notranslate"><span class="pre">.run</span></code> files to the
+<code class="docutils literal notranslate"><span class="pre">doc/sessions/</span></code> directory.</p>
+<p>Any files added as <code class="docutils literal notranslate"><span class="pre">doc/sessions/${example}.run</span></code> will result in generated
+file at <code class="docutils literal notranslate"><span class="pre">doc/source/sessions/${example}.html</span></code>, and these files can be
+included in the reStructuredText documentation at any time with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.. raw:: html
+   :file: sessions/${example}.html
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">.run</span></code> file format is just another YAML dictionary which consists of a
+<code class="docutils literal notranslate"><span class="pre">commands</span></code> list, instructing the program what to do command by command.</p>
+<p>Each <em>command</em> is a dictionary, the members of which are listed here:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">directory</span></code>: The input file relative project directory</li>
+<li><code class="docutils literal notranslate"><span class="pre">output</span></code>: The input file relative output html file to generate (optional)</li>
+<li><code class="docutils literal notranslate"><span class="pre">fake-output</span></code>: Don’t really run the command, just pretend to and pretend
+this was the output, an empty string will enable this too.</li>
+<li><code class="docutils literal notranslate"><span class="pre">command</span></code>: The command to run, without the leading <code class="docutils literal notranslate"><span class="pre">bst</span></code></li>
+</ul>
+<p>When adding a new <code class="docutils literal notranslate"><span class="pre">.run</span></code> file, one should normally also commit the new
+resulting generated <code class="docutils literal notranslate"><span class="pre">.html</span></code> file(s) into the <code class="docutils literal notranslate"><span class="pre">doc/source/sessions-stored/</span></code>
+directory at the same time, this ensures that other developers do not need to
+regenerate them locally in order to build the docs.</p>
+<p><strong>Example</strong>:</p>
+<div class="code yaml highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">commands</span><span class="p">:</span>
+
+<span class="c1"># Make it fetch first</span>
+<span class="o">-</span> <span class="n">directory</span><span class="p">:</span> <span class="o">../</span><span class="n">examples</span><span class="o">/</span><span class="n">foo</span>
+  <span class="n">command</span><span class="p">:</span> <span class="n">fetch</span> <span class="n">hello</span><span class="o">.</span><span class="n">bst</span>
+
+<span class="c1"># Capture a build output</span>
+<span class="o">-</span> <span class="n">directory</span><span class="p">:</span> <span class="o">../</span><span class="n">examples</span><span class="o">/</span><span class="n">foo</span>
+  <span class="n">output</span><span class="p">:</span> <span class="o">../</span><span class="n">source</span><span class="o">/</span><span class="n">sessions</span><span class="o">/</span><span class="n">foo</span><span class="o">-</span><span class="n">build</span><span class="o">.</span><span class="n">html</span>
+  <span class="n">command</span><span class="p">:</span> <span class="n">build</span> <span class="n">hello</span><span class="o">.</span><span class="n">bst</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="protocol-buffers">
+<h2>Protocol Buffers<a class="headerlink" href="#protocol-buffers" title="Permalink to this headline">¶</a></h2>
+<p>BuildStream uses protobuf and gRPC for serialization and communication with
+artifact cache servers.  This requires <code class="docutils literal notranslate"><span class="pre">.proto</span></code> files and Python code
+generated from the <code class="docutils literal notranslate"><span class="pre">.proto</span></code> files using protoc.  All these files live in the
+<code class="docutils literal notranslate"><span class="pre">buildstream/_protos</span></code> directory.  The generated files are included in the
+git repository to avoid depending on grpcio-tools for user installations.</p>
+<div class="section" id="regenerating-code">
+<h3>Regenerating code<a class="headerlink" href="#regenerating-code" title="Permalink to this headline">¶</a></h3>
+<p>When <code class="docutils literal notranslate"><span class="pre">.proto</span></code> files are modified, the corresponding Python code needs to
+be regenerated.  As a prerequisite for code generation you need to install
+<code class="docutils literal notranslate"><span class="pre">grpcio-tools</span></code> using pip or some other mechanism:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">grpcio</span><span class="o">-</span><span class="n">tools</span>
+</pre></div>
+</div>
+<p>To actually regenerate the code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">build_grpc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="testing-buildstream">
+<h2>Testing BuildStream<a class="headerlink" href="#testing-buildstream" title="Permalink to this headline">¶</a></h2>
+<p>BuildStream uses pytest for regression tests and testing out
+the behavior of newly added components.</p>
+<p>The elaborate documentation for pytest can be found here: <a class="reference external" href="http://doc.pytest.org/en/latest/contents.html">http://doc.pytest.org/en/latest/contents.html</a></p>
+<p>Don’t get lost in the docs if you don’t need to, follow existing examples instead.</p>
+<div class="section" id="running-tests">
+<h3>Running tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h3>
+<p>To run the tests, just type:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">test</span>
+</pre></div>
+</div>
+<p>At the toplevel.</p>
+<p>When debugging a test, it can be desirable to see the stdout
+and stderr generated by a test, to do this use the –addopts
+function to feed arguments to pytest as such:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">test</span> <span class="o">--</span><span class="n">addopts</span> <span class="o">-</span><span class="n">s</span>
+</pre></div>
+</div>
+<p>You can always abort on the first failure by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">test</span> <span class="o">--</span><span class="n">addopts</span> <span class="o">-</span><span class="n">x</span>
+</pre></div>
+</div>
+<p>If you want to run a specific test or a group of tests, you
+can specify a prefix to match. E.g. if you want to run all of
+the frontend tests you can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">test</span> <span class="o">--</span><span class="n">addopts</span> <span class="s1">&#39;-k tests/frontend/&#39;</span>
+</pre></div>
+</div>
+<p>We also have a set of slow integration tests that are disabled by
+default - you will notice most of them marked with SKIP in the pytest
+output. To run them, you can use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">test</span> <span class="o">--</span><span class="n">addopts</span> <span class="s1">&#39;--integration&#39;</span>
+</pre></div>
+</div>
+<p>By default, buildstream also runs pylint on all files. Should you want
+to run just pylint (these checks are a lot faster), you can do so
+with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">test</span> <span class="o">--</span><span class="n">addopts</span> <span class="s1">&#39;-m pylint&#39;</span>
+</pre></div>
+</div>
+<p>Alternatively, any IDE plugin that uses pytest should automatically
+detect the <code class="docutils literal notranslate"><span class="pre">.pylintrc</span></code> in the project’s root directory.</p>
+</div>
+<div class="section" id="adding-tests">
+<h3>Adding tests<a class="headerlink" href="#adding-tests" title="Permalink to this headline">¶</a></h3>
+<p>Tests are found in the tests subdirectory, inside of which
+there is a separarate directory for each <em>domain</em> of tests.
+All tests are collected as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tests</span><span class="o">/*/*.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>If the new test is not appropriate for the existing test domains,
+then simply create a new directory for it under the tests subdirectory.</p>
+<p>Various tests may include data files to test on, there are examples
+of this in the existing tests. When adding data for a test, create
+a subdirectory beside your test in which to store data.</p>
+<p>When creating a test that needs data, use the datafiles extension
+to decorate your test case (again, examples exist in the existing
+tests for this), documentation on the datafiles extension can
+be found here: <a class="reference external" href="https://pypi.python.org/pypi/pytest-datafiles">https://pypi.python.org/pypi/pytest-datafiles</a></p>
+<p>Tests that run a sandbox should be decorated with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">integration</span>
+</pre></div>
+</div>
+<p>and use the integration cli helper.</p>
+</div>
+</div>
+<div class="section" id="measuring-buildstream-performance">
+<h2>Measuring BuildStream performance<a class="headerlink" href="#measuring-buildstream-performance" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="benchmarking-framework">
+<h3>Benchmarking framework<a class="headerlink" href="#benchmarking-framework" title="Permalink to this headline">¶</a></h3>
+<p>BuildStream has a utility to measure performance which is available from a
+separate repository at <a class="reference external" href="https://gitlab.com/BuildStream/benchmarks">https://gitlab.com/BuildStream/benchmarks</a>. This tool
+allows you to run a fixed set of workloads with multiple versions of
+BuildStream. From this you can see whether one version performs better or
+worse than another which is useful when looking for regressions and when
+testing potential optimizations.</p>
+<p>For full documentation on how to use the benchmarking tool see the README in
+the ‘benchmarks’ repository.</p>
+</div>
+<div class="section" id="profiling-tools">
+<h3>Profiling tools<a class="headerlink" href="#profiling-tools" title="Permalink to this headline">¶</a></h3>
+<p>When looking for ways to speed up the code you should make use of a profiling
+tool.</p>
+<p>Python provides <a class="reference external" href="https://docs.python.org/3/library/profile.html">cProfile</a>
+which gives you a list of all functions called during execution and how much
+time was spent in each function. Here is an example of running <cite>bst –help</cite>
+under cProfile:</p>
+<blockquote>
+<div>python3 -m cProfile -o bst.cprofile – $(which bst) –help</div></blockquote>
+<p>You can then analyze the results interactively using the ‘pstats’ module:</p>
+<blockquote>
+<div>python3 -m pstats ./bst.cprofile</div></blockquote>
+<p>For more detailed documentation of cProfile and ‘pstats’, see:
+<a class="reference external" href="https://docs.python.org/3/library/profile.html">https://docs.python.org/3/library/profile.html</a>.</p>
+<p>For a richer visualisation of the callstack you can try <a class="reference external" href="https://github.com/uber/pyflame">Pyflame</a>. Once you have followed the instructions in
+Pyflame’s README to install the tool, you can profile <cite>bst</cite> commands as in the
+following example:</p>
+<blockquote>
+<div>pyflame –output bst.flame –trace bst –help</div></blockquote>
+<p>You may see an <cite>Unexpected ptrace(2) exception:</cite> error. Note that the <cite>bst</cite>
+operation will continue running in the background in this case, you will need
+to wait for it to complete or kill it. Once this is done, rerun the above
+command which appears to fix the issue.</p>
+<p>Once you have output from pyflame, you can use the <code class="docutils literal notranslate"><span class="pre">flamegraph.pl</span></code> script
+from the <a class="reference external" href="https://github.com/brendangregg/FlameGraph">Flamegraph project</a>
+to generate an .svg image:</p>
+<blockquote>
+<div>./flamegraph.pl bst.flame &gt; bst-flamegraph.svg</div></blockquote>
+<p>The generated SVG file can then be viewed in your preferred web browser.</p>
+</div>
+<div class="section" id="profiling-specific-parts-of-buildstream-with-bst-profile">
+<h3>Profiling specific parts of BuildStream with BST_PROFILE<a class="headerlink" href="#profiling-specific-parts-of-buildstream-with-bst-profile" title="Permalink to this headline">¶</a></h3>
+<p>BuildStream can also turn on cProfile for specific parts of execution
+using BST_PROFILE.</p>
+<p>BST_PROFILE can be set to a section name, or ‘all’ for all
+sections. There is a list of topics in <cite>buildstream/_profile.py</cite>. For
+example, running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BST_PROFILE</span><span class="o">=</span><span class="n">load</span><span class="o">-</span><span class="n">pipeline</span> <span class="n">bst</span> <span class="n">build</span> <span class="n">bootstrap</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">x86</span><span class="o">.</span><span class="n">bst</span>
+</pre></div>
+</div>
+<p>will produce a profile in the current directory for the time take to
+call most of <cite>initialized</cite>, for each element. These profile files
+are in the same cProfile format as those mentioned in the previous
+section, and can be analysed with <cite>pstats</cite> or <cite>pyflame</cite>.</p>
+</div>
+<div class="section" id="profiling-the-artifact-cache-receiver">
+<h3>Profiling the artifact cache receiver<a class="headerlink" href="#profiling-the-artifact-cache-receiver" title="Permalink to this headline">¶</a></h3>
+<p>Since the artifact cache receiver is not normally run directly, it’s
+necessary to alter the ForceCommand part of sshd_config to enable
+profiling. See the main documentation in <cite>doc/source/artifacts.rst</cite>
+for general information on setting up the artifact cache. It’s also
+useful to change directory to a logging directory before starting
+<cite>bst-artifact-receive</cite> with profiling on.</p>
+<p>This is an example of a ForceCommand section of sshd_config used to
+obtain profiles:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Match</span> <span class="n">user</span> <span class="n">artifacts</span>
+  <span class="n">ForceCommand</span> <span class="n">BST_PROFILE</span><span class="o">=</span><span class="n">artifact</span><span class="o">-</span><span class="n">receive</span> <span class="n">cd</span> <span class="o">/</span><span class="n">tmp</span> <span class="o">&amp;&amp;</span> <span class="n">bst</span><span class="o">-</span><span class="n">artifact</span><span class="o">-</span><span class="n">receive</span> <span class="o">--</span><span class="n">pull</span><span class="o">-</span><span class="n">url</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">artifacts</span><span class="o">/</span><span class="n">artifacts</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-manifest-in-and-setup-py">
+<h2>The MANIFEST.in and setup.py<a class="headerlink" href="#the-manifest-in-and-setup-py" title="Permalink to this headline">¶</a></h2>
+<p>When adding a dependency to BuildStream, it’s important to update the setup.py accordingly.</p>
+<p>When adding data files which need to be discovered at runtime by BuildStream, update setup.py accordingly.</p>
+<p>When adding data files for the purpose of docs or tests, or anything that is not covered by
+setup.py, update the MANIFEST.in accordingly.</p>
+<p>At any time, running the following command to create a source distribution should result in
+creating a tarball which contains everything we want it to include:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">sdist</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="buildstream.types.html" class="btn btn-neutral float-left" title="Foundation types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2017-2018, The BuildStream Contributors
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

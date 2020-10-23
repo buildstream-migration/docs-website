@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>User configuration &mdash; BuildStream 1.4.2+20.g89765b75 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Commands" href="using_commands.html" />
+    <link rel="prev" title="Creating and using a git mirror" href="examples/git-mirror.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BuildStream
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.4.2+20.g89765b75
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="main_about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_install.html">Install</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="main_using.html">Using</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="using_tutorial.html">Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_examples.html">Examples</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">User configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-file">Configuration file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#project-specific-value">Project specific value</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#artifact-server">Artifact server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#strict-build-plan">Strict build plan</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#default-mirror">Default Mirror</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#default-configuration">Default configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="using_commands.html">Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="main_core.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HACKING.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BuildStream</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="main_using.html">Using</a> &raquo;</li>
+        
+      <li>User configuration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/using_config.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="user-configuration">
+<span id="user-config"></span><h1>User configuration<a class="headerlink" href="#user-configuration" title="Permalink to this headline">¶</a></h1>
+<p>User configuration and preferences can be specified in a user provided
+configuration file, and usually also on the command line.</p>
+<p>Values specified in a user provided configuration file override the
+defaults, while command line options take precedence over any other
+specified configurations.</p>
+<div class="section" id="configuration-file">
+<h2>Configuration file<a class="headerlink" href="#configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>Users can provide a configuration file to override parameters in
+the default configuration.</p>
+<p>Unless a configuration file is explicitly specified on the command line when
+invoking <code class="docutils literal notranslate"><span class="pre">bst</span></code>, an attempt is made to load user specific configuration from
+<code class="docutils literal notranslate"><span class="pre">$XDG_CONFIG_HOME/buildstream.conf</span></code>. On most Linux based systems, the location
+will be <code class="docutils literal notranslate"><span class="pre">~/.config/buildstream.conf</span></code></p>
+</div>
+<div class="section" id="project-specific-value">
+<h2>Project specific value<a class="headerlink" href="#project-specific-value" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">projects</span></code> key can be used to specify project specific configurations,
+the supported configurations on a project wide basis are listed here.</p>
+<div class="section" id="artifact-server">
+<span id="config-artifacts"></span><h3>Artifact server<a class="headerlink" href="#artifact-server" title="Permalink to this headline">¶</a></h3>
+<p>The project you build will often specify a <a class="reference internal" href="install_artifacts.html#artifacts"><span class="std std-ref">remote artifact cache</span></a> already, but you may want to specify extra caches. There are two
+ways to do this.  You can add one or more global caches:</p>
+<p><strong>Example</strong></p>
+<div class="code yaml highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">artifacts</span><span class="p">:</span>
+  <span class="n">url</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">artifacts</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">artifacts</span>
+</pre></div>
+</div>
+<p>Caches listed there will be considered lower priority than those specified
+by the project configuration.</p>
+<p>You can also add project-specific caches:</p>
+<p><strong>Example</strong></p>
+<div class="code yaml highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">projects</span><span class="p">:</span>
+  <span class="n">project</span><span class="o">-</span><span class="n">name</span><span class="p">:</span>
+    <span class="n">artifacts</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">url</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">artifacts</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">artifacts1</span>
+      <span class="o">-</span> <span class="n">url</span><span class="p">:</span> <span class="n">ssh</span><span class="p">:</span><span class="o">//</span><span class="n">user</span><span class="nd">@artifacts</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">artifacts2</span>
+        <span class="n">push</span><span class="p">:</span> <span class="n">true</span>
+</pre></div>
+</div>
+<p>Caches listed here will be considered higher priority than those specified
+by the project.</p>
+<p>If you give a list of URLs, earlier entries in the list will have higher
+priority than later ones.</p>
+</div>
+<div class="section" id="strict-build-plan">
+<span id="user-config-strict-mode"></span><h3>Strict build plan<a class="headerlink" href="#strict-build-plan" title="Permalink to this headline">¶</a></h3>
+<p>The strict build plan option decides whether you want elements
+to rebuild when their dependencies have changed. This is enabled
+by default, but recommended to turn off in developer scenarios where
+you might want to build a large system and test it quickly after
+modifying some low level component.</p>
+<p><strong>Example</strong></p>
+<div class="code yaml highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">projects</span><span class="p">:</span>
+  <span class="n">project</span><span class="o">-</span><span class="n">name</span><span class="p">:</span>
+    <span class="n">strict</span><span class="p">:</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is always possible to override this at invocation time using
+the <code class="docutils literal notranslate"><span class="pre">--strict</span></code> and <code class="docutils literal notranslate"><span class="pre">--no-strict</span></code> command line options.</p>
+</div>
+</div>
+<div class="section" id="default-mirror">
+<span id="config-default-mirror"></span><h3>Default Mirror<a class="headerlink" href="#default-mirror" title="Permalink to this headline">¶</a></h3>
+<p>When using <a class="reference internal" href="format_project.html#project-essentials-mirrors"><span class="std std-ref">mirrors</span></a>, a default mirror can
+be defined to be fetched first.
+The default mirror is defined by its name, e.g.</p>
+<div class="code yaml highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">projects</span><span class="p">:</span>
+  <span class="n">project</span><span class="o">-</span><span class="n">name</span><span class="p">:</span>
+    <span class="n">default</span><span class="o">-</span><span class="n">mirror</span><span class="p">:</span> <span class="n">oz</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is possible to override this at invocation time using the
+<code class="docutils literal notranslate"><span class="pre">--default-mirror</span></code> command-line option.</p>
+</div>
+</div>
+</div>
+<div class="section" id="default-configuration">
+<h2>Default configuration<a class="headerlink" href="#default-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The default BuildStream configuration is specified here for reference:</p>
+<blockquote>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Default BuildStream user configuration.</span>
+
+<span class="c1">#</span>
+<span class="c1">#    Work Directories</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="c1"># Note that BuildStream forces the XDG Base Directory names</span>
+<span class="c1"># into the environment if they are not already set, and allows</span>
+<span class="c1"># expansion of &#39;~&#39; and environment variables when specifying</span>
+<span class="c1"># paths.</span>
+<span class="c1">#</span>
+
+<span class="c1"># Location to store sources</span>
+<span class="nt">sourcedir</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${XDG_CACHE_HOME}/buildstream/sources</span>
+
+<span class="c1"># Location to perform builds</span>
+<span class="nt">builddir</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${XDG_CACHE_HOME}/buildstream/build</span>
+
+<span class="c1"># Location to store local binary artifacts</span>
+<span class="nt">artifactdir</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${XDG_CACHE_HOME}/buildstream/artifacts</span>
+
+<span class="c1"># Location to store build logs</span>
+<span class="nt">logdir</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${XDG_CACHE_HOME}/buildstream/logs</span>
+
+<span class="c1">#</span>
+<span class="c1">#    Cache</span>
+<span class="c1">#</span>
+<span class="nt">cache</span><span class="p">:</span>
+  <span class="c1"># Size of the artifact cache in bytes - BuildStream will attempt to keep the</span>
+  <span class="c1"># artifact cache within this size.</span>
+  <span class="c1"># If the value is suffixed with K, M, G or T, the specified memory size is</span>
+  <span class="c1"># parsed as Kilobytes, Megabytes, Gigabytes, or Terabytes (with the base</span>
+  <span class="c1"># 1024), respectively.</span>
+  <span class="c1"># Alternatively, a percentage value may be specified, which is taken relative</span>
+  <span class="c1"># to the isize of the file system containing the cache.</span>
+  <span class="nt">quota</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">infinity</span>
+
+<span class="c1">#</span>
+<span class="c1">#    Scheduler</span>
+<span class="c1">#</span>
+<span class="nt">scheduler</span><span class="p">:</span>
+
+  <span class="c1"># Maximum number of simultaneous downloading tasks.</span>
+  <span class="nt">fetchers</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+
+  <span class="c1"># Maximum number of simultaneous build tasks.</span>
+  <span class="nt">builders</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">4</span>
+
+  <span class="c1"># Maximum number of simultaneous uploading tasks.</span>
+  <span class="nt">pushers</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">4</span>
+
+  <span class="c1"># Maximum number of retries for network tasks.</span>
+  <span class="nt">network-retries</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+
+  <span class="c1"># What to do when an element fails, if not running in</span>
+  <span class="c1"># interactive mode:</span>
+  <span class="c1">#</span>
+  <span class="c1">#  continue  - Continue queueing jobs as much as possible</span>
+  <span class="c1">#  quit      - Exit after all ongoing jobs complete</span>
+  <span class="c1">#  terminate - Terminate any ongoing jobs and exit</span>
+  <span class="c1">#</span>
+  <span class="nt">on-error</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">quit</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Build related configuration</span>
+<span class="c1">#</span>
+<span class="nt">build</span><span class="p">:</span>
+
+  <span class="c1">#</span>
+  <span class="c1"># Maximum number of jobs to run per build task.</span>
+  <span class="c1">#</span>
+  <span class="c1"># The default behavior when this is set to 0, is to use the</span>
+  <span class="c1"># maximum number of threads available, with a maximum of 8.</span>
+  <span class="c1">#</span>
+  <span class="nt">max-jobs</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+
+
+<span class="c1">#</span>
+<span class="c1">#    Logging</span>
+<span class="c1">#</span>
+<span class="nt">logging</span><span class="p">:</span>
+
+  <span class="c1"># The abbreviated cache key length to display in the UI</span>
+  <span class="nt">key-length</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8</span>
+
+  <span class="c1"># Whether to show extra detailed messages</span>
+  <span class="nt">verbose</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="c1"># Maximum number of lines to print from the</span>
+  <span class="c1"># end of a failing build log</span>
+  <span class="nt">error-lines</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+
+  <span class="c1"># Maximum number of lines to print in a detailed</span>
+  <span class="c1"># message on the console or in the master log (the full</span>
+  <span class="c1"># messages are always recorded in the individual build</span>
+  <span class="c1"># logs)</span>
+  <span class="nt">message-lines</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+
+  <span class="c1"># Whether to enable debugging messages</span>
+  <span class="nt">debug</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+
+  <span class="c1"># Format string for printing the pipeline at startup, this</span>
+  <span class="c1"># also determines the default display format for `bst show`</span>
+  <span class="nt">element-format</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+
+    <span class="no">%{state: &gt;12} %{full-key} %{name} %{workspace-dirs}</span>
+
+  <span class="c1"># Format string for all log messages.</span>
+  <span class="nt">message-format</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+
+    <span class="no">[%{elapsed}][%{key}][%{element}] %{action} %{message}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="using_commands.html" class="btn btn-neutral float-right" title="Commands" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="examples/git-mirror.html" class="btn btn-neutral float-left" title="Creating and using a git mirror" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, The BuildStream Contributors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

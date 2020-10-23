@@ -1,0 +1,203 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Description of assemble activities &#8212; BuildStream 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <span class="target" id="module-buildstream.buildelement"></span><p>The BuildElement class is a convenience element one can derive from for
+implementing the most common case of element.</p>
+<div class="section" id="description-of-assemble-activities">
+<h1>Description of assemble activities<a class="headerlink" href="#description-of-assemble-activities" title="Permalink to this headline">¶</a></h1>
+<p>This element will perform the following steps to assemble an element:</p>
+<div class="section" id="stage-dependencies">
+<h2>Stage dependencies<a class="headerlink" href="#stage-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>The dependencies in the <a class="reference internal" href="buildstream.element.html#buildstream.element.Scope.BUILD" title="buildstream.element.Scope.BUILD"><code class="xref py py-func docutils literal"><span class="pre">Scope.BUILD</span></code></a>
+scope will be staged at the root of the sandbox</p>
+</div>
+<div class="section" id="integrate-dependencies">
+<h2>Integrate dependencies<a class="headerlink" href="#integrate-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>The integration commands taken from the <code class="docutils literal"><span class="pre">bst</span></code> public domain of each dependency
+will be run in the sandbox to create and update caches. Typically <code class="docutils literal"><span class="pre">ldconfig</span></code>
+among other things is run in this step.</p>
+</div>
+<div class="section" id="stage-sources">
+<h2>Stage sources<a class="headerlink" href="#stage-sources" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="buildstream.source.html#module-buildstream.source" title="buildstream.source"><code class="xref py py-mod docutils literal"><span class="pre">Sources</span></code></a> are now staged according to their configuration
+into the <code class="docutils literal"><span class="pre">%{build-root}</span></code> directory (normally <code class="docutils literal"><span class="pre">/buildstream/build</span></code>) inside the sandbox.</p>
+</div>
+<div class="section" id="run-commands">
+<h2>Run commands<a class="headerlink" href="#run-commands" title="Permalink to this headline">¶</a></h2>
+<p>Commands are now run in the sandbox.</p>
+<p>Commands are taken from the element configuration specified by the given
+<a class="reference internal" href="#module-buildstream.buildelement" title="buildstream.buildelement"><code class="xref py py-mod docutils literal"><span class="pre">BuildElement</span></code></a> subclass, which can in turn be
+overridden by the user in element declarations (<code class="docutils literal"><span class="pre">.bst</span></code> files).</p>
+<p>Commands are run in the following order:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">configure-commands</span></code>: Commands to configure how the element will build</li>
+<li><code class="docutils literal"><span class="pre">build-commands</span></code>: Commands to build the element</li>
+<li><code class="docutils literal"><span class="pre">install-commands</span></code>: Commands to install the results into <code class="docutils literal"><span class="pre">%{install-root}</span></code></li>
+<li><code class="docutils literal"><span class="pre">strip-commands</span></code>: Commands to strip debugging symbols installed binaries</li>
+</ul>
+<p>Sometimes it is interesting to append or prepend commands to an existing
+command list without replacing it entirely, for this; array composition
+<a class="reference internal" href="formatintro.html#format-directives-list-prepend"><span class="std std-ref">prepend</span></a> and
+<a class="reference internal" href="formatintro.html#format-directives-list-append"><span class="std std-ref">append</span></a> directives can be used.</p>
+<p><strong>Example</strong></p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="n">config</span><span class="p">:</span>
+  <span class="n">configure</span><span class="o">-</span><span class="n">commands</span><span class="p">:</span>
+    <span class="p">(</span><span class="o">&lt;</span><span class="p">):</span>
+    <span class="o">-</span> <span class="n">echo</span> <span class="s2">&quot;Do something before default configure-commands&quot;</span>
+</pre></div>
+</div>
+<p><strong>Working Directory</strong></p>
+<p>Note that by default the working directory is where the sources are staged in
+<code class="docutils literal"><span class="pre">%{build-root}</span></code>, but this can be overridden to build inside of a subdirectory
+of the build directory using the <code class="docutils literal"><span class="pre">command-subdir</span></code> variable in an element
+declaration. e.g.:</p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="n">variables</span><span class="p">:</span>
+  <span class="n">command</span><span class="o">-</span><span class="n">subdir</span><span class="p">:</span> <span class="n">src</span>
+</pre></div>
+</div>
+<p>The above fragment will cause all commands to be run in the <code class="docutils literal"><span class="pre">src/</span></code> subdirectory
+of the staged sources.</p>
+</div>
+<div class="section" id="result-collection">
+<h2>Result collection<a class="headerlink" href="#result-collection" title="Permalink to this headline">¶</a></h2>
+<p>Finally, the resulting build <em>artifact</em> is collected from the the <code class="docutils literal"><span class="pre">%{install-root}</span></code>
+directory (which is normally configured as <code class="docutils literal"><span class="pre">/buildstream/install</span></code>) inside the sandbox.</p>
+<p>All build elements must install into the <code class="docutils literal"><span class="pre">%{install-root}</span></code> using whatever
+semantic the given build system provides to do this. E.g. for standard autotools
+packages we simply do <code class="docutils literal"><span class="pre">make</span> <span class="pre">DESTDIR=%{install-root}</span> <span class="pre">install</span></code>.</p>
+<dl class="class">
+<dt id="buildstream.buildelement.BuildElement">
+<em class="property">class </em><code class="descname">BuildElement</code><span class="sig-paren">(</span><em>context</em>, <em>project</em>, <em>artifacts</em>, <em>meta</em>, <em>plugin_conf</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="buildstream.element.html#buildstream.element.Element" title="buildstream.element.Element"><code class="xref py py-class docutils literal"><span class="pre">buildstream.element.Element</span></code></a></p>
+<dl class="method">
+<dt id="buildstream.buildelement.BuildElement.configure">
+<code class="descname">configure</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement.configure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="buildstream.buildelement.BuildElement.preflight">
+<code class="descname">preflight</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement.preflight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="buildstream.buildelement.BuildElement.get_unique_key">
+<code class="descname">get_unique_key</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement.get_unique_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="buildstream.buildelement.BuildElement.configure_sandbox">
+<code class="descname">configure_sandbox</code><span class="sig-paren">(</span><em>sandbox</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement.configure_sandbox" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="buildstream.buildelement.BuildElement.stage">
+<code class="descname">stage</code><span class="sig-paren">(</span><em>sandbox</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement.stage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="buildstream.buildelement.BuildElement.assemble">
+<code class="descname">assemble</code><span class="sig-paren">(</span><em>sandbox</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement.assemble" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="buildstream.buildelement.BuildElement.generate_script">
+<code class="descname">generate_script</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.buildelement.BuildElement.generate_script" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Description of assemble activities</a><ul>
+<li><a class="reference internal" href="#stage-dependencies">Stage dependencies</a></li>
+<li><a class="reference internal" href="#integrate-dependencies">Integrate dependencies</a></li>
+<li><a class="reference internal" href="#stage-sources">Stage sources</a></li>
+<li><a class="reference internal" href="#run-commands">Run commands</a></li>
+<li><a class="reference internal" href="#result-collection">Result collection</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Codethink Limited.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/buildstream.buildelement.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installing BuildStream on a Linux distro &mdash; BuildStream 1.2.8 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="BuildStream inside Docker" href="install_docker.html" />
+    <link rel="prev" title="Install" href="main_install.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BuildStream
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.2.8
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="main_about.html">About</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="main_install.html">Install</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Installing BuildStream on a Linux distro</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installing-from-source-recommended">Installing from source (recommended)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#installing-dependencies">Installing dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#installing">Installing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#adjust-path">Adjust PATH</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bash-completions">Bash completions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#upgrading-buildstream">Upgrading BuildStream</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-from-distro-packages">Installing from distro packages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Arch Linux</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install_docker.html">BuildStream inside Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install_artifacts.html">Installing an artifact server</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="main_using.html">Using</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_core.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HACKING.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BuildStream</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="main_install.html">Install</a> &raquo;</li>
+        
+      <li>Installing BuildStream on a Linux distro</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/install_linux_distro.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installing-buildstream-on-a-linux-distro">
+<span id="install"></span><h1>Installing BuildStream on a Linux distro<a class="headerlink" href="#installing-buildstream-on-a-linux-distro" title="Permalink to this headline">¶</a></h1>
+<p>BuildStream requires the following base system requirements:</p>
+<ul class="simple">
+<li>python3 &gt;= 3.5</li>
+<li>libostree &gt;= v2017.8 with introspection data</li>
+<li>bubblewrap &gt;= 0.1.2</li>
+<li>fuse2</li>
+<li>PyGObject introspection bindings</li>
+<li>psutil python library (so you don’t have to install GCC and python-devel to build it yourself)</li>
+</ul>
+<p>BuildStream also depends on the host tools for the <a class="reference internal" href="buildstream.source.html#module-buildstream.source" title="buildstream.source"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Source</span></code></a> plugins.
+Refer to the respective <a class="reference internal" href="core_plugins.html#plugins-sources"><span class="std std-ref">source plugin</span></a> documentation for host tool
+requirements of specific plugins.</p>
+<p>If you intend to push built artifacts to a remote artifact server,
+which requires special permissions, you will also need:</p>
+<ul class="simple">
+<li>ssh</li>
+</ul>
+<div class="section" id="installing-from-source-recommended">
+<h2>Installing from source (recommended)<a class="headerlink" href="#installing-from-source-recommended" title="Permalink to this headline">¶</a></h2>
+<p>Until BuildStream is available in your distro, you will need to install
+it yourself from the <a class="reference external" href="https://gitlab.com/BuildStream/buildstream.git">git repository</a>
+using python’s <code class="docutils literal notranslate"><span class="pre">pip</span></code> package manager.</p>
+<p>For the purpose of installing BuildStream while there are no distro packages,
+you will additionally need:</p>
+<ul class="simple">
+<li>pip for python3 (only required for setup)</li>
+<li>Python 3 development libraries and headers</li>
+<li>git (to checkout buildstream)</li>
+</ul>
+<div class="section" id="installing-dependencies">
+<h3>Installing dependencies<a class="headerlink" href="#installing-dependencies" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="arch-linux">
+<h4>Arch Linux<a class="headerlink" href="#arch-linux" title="Permalink to this headline">¶</a></h4>
+<p>Install the dependencies with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">fuse2</span> <span class="n">ostree</span> <span class="n">bubblewrap</span> <span class="n">git</span> \
+               <span class="n">python</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span> <span class="n">python</span><span class="o">-</span><span class="n">gobject</span> <span class="n">python</span><span class="o">-</span><span class="n">psutil</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="debian">
+<h4>Debian<a class="headerlink" href="#debian" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="stretch">
+<h5>Stretch<a class="headerlink" href="#stretch" title="Permalink to this headline">¶</a></h5>
+<p>With stretch, you first need to ensure that you have the backports repository
+setup as described <a class="reference external" href="https://backports.debian.org/Instructions/">here</a></p>
+<p>By adding the following line to your sources.list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">debian</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">debian</span> <span class="n">stretch</span><span class="o">-</span><span class="n">backports</span> <span class="n">main</span>
+</pre></div>
+</div>
+<p>And then running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+</pre></div>
+</div>
+<p>At this point you should be able to get the system requirements with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> \
+    <span class="n">fuse</span> <span class="n">ostree</span> <span class="n">gir1</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="n">ostree</span><span class="o">-</span><span class="mf">1.0</span> <span class="n">bubblewrap</span> <span class="n">git</span> \
+    <span class="n">python3</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span> <span class="n">python3</span><span class="o">-</span><span class="n">gi</span> <span class="n">python3</span><span class="o">-</span><span class="n">psutil</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">t</span> <span class="n">stretch</span><span class="o">-</span><span class="n">backports</span> \
+    <span class="n">gir1</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="n">ostree</span><span class="o">-</span><span class="mf">1.0</span> <span class="n">ostree</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="buster-or-sid">
+<h5>Buster or Sid<a class="headerlink" href="#buster-or-sid" title="Permalink to this headline">¶</a></h5>
+<p>For debian unstable or testing, only the following line should be enough
+to get the base system requirements installed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> \
+    <span class="n">fuse</span> <span class="n">ostree</span> <span class="n">gir1</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="n">ostree</span><span class="o">-</span><span class="mf">1.0</span> <span class="n">bubblewrap</span> <span class="n">git</span> \
+    <span class="n">python3</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span> <span class="n">python3</span><span class="o">-</span><span class="n">gi</span> <span class="n">python3</span><span class="o">-</span><span class="n">psutil</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="fedora">
+<h4>Fedora<a class="headerlink" href="#fedora" title="Permalink to this headline">¶</a></h4>
+<p>For recent fedora systems, the following line should get you the system
+requirements you need:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">fuse</span> <span class="n">ostree</span> <span class="n">bubblewrap</span> <span class="n">git</span> \
+               <span class="n">python3</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span> <span class="n">python3</span><span class="o">-</span><span class="n">gobject</span> <span class="n">python3</span><span class="o">-</span><span class="n">psutil</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="installing">
+<h3>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h3>
+<p>Once you have the base system dependencies, you can clone the BuildStream
+git repository and install it as a regular user:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">gitlab</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">BuildStream</span><span class="o">/</span><span class="n">buildstream</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">buildstream</span>
+<span class="n">pip3</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>This will install buildstream’s pure python dependencies into
+your user’s homedir in <code class="docutils literal notranslate"><span class="pre">~/.local</span></code> and will run BuildStream directly
+from the git checkout directory.</p>
+<p>Keep following the instructions below to ensure that the <code class="docutils literal notranslate"><span class="pre">bst</span></code>
+command is in your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> and to enable bash completions for it.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>We recommend the <code class="docutils literal notranslate"><span class="pre">-e</span></code> option because you can upgrade your
+installation by simply updating the checked out git repository.</p>
+<p class="last">If you want a full installation that is not linked to your
+git checkout, just omit the <code class="docutils literal notranslate"><span class="pre">-e</span></code> option from the above commands.</p>
+</div>
+</div>
+<div class="section" id="adjust-path">
+<h3>Adjust PATH<a class="headerlink" href="#adjust-path" title="Permalink to this headline">¶</a></h3>
+<p>Since BuildStream is now installed under your local user’s install directories,
+you need to ensure that <code class="docutils literal notranslate"><span class="pre">PATH</span></code> is adjusted.</p>
+<p>A regular way to do this is to add the following line to the end of your <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="s2">&quot;$</span><span class="si">{PATH}</span><span class="s2">:$</span><span class="si">{HOME}</span><span class="s2">/.local/bin&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You will have to restart your terminal in order for these changes to take effect.</p>
+</div>
+</div>
+<div class="section" id="bash-completions">
+<h3>Bash completions<a class="headerlink" href="#bash-completions" title="Permalink to this headline">¶</a></h3>
+<p>Bash completions are supported by sourcing the <code class="docutils literal notranslate"><span class="pre">buildstream/data/bst</span></code>
+script found in the BuildStream repository. On many systems this script
+can be installed into a completions directory but when installing BuildStream
+without a package manager this is not an option.</p>
+<p>To enable completions for an installation of BuildStream you
+installed yourself from git, just append the script verbatim
+to your <code class="docutils literal notranslate"><span class="pre">~/.bash_completion</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># BuildStream bash completion scriptlet.</span>
+<span class="c1">#</span>
+<span class="c1"># On systems which use the bash-completion module for</span>
+<span class="c1"># completion discovery with bash, this can be installed at:</span>
+<span class="c1">#</span>
+<span class="c1">#   pkg-config --variable=completionsdir bash-completion</span>
+<span class="c1">#</span>
+<span class="c1"># If BuildStream is not installed system wide, you can</span>
+<span class="c1"># simply source this script to enable completions or append</span>
+<span class="c1"># this script to your ~/.bash_completion file.</span>
+<span class="c1">#</span>
+<span class="l l-Scalar l-Scalar-Plain">_bst_completion() {</span>
+    <span class="l l-Scalar l-Scalar-Plain">local IFS=$&#39;</span>
+<span class="l l-Scalar l-Scalar-Plain">&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">COMPREPLY=( $( env COMP_WORDS=&quot;${COMP_WORDS[*]}&quot; \</span>
+                   <span class="l l-Scalar l-Scalar-Plain">COMP_CWORD=$COMP_CWORD \</span>
+                   <span class="l l-Scalar l-Scalar-Plain">_BST_COMPLETION=complete $1 ) )</span>
+    <span class="l l-Scalar l-Scalar-Plain">return 0</span>
+<span class="l l-Scalar l-Scalar-Plain">}</span>
+
+<span class="l l-Scalar l-Scalar-Plain">complete -F _bst_completion -o nospace bst;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="upgrading-buildstream">
+<h3>Upgrading BuildStream<a class="headerlink" href="#upgrading-buildstream" title="Permalink to this headline">¶</a></h3>
+<p>Assuming you have followed the default instructions above, all
+you need to do to upgrade BuildStream is to update your local git
+checkout:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">buildstream</span>
+<span class="n">git</span> <span class="n">pull</span> <span class="o">--</span><span class="n">rebase</span>
+</pre></div>
+</div>
+<p>If you did not specify the <code class="docutils literal notranslate"><span class="pre">-e</span></code> option at install time, you will
+need to cleanly reinstall BuildStream:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">uninstall</span> <span class="n">buildstream</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">buildstream</span>
+<span class="n">git</span> <span class="n">pull</span> <span class="o">--</span><span class="n">rebase</span>
+<span class="n">pip3</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="o">.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="installing-from-distro-packages">
+<h2>Installing from distro packages<a class="headerlink" href="#installing-from-distro-packages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Arch Linux<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Install <a class="reference external" href="https://aur.archlinux.org/packages/buildstream">buildstream</a>
+from <a class="reference external" href="https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_packages">AUR</a>.
+Alternatively, use
+<a class="reference external" href="https://aur.archlinux.org/packages/buildstream-git">buildstream-git</a>
+for the lastest version of the development branch.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="install_docker.html" class="btn btn-neutral float-right" title="BuildStream inside Docker" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="main_install.html" class="btn btn-neutral float-left" title="Install" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, The BuildStream Contributors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

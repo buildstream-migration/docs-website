@@ -1,0 +1,337 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Foundation types &mdash; BuildStream 1.4.2+20.g89765b75 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing" href="HACKING.html" />
+    <link rel="prev" title="buildstream.sandbox package" href="buildstream.sandbox.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BuildStream
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.4.2+20.g89765b75
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="main_about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_using.html">Using</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="main_core.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core_format.html">Project format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core_plugins.html">Plugin specific documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core_framework.html">Plugin API reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core_additional.html">Additional writings</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="buildstream.html">buildstream package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="buildstream.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="buildstream.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="buildstream.buildelement.html">BuildElement - Abstract class for build elements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="buildstream.element.html">Element - Base element class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="buildstream.plugin.html">Plugin - Base plugin class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="buildstream.scriptelement.html">ScriptElement - Abstract class for scripting elements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="buildstream.source.html">Source - Base source class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="buildstream.source.html#sourcefetcher-object-for-fetching-individual-urls">SourceFetcher - Object for fetching individual URLs</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Foundation types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="buildstream.utils.html">Utilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="HACKING.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BuildStream</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="main_core.html">Reference</a> &raquo;</li>
+        
+          <li><a href="buildstream.html">buildstream package</a> &raquo;</li>
+        
+      <li>Foundation types</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/buildstream.types.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="module-buildstream.types"></span><div class="section" id="foundation-types">
+<h1>Foundation types<a class="headerlink" href="#foundation-types" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="buildstream.types.Scope">
+<em class="property">class </em><code class="descname">Scope</code><a class="headerlink" href="#buildstream.types.Scope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Defines the scope of dependencies to include for a given element
+when iterating over the dependency graph in APIs like
+<a class="reference internal" href="buildstream.element.html#buildstream.element.Element.dependencies" title="buildstream.element.Element.dependencies"><code class="xref py py-func docutils literal notranslate"><span class="pre">Element.dependencies()</span></code></a></p>
+<dl class="attribute">
+<dt id="buildstream.types.Scope.ALL">
+<code class="descname">ALL</code><em class="property"> = 1</em><a class="headerlink" href="#buildstream.types.Scope.ALL" title="Permalink to this definition">¶</a></dt>
+<dd><p>All elements which the given element depends on, following
+all elements required for building. Including the element itself.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.types.Scope.BUILD">
+<code class="descname">BUILD</code><em class="property"> = 2</em><a class="headerlink" href="#buildstream.types.Scope.BUILD" title="Permalink to this definition">¶</a></dt>
+<dd><p>All elements required for building the element, including their
+respective run dependencies. Not including the given element itself.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.types.Scope.RUN">
+<code class="descname">RUN</code><em class="property"> = 3</em><a class="headerlink" href="#buildstream.types.Scope.RUN" title="Permalink to this definition">¶</a></dt>
+<dd><p>All elements required for running the element. Including the element
+itself.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.types.Scope.NONE">
+<code class="descname">NONE</code><em class="property"> = 4</em><a class="headerlink" href="#buildstream.types.Scope.NONE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Just the element itself, no dependencies.</p>
+<p><em>Since: 1.4</em></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="buildstream.types.Consistency">
+<em class="property">class </em><code class="descname">Consistency</code><a class="headerlink" href="#buildstream.types.Consistency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Defines the various consistency states of a <a class="reference internal" href="buildstream.source.html#buildstream.source.Source" title="buildstream.source.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a>.</p>
+<dl class="attribute">
+<dt id="buildstream.types.Consistency.INCONSISTENT">
+<code class="descname">INCONSISTENT</code><em class="property"> = 0</em><a class="headerlink" href="#buildstream.types.Consistency.INCONSISTENT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inconsistent</p>
+<p>Inconsistent sources have no explicit reference set. They cannot
+produce a cache key, be fetched or staged. They can only be tracked.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.types.Consistency.RESOLVED">
+<code class="descname">RESOLVED</code><em class="property"> = 1</em><a class="headerlink" href="#buildstream.types.Consistency.RESOLVED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolved</p>
+<p>Resolved sources have a reference and can produce a cache key and
+be fetched, however they cannot be staged.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.types.Consistency.CACHED">
+<code class="descname">CACHED</code><em class="property"> = 2</em><a class="headerlink" href="#buildstream.types.Consistency.CACHED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cached</p>
+<p>Sources have a cached unstaged copy in the source directory.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="buildstream.types.CoreWarnings">
+<em class="property">class </em><code class="descname">CoreWarnings</code><a class="headerlink" href="#buildstream.types.CoreWarnings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Some common warnings which are raised by core functionalities within BuildStream are found in this class.</p>
+<dl class="attribute">
+<dt id="buildstream.types.CoreWarnings.BAD_CHARACTERS_IN_NAME">
+<code class="descname">BAD_CHARACTERS_IN_NAME</code><em class="property"> = None</em><a class="headerlink" href="#buildstream.types.CoreWarnings.BAD_CHARACTERS_IN_NAME" title="Permalink to this definition">¶</a></dt>
+<dd><p>This warning will be produces when filename for a target contains invalid
+characters in its name.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.types.CoreWarnings.OVERLAPS">
+<code class="descname">OVERLAPS</code><em class="property"> = 'overlaps'</em><a class="headerlink" href="#buildstream.types.CoreWarnings.OVERLAPS" title="Permalink to this definition">¶</a></dt>
+<dd><p>This warning will be produced when buildstream detects an overlap on an element
+which is not whitelisted. See <a class="reference internal" href="format_public.html#public-overlap-whitelist"><span class="std std-ref">Overlap Whitelist</span></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.types.CoreWarnings.REF_NOT_IN_TRACK">
+<code class="descname">REF_NOT_IN_TRACK</code><em class="property"> = 'ref-not-in-track'</em><a class="headerlink" href="#buildstream.types.CoreWarnings.REF_NOT_IN_TRACK" title="Permalink to this definition">¶</a></dt>
+<dd><p>This warning will be produced when a source is configured with a reference
+which is found to be invalid based on the configured track</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.types.CoreWarnings.BAD_ELEMENT_SUFFIX">
+<code class="descname">BAD_ELEMENT_SUFFIX</code><em class="property"> = 'bad-element-suffix'</em><a class="headerlink" href="#buildstream.types.CoreWarnings.BAD_ELEMENT_SUFFIX" title="Permalink to this definition">¶</a></dt>
+<dd><p>This warning will be produced when an element whose name does not end in .bst
+is referenced either on the command line or by another element</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="HACKING.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="buildstream.sandbox.html" class="btn btn-neutral float-left" title="buildstream.sandbox package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, The BuildStream Contributors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

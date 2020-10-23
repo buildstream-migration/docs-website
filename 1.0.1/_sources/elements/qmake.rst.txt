@@ -1,0 +1,4 @@
+qmake plugin
+============================================
+
+.. automodule:: elements.qmake

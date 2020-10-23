@@ -1,0 +1,263 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ScriptElement &#8212; BuildStream 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <span class="target" id="module-buildstream.scriptelement"></span><div class="section" id="scriptelement">
+<h1>ScriptElement<a class="headerlink" href="#scriptelement" title="Permalink to this headline">¶</a></h1>
+<p>The ScriptElement class is a convenience class one can derive for
+implementing elements that stage elements and run command-lines on them.</p>
+<p>Any derived classes must write their own configure() implementation, using
+the public APIs exposed in this class.</p>
+<p>Derived classes must also chain up to the parent method in their preflight()
+implementations.</p>
+<dl class="class">
+<dt id="buildstream.scriptelement.ScriptElement">
+<em class="property">class </em><code class="descname">ScriptElement</code><span class="sig-paren">(</span><em>context</em>, <em>project</em>, <em>artifacts</em>, <em>meta</em>, <em>plugin_conf</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.scriptelement.ScriptElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="buildstream.element.html#buildstream.element.Element" title="buildstream.element.Element"><code class="xref py py-class docutils literal"><span class="pre">buildstream.element.Element</span></code></a></p>
+<dl class="attribute">
+<dt id="buildstream.scriptelement.ScriptElement.BST_STRICT_REBUILD">
+<code class="descname">BST_STRICT_REBUILD</code><em class="property"> = True</em><a class="headerlink" href="#buildstream.scriptelement.ScriptElement.BST_STRICT_REBUILD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="buildstream.scriptelement.ScriptElement.set_work_dir">
+<code class="descname">set_work_dir</code><span class="sig-paren">(</span><em>work_dir=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.scriptelement.ScriptElement.set_work_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the working dir</p>
+<p>The working dir (a.k.a. cwd) is the directory which commands will be
+called from.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>work_dir</strong> (<em>str</em>) – The working directory. If called without this argument</li>
+<li><strong>it'll default to the value of the variable cwd.</strong> (<em>set</em><em>,</em>) – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.scriptelement.ScriptElement.set_install_root">
+<code class="descname">set_install_root</code><span class="sig-paren">(</span><em>install_root=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.scriptelement.ScriptElement.set_install_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the install root</p>
+<p>The install root is the directory which output will be collected from
+once the commands have been run.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>install_root</strong> (<em>str</em>) – The install root. If called without this argument</li>
+<li><strong>it'll default to the value of the variable install-root.</strong> (<em>set</em><em>,</em>) – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.scriptelement.ScriptElement.set_root_read_only">
+<code class="descname">set_root_read_only</code><span class="sig-paren">(</span><em>root_read_only</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.scriptelement.ScriptElement.set_root_read_only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets root read-only</p>
+<p>When commands are run, if root_read_only is true, then the root of the
+filesystem will be protected. This is strongly recommended whenever
+possible.</p>
+<p>If this variable is not set, the default permission is read-write.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>root_read_only</strong> (<em>bool</em>) – Whether to mark the root filesystem as</li>
+<li><strong>read-only.</strong> – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.scriptelement.ScriptElement.layout_add">
+<code class="descname">layout_add</code><span class="sig-paren">(</span><em>element</em>, <em>destination</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.scriptelement.ScriptElement.layout_add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an element-destination pair to the layout.</p>
+<p>Layout is a way of defining how dependencies should be added to the
+staging area for running commands.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>element</strong> (<em>str</em>) – The name of the element to stage, or None. This may be any
+element found in the dependencies, whether it is a direct
+or indirect dependency.</li>
+<li><strong>destination</strong> (<em>str</em>) – The path inside the staging area for where to
+stage this element. If it is not “/”, then integration
+commands will not be run.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If this function is never called, then the default behavior is to just
+stage the Scope.BUILD dependencies of the element in question at the
+sandbox root. Otherwise, the Scope.RUN dependencies of each specified
+element will be staged in their specified destination directories.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The order of directories in the layout is significant as they
+will be mounted into the sandbox. It is an error to specify a parent
+directory which will shadow a directory already present in the layout.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In the case that no element is specified, a read-write directory will
+be made available at the specified location.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.scriptelement.ScriptElement.add_commands">
+<code class="descname">add_commands</code><span class="sig-paren">(</span><em>group_name</em>, <em>command_list</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.scriptelement.ScriptElement.add_commands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a list of commands under the group-name.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Command groups will be run in the order they were added.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This does not perform substitutions automatically. They must
+be performed beforehand (see
+<a class="reference internal" href="buildstream.element.html#buildstream.element.Element.node_subst_list" title="buildstream.element.Element.node_subst_list"><code class="xref py py-func docutils literal"><span class="pre">node_subst_list()</span></code></a>)</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>group_name</strong> (<em>str</em>) – The name of the group of commands.</li>
+<li><strong>command_list</strong> (<em>list</em>) – The list of commands to be run.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.scriptelement.ScriptElement.preflight">
+<code class="descname">preflight</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.scriptelement.ScriptElement.preflight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="buildstream.scriptelement.ScriptElement.get_unique_key">
+<code class="descname">get_unique_key</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.scriptelement.ScriptElement.get_unique_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="buildstream.scriptelement.ScriptElement.configure_sandbox">
+<code class="descname">configure_sandbox</code><span class="sig-paren">(</span><em>sandbox</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.scriptelement.ScriptElement.configure_sandbox" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="buildstream.scriptelement.ScriptElement.stage">
+<code class="descname">stage</code><span class="sig-paren">(</span><em>sandbox</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.scriptelement.ScriptElement.stage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="buildstream.scriptelement.ScriptElement.assemble">
+<code class="descname">assemble</code><span class="sig-paren">(</span><em>sandbox</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.scriptelement.ScriptElement.assemble" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="buildstream.scriptelement.setup">
+<code class="descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.scriptelement.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Codethink Limited.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/buildstream.scriptelement.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

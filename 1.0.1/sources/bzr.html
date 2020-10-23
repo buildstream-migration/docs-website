@@ -1,0 +1,112 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>bzr plugin &#8212; BuildStream 0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sources.bzr">
+<span id="bzr-plugin"></span><h1>bzr plugin<a class="headerlink" href="#module-sources.bzr" title="Permalink to this headline">¶</a></h1>
+<p>A source implementation for staging bazaar branches</p>
+<p><strong>Usage:</strong></p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Specify the bzr source kind</span>
+<span class="n">kind</span><span class="p">:</span> <span class="n">bzr</span>
+
+<span class="c1"># Specify the bzr url. Bazaar URLs come in many forms, see</span>
+<span class="c1"># `bzr help urlspec` for more information. Using an alias defined</span>
+<span class="c1"># in your project configuration is encouraged.</span>
+<span class="n">url</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">launchpad</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">bzr</span>
+
+<span class="c1"># Specify the tracking branch. This is mandatory, as bzr cannot identify</span>
+<span class="c1"># an individual revision outside its branch. bzr URLs that omit the branch</span>
+<span class="c1"># name implicitly specify the trunk branch, but bst requires this to be</span>
+<span class="c1"># explicit.</span>
+<span class="n">track</span><span class="p">:</span> <span class="n">trunk</span>
+
+<span class="c1"># Specify the ref. This is a revision number. This is usually a decimal,</span>
+<span class="c1"># but revisions on a branch are of the form</span>
+<span class="c1"># &lt;revision-branched-from&gt;.&lt;branch-number&gt;.&lt;revision-since-branching&gt;</span>
+<span class="c1"># e.g. 6622.1.6.</span>
+<span class="c1"># The ref must be specified to build, and &#39;bst track&#39; will update the</span>
+<span class="c1"># revision number to the one on the tip of the branch specified in &#39;track&#39;.</span>
+<span class="n">ref</span><span class="p">:</span> <span class="mi">6622</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Codethink Limited.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/sources/bzr.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

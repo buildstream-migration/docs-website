@@ -1,0 +1,27 @@
+buildstream package
+===================
+
+.. automodule:: buildstream
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    buildstream.sandbox
+
+Submodules
+----------
+
+.. toctree::
+
+   buildstream.buildelement
+   buildstream.element
+   buildstream.plugin
+   buildstream.scriptelement
+   buildstream.source
+   buildstream.utils
+

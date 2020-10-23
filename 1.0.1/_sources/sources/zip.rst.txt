@@ -1,0 +1,4 @@
+zip plugin
+============================================
+
+.. automodule:: sources.zip

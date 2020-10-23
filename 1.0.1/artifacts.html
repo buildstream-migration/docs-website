@@ -1,0 +1,248 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Artifact Caches &#8212; BuildStream 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="artifact-caches">
+<span id="artifacts"></span><h1>Artifact Caches<a class="headerlink" href="#artifact-caches" title="Permalink to this headline">¶</a></h1>
+<p>BuildStream revisions output of each element under it’s specific
+cache key in a local artifact cache.</p>
+<p>This artifact cache can however be shared with others, or automated
+builders can be made to contribute to a shared artifact cache so
+that developers dont need to build everything all the time, instead
+they can download prebuilt artifacts from a shared cache, if an artifact
+is available for the specific cache keys they need.</p>
+<p>This page outlines how to setup and use a shared artifact cache.</p>
+<div class="section" id="setting-up-the-user">
+<h2>Setting up the user<a class="headerlink" href="#setting-up-the-user" title="Permalink to this headline">¶</a></h2>
+<p>A specific user is not needed for downloading artifacts, but since we
+are going to use ssh to upload the artifacts, you will want a dedicated
+user to own the artifact cache.</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">useradd</span> <span class="n">artifacts</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="installing-the-receiver">
+<h2>Installing the receiver<a class="headerlink" href="#installing-the-receiver" title="Permalink to this headline">¶</a></h2>
+<p>You will also need to install BuildStream on the artifact server in order
+to receive uploaded artifacts over ssh. Follow the instructions for installing
+BuildStream <a class="reference internal" href="install.html#installing"><span class="std std-ref">here</span></a></p>
+<p>When installing BuildStream on the artifact server, it must be installed
+in a system wide location, with <code class="docutils literal"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">.</span></code> in the BuildStream
+checkout directory.</p>
+<p>Otherwise, some tinkering is required to ensure BuildStream is available
+in <code class="docutils literal"><span class="pre">PATH</span></code> when it’s companion <code class="docutils literal"><span class="pre">bst-artifact-receive</span></code> program is run
+remotely.</p>
+<p>You can install only the artifact receiver companion program without
+requiring BuildStream’s more exigent dependencies by setting the
+<code class="docutils literal"><span class="pre">BST_ARTIFACTS_ONLY</span></code> environment variable at install time, like so:</p>
+<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="n">BST_ARTIFACTS_ONLY</span><span class="o">=</span><span class="mi">1</span> <span class="n">pip3</span> <span class="n">install</span> <span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="initializing-the-cache">
+<h2>Initializing the cache<a class="headerlink" href="#initializing-the-cache" title="Permalink to this headline">¶</a></h2>
+<p>Now that you have a dedicated user to own the artifact cache, change
+to that user, and create the artifact cache ostree repository directly
+in it’s home directory as such:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">ostree</span> <span class="n">init</span> <span class="o">--</span><span class="n">mode</span> <span class="n">archive</span><span class="o">-</span><span class="n">z2</span> <span class="o">--</span><span class="n">repo</span> <span class="n">artifacts</span>
+</pre></div>
+</div>
+<p>This should result in an artifact cache residing at the path <code class="docutils literal"><span class="pre">/home/artifacts/artifacts</span></code></p>
+</div>
+<div class="section" id="serve-the-cache-over-https">
+<h2>Serve the cache over https<a class="headerlink" href="#serve-the-cache-over-https" title="Permalink to this headline">¶</a></h2>
+<p>This part should be pretty simple, you can do this with various technologies, all
+we really require is that you make the artifacts available over https (you can use
+http but until we figure out using gpg signed ostree commits for the artifacts, it’s
+better to serve over https).</p>
+<p>Here is an example, note that you must have a certificate <strong>pem</strong> file to use, as
+is the case for hosting anything over https.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">http.server</span><span class="o">,</span> <span class="nn">ssl</span><span class="o">,</span> <span class="nn">os</span>
+
+<span class="c1"># Maybe use a custom port, especially if you are serving</span>
+<span class="c1"># other web pages on the same computer</span>
+<span class="n">server_address</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">443</span><span class="p">)</span>
+<span class="n">artifact_path</span> <span class="o">=</span> <span class="s1">&#39;/home/artifacts&#39;</span>
+
+<span class="c1"># The http server will serve from it&#39;s current</span>
+<span class="c1"># working directory</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">artifact_path</span><span class="p">)</span>
+
+<span class="c1"># Create Server</span>
+<span class="n">httpd</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">HTTPServer</span><span class="p">(</span>
+    <span class="n">server_address</span><span class="p">,</span>
+    <span class="n">http</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">SimpleHTTPRequestHandler</span><span class="p">)</span>
+
+<span class="c1"># Add ssl</span>
+<span class="n">httpd</span><span class="o">.</span><span class="n">socket</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">wrap_socket</span><span class="p">(</span><span class="n">httpd</span><span class="o">.</span><span class="n">socket</span><span class="p">,</span>
+                               <span class="n">server_side</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                               <span class="n">certfile</span><span class="o">=</span><span class="s1">&#39;localhost.pem&#39;</span><span class="p">,</span>
+                               <span class="n">ssl_version</span><span class="o">=</span><span class="n">ssl</span><span class="o">.</span><span class="n">PROTOCOL_TLSv1</span><span class="p">)</span>
+
+<span class="c1"># Run it</span>
+<span class="n">httpd</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-and-run-sshd">
+<h2>Configure and run sshd<a class="headerlink" href="#configure-and-run-sshd" title="Permalink to this headline">¶</a></h2>
+<p>You will need to run the sshd service to allow uploading artifacts.</p>
+<p>For this you will want something like the following in your <code class="docutils literal"><span class="pre">/etc/ssh/sshd_config</span></code></p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Allow ssh logins/commands with the artifacts user</span>
+<span class="n">AllowUsers</span> <span class="n">artifacts</span>
+
+<span class="c1"># Some specifics for the artifacts user</span>
+<span class="n">Match</span> <span class="n">user</span> <span class="n">artifacts</span>
+
+     <span class="c1"># Dont allow password authentication for artifacts user</span>
+     <span class="c1">#</span>
+     <span class="n">PasswordAuthentication</span> <span class="n">no</span>
+
+     <span class="c1"># Also lets dedicate this login for only running the</span>
+     <span class="c1"># bst-artifact-receive program, note that the full</span>
+     <span class="c1"># command must be specified here; &#39;artifacts&#39; is</span>
+     <span class="c1"># the HOME relative path to the artifact cache.</span>
+     <span class="c1"># The exact pull URL must also be specified.</span>
+     <span class="n">ForceCommand</span> <span class="n">bst</span><span class="o">-</span><span class="n">artifact</span><span class="o">-</span><span class="n">receive</span> <span class="o">--</span><span class="n">pull</span><span class="o">-</span><span class="n">url</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">artifacts</span> <span class="o">--</span><span class="n">verbose</span> <span class="n">artifacts</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="summary-file-updates">
+<h2>Summary file updates<a class="headerlink" href="#summary-file-updates" title="Permalink to this headline">¶</a></h2>
+<p>BuildStream uses the OSTree summary file to determine what artifacts are
+available in the remote artifact cache. <code class="docutils literal"><span class="pre">ostree</span> <span class="pre">summary</span> <span class="pre">-u</span></code> updates
+the summary file. This command cannot be run concurrently and thus it
+cannot be executed by <code class="docutils literal"><span class="pre">bst-artifact-receive</span></code>, it has to be triggered
+externally.</p>
+<p>A simple way to configure this is to set up a cron job that triggers the
+summary file update every 5 minutes.
+E.g., create <code class="docutils literal"><span class="pre">/etc/cron.d/artifacts</span></code> with the following content:</p>
+<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="o">*/</span><span class="mi">5</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="n">artifacts</span> <span class="n">ostree</span> <span class="o">--</span><span class="n">repo</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">artifacts</span><span class="o">/</span><span class="n">artifacts</span> <span class="n">summary</span> <span class="o">-</span><span class="n">u</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="user-configuration">
+<h2>User Configuration<a class="headerlink" href="#user-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The user configuration for artifacts is documented with the rest
+of the <a class="reference internal" href="config.html#config"><span class="std std-ref">user configuration documentation</span></a>.</p>
+<p>Assuming you have the same setup used in this document, and that your
+host is reachable on the internet as <code class="docutils literal"><span class="pre">artifacts.com</span></code> (for example),
+then a user can use the following user configuration:</p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1">#    Artifacts</span>
+<span class="c1">#</span>
+<span class="n">artifacts</span><span class="p">:</span>
+
+  <span class="n">url</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">artifacts</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">artifacts</span>
+
+  <span class="c1"># Alternative form if you have push access to the cache</span>
+  <span class="c1">#url: ssh://artifacts@artifacts.com:22200/artifacts</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="authenticating-users">
+<h2>Authenticating Users<a class="headerlink" href="#authenticating-users" title="Permalink to this headline">¶</a></h2>
+<p>In order to give permission to a given user to upload
+artifacts, simply use the regular <code class="docutils literal"><span class="pre">ssh</span></code> method.</p>
+<p>First obtain the user’s public ssh key, and add it
+to the authorized keys, like so:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="n">user_id_rsa</span><span class="o">.</span><span class="n">pub</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">artifacts</span><span class="o">/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Artifact Caches</a><ul>
+<li><a class="reference internal" href="#setting-up-the-user">Setting up the user</a></li>
+<li><a class="reference internal" href="#installing-the-receiver">Installing the receiver</a></li>
+<li><a class="reference internal" href="#initializing-the-cache">Initializing the cache</a></li>
+<li><a class="reference internal" href="#serve-the-cache-over-https">Serve the cache over https</a></li>
+<li><a class="reference internal" href="#configure-and-run-sshd">Configure and run sshd</a></li>
+<li><a class="reference internal" href="#summary-file-updates">Summary file updates</a></li>
+<li><a class="reference internal" href="#user-configuration">User Configuration</a></li>
+<li><a class="reference internal" href="#authenticating-users">Authenticating Users</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Codethink Limited.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/artifacts.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,4 @@
+_downloadablefilesource plugin
+============================================
+
+.. automodule:: sources._downloadablefilesource

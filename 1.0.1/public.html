@@ -1,0 +1,154 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Builtin Public Data &#8212; BuildStream 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="builtin-public-data">
+<span id="public"></span><h1>Builtin Public Data<a class="headerlink" href="#builtin-public-data" title="Permalink to this headline">¶</a></h1>
+<p>Elements can provide public data which can be read by other elements
+later in the pipeline, the format for exposing public data on a given
+element is <a class="reference internal" href="format.html#format-public"><span class="std std-ref">described here</span></a>.</p>
+<p>Any element may use public data for whatever purpose it wants, but
+BuildStream has some built-in expectations of public data, which resides
+completely in the <code class="docutils literal"><span class="pre">bst</span></code> domain.</p>
+<p>In this section we will describe the public data in the <code class="docutils literal"><span class="pre">bst</span></code> domain.</p>
+<div class="section" id="integration-commands">
+<span id="public-integration"></span><h2>Integration Commands<a class="headerlink" href="#integration-commands" title="Permalink to this headline">¶</a></h2>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Specify some integration commands</span>
+<span class="n">public</span><span class="p">:</span>
+  <span class="n">bst</span><span class="p">:</span>
+    <span class="n">integration</span><span class="o">-</span><span class="n">commands</span><span class="p">:</span>
+    <span class="o">-</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">update</span><span class="o">-</span><span class="n">fancy</span><span class="o">-</span><span class="n">feature</span><span class="o">-</span><span class="n">cache</span>
+</pre></div>
+</div>
+<p>The built-in <code class="docutils literal"><span class="pre">integration-commands</span></code> list indicates that depending elements
+should run this set of commands before expecting the staged runtime environment
+to be functional.</p>
+<p>Typical cases for this include running <code class="docutils literal"><span class="pre">ldconfig</span></code> at the base of a pipeline,
+or running commands to update various system caches.</p>
+<p>Integration commands of a given element are automatically run by the
+<a class="reference internal" href="buildstream.element.html#buildstream.element.Element.integrate" title="buildstream.element.Element.integrate"><code class="xref py py-func docutils literal"><span class="pre">Element.integrate()</span></code></a> method
+and are used by various plugins.</p>
+<p>Notably the <a class="reference internal" href="buildstream.buildelement.html#module-buildstream.buildelement" title="buildstream.buildelement"><code class="xref py py-mod docutils literal"><span class="pre">BuildElement</span></code></a> derived classes
+will always integrate the build dependencies after staging and before running
+any build commands.</p>
+</div>
+<div class="section" id="split-rules">
+<span id="public-split-rules"></span><h2>Split Rules<a class="headerlink" href="#split-rules" title="Permalink to this headline">¶</a></h2>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Specify some split rules</span>
+<span class="n">public</span><span class="p">:</span>
+  <span class="n">bst</span><span class="p">:</span>
+    <span class="n">split</span><span class="o">-</span><span class="n">rules</span><span class="p">:</span>
+      <span class="n">runtime</span><span class="p">:</span>
+      <span class="o">-</span> <span class="o">|</span>
+        <span class="o">%</span><span class="p">{</span><span class="n">bindir</span><span class="p">}</span><span class="o">/*</span>
+      <span class="o">-</span> <span class="o">|</span>
+        <span class="o">%</span><span class="p">{</span><span class="n">sbindir</span><span class="p">}</span><span class="o">/*</span>
+      <span class="o">-</span> <span class="o">|</span>
+        <span class="o">%</span><span class="p">{</span><span class="n">libexecdir</span><span class="p">}</span><span class="o">/*</span>
+      <span class="o">-</span> <span class="o">|</span>
+        <span class="o">%</span><span class="p">{</span><span class="n">libdir</span><span class="p">}</span><span class="o">/</span><span class="n">lib</span><span class="o">*.</span><span class="n">so</span><span class="o">*</span>
+</pre></div>
+</div>
+<p>Split rules indicate how the output of an element can be categorized
+into <em>domains</em>.</p>
+<p>The <code class="docutils literal"><span class="pre">split-rules</span></code> domains are used by the
+<a class="reference internal" href="buildstream.element.html#buildstream.element.Element.stage_artifact" title="buildstream.element.Element.stage_artifact"><code class="xref py py-func docutils literal"><span class="pre">Element.stage_artifact()</span></code></a>
+method when deciding what domains of an artifact should be staged.</p>
+<p>The strings listed in each domain are first substituted with the
+<a class="reference internal" href="format.html#format-variables"><span class="std std-ref">variables</span></a> in context of the given element, and
+then applied as a glob style match, as understood by
+<a class="reference internal" href="buildstream.utils.html#buildstream.utils.glob" title="buildstream.utils.glob"><code class="xref py py-func docutils literal"><span class="pre">utils.glob()</span></code></a></p>
+<p>This is used for creating compositions with the <a class="reference internal" href="elements/compose.html#module-elements.compose" title="elements.compose"><code class="xref py py-mod docutils literal"><span class="pre">compose</span></code></a>
+element and can be used by other deployment related elements for the purpose of
+splitting element artifacts into separate packages.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Builtin Public Data</a><ul>
+<li><a class="reference internal" href="#integration-commands">Integration Commands</a></li>
+<li><a class="reference internal" href="#split-rules">Split Rules</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Codethink Limited.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/public.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

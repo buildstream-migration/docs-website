@@ -1,0 +1,134 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>script plugin &#8212; BuildStream 0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-elements.script">
+<span id="script-plugin"></span><h1>script plugin<a class="headerlink" href="#module-elements.script" title="Permalink to this headline">¶</a></h1>
+<p>Script element</p>
+<p>This element allows one to run some commands to mutate the
+input and create some output.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Script elements may only specify build dependencies. See
+<a class="reference internal" href="../format.html#format-dependencies"><span class="std std-ref">the format documentation</span></a> for more
+detail on specifying dependencies.</p>
+</div>
+<dl class="docutils">
+<dt>The default configuration and possible options are as such:</dt>
+<dd><div class="first last highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># Common script element variables</span>
+<span class="l l-Scalar l-Scalar-Plain">variables</span><span class="p p-Indicator">:</span>
+  <span class="c1"># Defines the directory that output is collected from once commands</span>
+  <span class="c1"># have been run.</span>
+  <span class="l l-Scalar l-Scalar-Plain">install-root</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/buildstream/install</span>
+  <span class="c1">#</span>
+  <span class="c1"># Defines the directory commands will be run from.</span>
+  <span class="l l-Scalar l-Scalar-Plain">cwd</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/</span>
+  <span class="c1">#</span>
+  <span class="c1"># Not directly used, but expected to be used when staging elements to be</span>
+  <span class="c1"># worked on.</span>
+  <span class="l l-Scalar l-Scalar-Plain">build-root</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/buildstream/build</span>
+
+<span class="c1"># Script element configuration</span>
+<span class="l l-Scalar l-Scalar-Plain">config</span><span class="p p-Indicator">:</span>
+
+  <span class="c1"># Defines whether to run the sandbox with &#39;/&#39; read-only.</span>
+  <span class="c1"># It is recommended to set root as read-only wherever possible.</span>
+  <span class="l l-Scalar l-Scalar-Plain">root-read-only</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+
+  <span class="c1"># Defines where to stage elements which are direct or indirect dependencies.</span>
+  <span class="c1"># By default, all direct dependencies are staged to &#39;/&#39;.</span>
+  <span class="c1"># This is also commonly used to take one element as an environment</span>
+  <span class="c1"># containing the tools used to operate on the other element.</span>
+  <span class="c1"># layout:</span>
+  <span class="c1"># - element: foo-tools.bst</span>
+  <span class="c1">#   destination: /</span>
+  <span class="c1"># - element: foo-system.bst</span>
+  <span class="c1">#   destination: %{build-root}</span>
+
+  <span class="c1"># List of commands to run in the sandbox.</span>
+  <span class="l l-Scalar l-Scalar-Plain">commands</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Codethink Limited.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/elements/script.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

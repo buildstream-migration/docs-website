@@ -1,0 +1,250 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>BuildStream on your host &#8212; BuildStream 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="buildstream-on-your-host">
+<span id="installing"></span><h1>BuildStream on your host<a class="headerlink" href="#buildstream-on-your-host" title="Permalink to this headline">¶</a></h1>
+<p>Until BuildStream is available in your distro, there are a few hoops to jump
+through to get started.</p>
+<p>If your system cannot provide the base system requirements for BuildStream,
+then we have some instructions below which can get you started using BuildStream
+within a Docker container.</p>
+<div class="section" id="system-requirements">
+<h2>System requirements<a class="headerlink" href="#system-requirements" title="Permalink to this headline">¶</a></h2>
+<p>BuildStream requires the following base system requirements:</p>
+<ul class="simple">
+<li>python3 &gt;= 3.4</li>
+<li>ruamel.yaml python library</li>
+<li>PyGObject introspection bindings</li>
+<li>OSTree &gt;= v2017.8 with introspection data</li>
+</ul>
+<p>Note that <code class="docutils literal"><span class="pre">ruamel.yaml</span></code> is a pure python library which is normally
+obtainable via pip, however there seems to be some problems with installing
+this package so we recommend installing it with your package manager first.</p>
+<p>For the purpose of installing BuildStream while there are no distro packages,
+you will additionally need:</p>
+<ul class="simple">
+<li>pip for python3 (only required for setup)</li>
+<li>Python 3 development libraries and headers</li>
+<li>git (to checkout buildstream)</li>
+</ul>
+<p>Here are some examples of how to prepare the base requirements on
+some distros.</p>
+<div class="section" id="arch">
+<h3>Arch<a class="headerlink" href="#arch" title="Permalink to this headline">¶</a></h3>
+<p>Install the dependencies with:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sudo pacman -S python python-pip python-gobject git </dt>
+<dd>ostree bubblewrap python-ruamel-yaml</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="debian-stretch">
+<h3>Debian Stretch<a class="headerlink" href="#debian-stretch" title="Permalink to this headline">¶</a></h3>
+<p>With stretch, you first need to ensure that you have the backports repository
+setup as described <a class="reference external" href="https://backports.debian.org/Instructions/">here</a></p>
+<p>By adding the following line to your sources.list:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">debian</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">debian</span> <span class="n">jessie</span><span class="o">-</span><span class="n">backports</span> <span class="n">main</span>
+</pre></div>
+</div>
+<p>And then running:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+</pre></div>
+</div>
+<p>At this point you should be able to get the system requirements with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> \
+    <span class="n">python3</span><span class="o">-</span><span class="n">dev</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span> <span class="n">git</span> <span class="n">python3</span><span class="o">-</span><span class="n">gi</span> \
+    <span class="n">python3</span><span class="o">-</span><span class="n">ruamel</span><span class="o">.</span><span class="n">yaml</span> <span class="n">bubblewrap</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">t</span> <span class="n">stretch</span><span class="o">-</span><span class="n">backports</span> \
+    <span class="n">gir1</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="n">ostree</span><span class="o">-</span><span class="mf">1.0</span> <span class="n">ostree</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="debian-buster-or-sid">
+<h3>Debian Buster or Sid<a class="headerlink" href="#debian-buster-or-sid" title="Permalink to this headline">¶</a></h3>
+<p>For debian unstable or testing, only the following line should be enough
+to get the base system requirements installed:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> \
+    <span class="n">python3</span><span class="o">-</span><span class="n">dev</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span> <span class="n">git</span> \
+    <span class="n">python3</span><span class="o">-</span><span class="n">gi</span> <span class="n">gir1</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="n">ostree</span><span class="o">-</span><span class="mf">1.0</span> <span class="n">ostree</span> \
+    <span class="n">bubblewrap</span> <span class="n">python3</span><span class="o">-</span><span class="n">ruamel</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fedora">
+<h3>Fedora<a class="headerlink" href="#fedora" title="Permalink to this headline">¶</a></h3>
+<p>For recent fedora systems, the following line should get you the system
+requirements you need:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">bubblewrap</span> <span class="n">fuse</span> <span class="n">git</span> <span class="n">python3</span><span class="o">-</span><span class="n">gobject</span> \
+               <span class="n">python3</span><span class="o">-</span><span class="n">psutil</span> <span class="n">ostree</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="user-installation-with-pip">
+<h2>User installation with pip<a class="headerlink" href="#user-installation-with-pip" title="Permalink to this headline">¶</a></h2>
+<p>Once you have the base system dependencies, you can clone the buildstream
+git repository and install it as a regular user:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">gitlab</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">BuildStream</span><span class="o">/</span><span class="n">buildstream</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">buildstream</span>
+<span class="n">pip3</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>This will install buildstream and it’s pure python dependencies directly into
+your user’s homedir in <code class="docutils literal"><span class="pre">~/.local</span></code></p>
+<div class="section" id="adjust-path">
+<h3>Adjust PATH<a class="headerlink" href="#adjust-path" title="Permalink to this headline">¶</a></h3>
+<p>Since BuildStream is now installed under your local user’s install directories,
+you need to ensure that <code class="docutils literal"><span class="pre">PATH</span></code> is adjusted.</p>
+<p>A regular way to do this is to add the following line to the end of your <code class="docutils literal"><span class="pre">~/.bashrc</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>export PATH=${PATH}:~/.local/bin
+</pre></div>
+</div>
+</div>
+<div class="section" id="bash-completions">
+<h3>Bash Completions<a class="headerlink" href="#bash-completions" title="Permalink to this headline">¶</a></h3>
+<p>Bash completions are supported by sourcing the <code class="docutils literal"><span class="pre">buildstream/data/bst</span></code>
+script found in the BuildStream repository. On many systems this script
+can be installed into a completions directory but when installing BuildStream
+without a package manager this is not an option.</p>
+<p>To enable completions for an installation of BuildStream you
+installed yourself from git, just append the script verbatim
+to your <code class="docutils literal"><span class="pre">~/.bash_completion</span></code>:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># BuildStream bash completion scriptlet.</span>
+<span class="c1">#</span>
+<span class="c1"># On systems which use the bash-completion module for</span>
+<span class="c1"># completion discovery with bash, this can be installed at:</span>
+<span class="c1">#</span>
+<span class="c1">#   pkg-config --variable=completionsdir bash-completion</span>
+<span class="c1">#</span>
+<span class="c1"># If BuildStream is not installed system wide, you can</span>
+<span class="c1"># simply source this script to enable completions or append</span>
+<span class="c1"># this script to your ~/.bash_completion file.</span>
+<span class="c1">#</span>
+<span class="l l-Scalar l-Scalar-Plain">_bst_completion() {</span>
+    <span class="l l-Scalar l-Scalar-Plain">local IFS=$&#39;</span>
+<span class="l l-Scalar l-Scalar-Plain">&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">COMPREPLY=( $( env COMP_WORDS=&quot;${COMP_WORDS[*]}&quot; \</span>
+                   <span class="l l-Scalar l-Scalar-Plain">COMP_CWORD=$COMP_CWORD \</span>
+                   <span class="l l-Scalar l-Scalar-Plain">_BST_COMPLETION=complete $1 ) )</span>
+    <span class="l l-Scalar l-Scalar-Plain">return 0</span>
+<span class="l l-Scalar l-Scalar-Plain">}</span>
+
+<span class="l l-Scalar l-Scalar-Plain">complete -F _bst_completion -o nospace bst;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="upgrading-with-pip">
+<h3>Upgrading with pip<a class="headerlink" href="#upgrading-with-pip" title="Permalink to this headline">¶</a></h3>
+<p>To upgrade a previously install BuildStream, you will need to pull the latest
+changes and reinstall as such:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">uninstall</span> <span class="n">buildstream</span>
+<span class="n">cd</span> <span class="n">buildstream</span>
+<span class="n">git</span> <span class="n">pull</span> <span class="o">--</span><span class="n">rebase</span>
+<span class="n">pip3</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="o">.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">BuildStream on your host</a><ul>
+<li><a class="reference internal" href="#system-requirements">System requirements</a><ul>
+<li><a class="reference internal" href="#arch">Arch</a></li>
+<li><a class="reference internal" href="#debian-stretch">Debian Stretch</a></li>
+<li><a class="reference internal" href="#debian-buster-or-sid">Debian Buster or Sid</a></li>
+<li><a class="reference internal" href="#fedora">Fedora</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#user-installation-with-pip">User installation with pip</a><ul>
+<li><a class="reference internal" href="#adjust-path">Adjust PATH</a></li>
+<li><a class="reference internal" href="#bash-completions">Bash Completions</a></li>
+<li><a class="reference internal" href="#upgrading-with-pip">Upgrading with pip</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Codethink Limited.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/install.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

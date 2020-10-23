@@ -1,0 +1,650 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Element &#8212; BuildStream 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <span class="target" id="module-buildstream.element"></span><div class="section" id="element">
+<h1>Element<a class="headerlink" href="#element" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="buildstream.element.Scope">
+<em class="property">class </em><code class="descname">Scope</code><a class="headerlink" href="#buildstream.element.Scope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">enum.Enum</span></code></p>
+<p>Types of scope for a given element</p>
+<dl class="attribute">
+<dt id="buildstream.element.Scope.ALL">
+<code class="descname">ALL</code><em class="property"> = 1</em><a class="headerlink" href="#buildstream.element.Scope.ALL" title="Permalink to this definition">¶</a></dt>
+<dd><p>All elements which the given element depends on, following
+all elements required for building. Including the element itself.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.element.Scope.BUILD">
+<code class="descname">BUILD</code><em class="property"> = 2</em><a class="headerlink" href="#buildstream.element.Scope.BUILD" title="Permalink to this definition">¶</a></dt>
+<dd><p>All elements required for building the element, including their
+respective run dependencies. Not including the given element itself.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.element.Scope.RUN">
+<code class="descname">RUN</code><em class="property"> = 3</em><a class="headerlink" href="#buildstream.element.Scope.RUN" title="Permalink to this definition">¶</a></dt>
+<dd><p>All elements required for running the element. Including the element
+itself.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="buildstream.element.ElementError">
+<em class="property">exception </em><code class="descname">ElementError</code><span class="sig-paren">(</span><em>message</em>, <em>*</em>, <em>reason=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.ElementError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">buildstream._exceptions.BstError</span></code></p>
+<p>This exception should be raised by <a class="reference internal" href="#buildstream.element.Element" title="buildstream.element.Element"><code class="xref py py-class docutils literal"><span class="pre">Element</span></code></a> implementations
+to report errors to the user.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>message</strong> (<em>str</em>) – The error message to report to the user</li>
+<li><strong>reason</strong> (<em>str</em>) – An optional machine readable reason string, used for test cases</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="buildstream.element.Element">
+<em class="property">class </em><code class="descname">Element</code><a class="headerlink" href="#buildstream.element.Element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="buildstream.plugin.html#buildstream.plugin.Plugin" title="buildstream.plugin.Plugin"><code class="xref py py-class docutils literal"><span class="pre">buildstream.plugin.Plugin</span></code></a></p>
+<p>Base Element class.</p>
+<p>All elements derive from this class, this interface defines how
+the core will be interacting with Elements.</p>
+<dl class="attribute">
+<dt id="buildstream.element.Element.BST_ARTIFACT_VERSION">
+<code class="descname">BST_ARTIFACT_VERSION</code><em class="property"> = 0</em><a class="headerlink" href="#buildstream.element.Element.BST_ARTIFACT_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd><p>The element plugin’s artifact version</p>
+<p>Elements must first set this to 1 if they change their unique key
+structure in a way that would produce a different key for the
+same input, or introduce a change in the build output for the
+same unique key. Further changes of this nature require bumping the
+artifact version.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.element.Element.BST_STRICT_REBUILD">
+<code class="descname">BST_STRICT_REBUILD</code><em class="property"> = False</em><a class="headerlink" href="#buildstream.element.Element.BST_STRICT_REBUILD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to rebuild this element in non strict mode if
+any of the dependencies have changed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.element.Element.normal_name">
+<code class="descname">normal_name</code><em class="property"> = None</em><a class="headerlink" href="#buildstream.element.Element.normal_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A normalized element name</p>
+<p>This is the original element without path separators or
+the extension, it’s used mainly for composing log file names
+and creating directory names and such.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.sources">
+<code class="descname">sources</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.sources" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generator function to enumerate the element sources</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body">(<a class="reference internal" href="buildstream.source.html#buildstream.source.Source" title="buildstream.source.Source"><code class="xref py py-class docutils literal"><span class="pre">Source</span></code></a>) – The sources of this element</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.dependencies">
+<code class="descname">dependencies</code><span class="sig-paren">(</span><em>scope</em>, <em>*</em>, <em>recurse=True</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generator function which yields the dependencies of the given element.</p>
+<p>If <cite>recurse</cite> is specified (the default), the full dependencies will be listed
+in deterministic staging order, starting with the basemost elements in the
+given <cite>scope</cite>. Otherwise, if <cite>recurse</cite> is not specified then only the direct
+dependencies in the given <cite>scope</cite> will be traversed, and the element itself
+will be omitted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>scope</strong> (<a class="reference internal" href="#buildstream.element.Scope" title="buildstream.element.Scope"><code class="xref py py-class docutils literal"><span class="pre">Scope</span></code></a>) – The scope to iterate in</li>
+<li><strong>recurse</strong> (<em>bool</em>) – Whether to recurse</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><p class="first last">(<a class="reference internal" href="#buildstream.element.Element" title="buildstream.element.Element"><code class="xref py py-class docutils literal"><span class="pre">Element</span></code></a>) – The dependencies in <cite>scope</cite>, in deterministic staging order</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.search">
+<code class="descname">search</code><span class="sig-paren">(</span><em>scope</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for a dependency by name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>scope</strong> (<a class="reference internal" href="#buildstream.element.Scope" title="buildstream.element.Scope"><code class="xref py py-class docutils literal"><span class="pre">Scope</span></code></a>) – The scope to search</li>
+<li><strong>name</strong> (<em>str</em>) – The dependency to search for</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The dependency element, or None if not found.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(<a class="reference internal" href="#buildstream.element.Element" title="buildstream.element.Element"><code class="xref py py-class docutils literal"><span class="pre">Element</span></code></a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.node_subst_member">
+<code class="descname">node_subst_member</code><span class="sig-paren">(</span><em>node</em>, <em>member_name</em>, <em>default=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.node_subst_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the value of a string node member, substituting any variables
+in the loaded value with the element contextual variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>node</strong> (<em>dict</em>) – A dictionary loaded from YAML</li>
+<li><strong>member_name</strong> (<em>str</em>) – The name of the member to fetch</li>
+<li><strong>default</strong> (<em>str</em>) – A value to return when <em>member_name</em> is not specified in <em>node</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The value of <em>member_name</em> in <em>node</em>, otherwise <em>default</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal"><span class="pre">LoadError</span></code> – When <em>member_name</em> is not found and no <em>default</em> was provided</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This is essentially the same as <a class="reference internal" href="buildstream.plugin.html#buildstream.plugin.Plugin.node_get_member" title="buildstream.plugin.Plugin.node_get_member"><code class="xref py py-func docutils literal"><span class="pre">node_get_member()</span></code></a>
+except that it assumes the expected type is a string and will also perform variable
+substitutions.</p>
+<p><strong>Example:</strong></p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Expect a string &#39;name&#39; in &#39;node&#39;, substituting any</span>
+<span class="c1"># variables in the returned string</span>
+<span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_subst_member</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.node_subst_list">
+<code class="descname">node_subst_list</code><span class="sig-paren">(</span><em>node</em>, <em>member_name</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.node_subst_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch a list from a node member, substituting any variables in the list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>node</strong> (<em>dict</em>) – A dictionary loaded from YAML</li>
+<li><strong>member_name</strong> (<em>str</em>) – The name of the member to fetch (a list)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The list in <em>member_name</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal"><span class="pre">LoadError</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This is essentially the same as <a class="reference internal" href="buildstream.plugin.html#buildstream.plugin.Plugin.node_get_member" title="buildstream.plugin.Plugin.node_get_member"><code class="xref py py-func docutils literal"><span class="pre">node_get_member()</span></code></a>
+except that it assumes the expected type is a list of strings and will also
+perform variable substitutions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.node_subst_list_element">
+<code class="descname">node_subst_list_element</code><span class="sig-paren">(</span><em>node</em>, <em>member_name</em>, <em>indices</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.node_subst_list_element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the value of a list element from a node member, substituting any variables
+in the loaded value with the element contextual variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>node</strong> (<em>dict</em>) – A dictionary loaded from YAML</li>
+<li><strong>member_name</strong> (<em>str</em>) – The name of the member to fetch</li>
+<li><strong>indices</strong> (<em>list of int</em>) – List of indices to search, in case of nested lists</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The value of the list element in <em>member_name</em> at the specified <em>indices</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal"><span class="pre">LoadError</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This is essentially the same as <a class="reference internal" href="buildstream.plugin.html#buildstream.plugin.Plugin.node_get_list_element" title="buildstream.plugin.Plugin.node_get_list_element"><code class="xref py py-func docutils literal"><span class="pre">node_get_list_element()</span></code></a>
+except that it assumes the expected type is a string and will also perform variable
+substitutions.</p>
+<p><strong>Example:</strong></p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Fetch the list itself</span>
+<span class="n">strings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_get_member</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="s1">&#39;strings&#39;</span><span class="p">)</span>
+
+<span class="c1"># Iterate over the list indices</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">strings</span><span class="p">)):</span>
+
+    <span class="c1"># Fetch the strings in this list, substituting content</span>
+    <span class="c1"># with our element&#39;s variables if needed</span>
+    <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_subst_list_element</span><span class="p">(</span>
+        <span class="n">node</span><span class="p">,</span> <span class="s1">&#39;strings&#39;</span><span class="p">,</span> <span class="p">[</span> <span class="n">i</span> <span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.compute_manifest">
+<code class="descname">compute_manifest</code><span class="sig-paren">(</span><em>*</em>, <em>include=None</em>, <em>exclude=None</em>, <em>orphans=True</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.compute_manifest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute and return this element’s selective manifest</p>
+<p>The manifest consists on the list of file paths in the
+artifact. The files in the manifest are selected according to
+<cite>include</cite>, <cite>exclude</cite> and <cite>orphans</cite> parameters. If <cite>include</cite> is
+not specified then all files spoken for by any domain are
+included unless explicitly excluded with an <cite>exclude</cite> domain.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>include</strong> (<em>list</em>) – An optional list of domains to include files from</li>
+<li><strong>exclude</strong> (<em>list</em>) – An optional list of domains to exclude files from</li>
+<li><strong>orphans</strong> (<em>bool</em>) – Whether to include files not spoken for by split domains</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><p class="first last"><em>(str)</em> – The paths of the files in manifest</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.stage_artifact">
+<code class="descname">stage_artifact</code><span class="sig-paren">(</span><em>sandbox</em>, <em>*</em>, <em>path=None</em>, <em>include=None</em>, <em>exclude=None</em>, <em>orphans=True</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.stage_artifact" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stage this element’s output artifact in the sandbox</p>
+<p>This will stage the files from the artifact to the sandbox at specified location.
+The files are selected for staging according to the <cite>include</cite>, <cite>exclude</cite> and <cite>orphans</cite>
+parameters; if <cite>include</cite> is not specified then all files spoken for by any domain
+are included unless explicitly excluded with an <cite>exclude</cite> domain.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sandbox</strong> (<a class="reference internal" href="buildstream.sandbox.sandbox.html#buildstream.sandbox.sandbox.Sandbox" title="buildstream.sandbox.sandbox.Sandbox"><code class="xref py py-class docutils literal"><span class="pre">Sandbox</span></code></a>) – The build sandbox</li>
+<li><strong>path</strong> (<em>str</em>) – An optional sandbox relative path</li>
+<li><strong>include</strong> (<em>list</em>) – An optional list of domains to include files from</li>
+<li><strong>exclude</strong> (<em>list</em>) – An optional list of domains to exclude files from</li>
+<li><strong>orphans</strong> (<em>bool</em>) – Whether to include files not spoken for by split domains</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first">(<a class="reference internal" href="#buildstream.element.ElementError" title="buildstream.element.ElementError"><code class="xref py py-class docutils literal"><span class="pre">ElementError</span></code></a>) – If the element has not yet produced an artifact.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The result describing what happened while staging</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(<a class="reference internal" href="buildstream.utils.html#buildstream.utils.FileListResult" title="buildstream.utils.FileListResult"><code class="xref py py-class docutils literal"><span class="pre">FileListResult</span></code></a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Directories in <cite>dest</cite> are replaced with files from <cite>src</cite>,
+unless the existing directory in <cite>dest</cite> is not empty in
+which case the path will be reported in the return value.</p>
+</div>
+<p><strong>Example:</strong></p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Stage the dependencies for a build of &#39;self&#39;</span>
+<span class="k">for</span> <span class="n">dep</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dependencies</span><span class="p">(</span><span class="n">Scope</span><span class="o">.</span><span class="n">BUILD</span><span class="p">):</span>
+    <span class="n">dep</span><span class="o">.</span><span class="n">stage_artifact</span><span class="p">(</span><span class="n">sandbox</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.stage_dependency_artifacts">
+<code class="descname">stage_dependency_artifacts</code><span class="sig-paren">(</span><em>sandbox</em>, <em>scope</em>, <em>*</em>, <em>path=None</em>, <em>include=None</em>, <em>exclude=None</em>, <em>orphans=True</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.stage_dependency_artifacts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stage element dependencies in scope</p>
+<p>This is primarily a convenience wrapper around
+<a class="reference internal" href="#buildstream.element.Element.stage_artifact" title="buildstream.element.Element.stage_artifact"><code class="xref py py-func docutils literal"><span class="pre">Element.stage_artifact()</span></code></a>
+which takes care of staging all the dependencies in <cite>scope</cite> and issueing the
+appropriate warnings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sandbox</strong> (<a class="reference internal" href="buildstream.sandbox.sandbox.html#buildstream.sandbox.sandbox.Sandbox" title="buildstream.sandbox.sandbox.Sandbox"><code class="xref py py-class docutils literal"><span class="pre">Sandbox</span></code></a>) – The build sandbox</li>
+<li><strong>scope</strong> (<a class="reference internal" href="#buildstream.element.Scope" title="buildstream.element.Scope"><code class="xref py py-class docutils literal"><span class="pre">Scope</span></code></a>) – The scope to stage dependencies in</li>
+<li><strong>path</strong> (<em>str</em>) – An optional sandbox relative path</li>
+<li><strong>include</strong> (<em>list</em>) – An optional list of domains to include files from</li>
+<li><strong>exclude</strong> (<em>list</em>) – An optional list of domains to exclude files from</li>
+<li><strong>orphans</strong> (<em>bool</em>) – Whether to include files not spoken for by split domains</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">(<a class="reference internal" href="#buildstream.element.ElementError" title="buildstream.element.ElementError"><code class="xref py py-class docutils literal"><span class="pre">ElementError</span></code></a>) – If any of the dependencies in <cite>scope</cite> have not
+yet produced artifacts.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.integrate">
+<code class="descname">integrate</code><span class="sig-paren">(</span><em>sandbox</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.integrate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integrate currently staged filesystem against this artifact.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sandbox</strong> (<a class="reference internal" href="buildstream.sandbox.sandbox.html#buildstream.sandbox.sandbox.Sandbox" title="buildstream.sandbox.sandbox.Sandbox"><code class="xref py py-class docutils literal"><span class="pre">Sandbox</span></code></a>) – The build sandbox</td>
+</tr>
+</tbody>
+</table>
+<p>This modifies the sysroot staged inside the sandbox so that
+the sysroot is <em>integrated</em>. Only an <em>integrated</em> sandbox
+may be trusted for running the software therein, as the integration
+commands will create and update important system cache files
+required for running the installed software (such as the ld.so.cache).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.stage_sources">
+<code class="descname">stage_sources</code><span class="sig-paren">(</span><em>sandbox</em>, <em>directory</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.stage_sources" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stage this element’s sources to a directory in the sandbox</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sandbox</strong> (<a class="reference internal" href="buildstream.sandbox.sandbox.html#buildstream.sandbox.sandbox.Sandbox" title="buildstream.sandbox.sandbox.Sandbox"><code class="xref py py-class docutils literal"><span class="pre">Sandbox</span></code></a>) – The build sandbox</li>
+<li><strong>directory</strong> (<em>str</em>) – An absolute path within the sandbox to stage the sources at</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.get_public_data">
+<code class="descname">get_public_data</code><span class="sig-paren">(</span><em>domain</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.get_public_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch public data on this element</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>domain</strong> (<em>str</em>) – A public domain name to fetch data for</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The public data dictionary for the given domain</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(dict)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This can only be called in the build phase of an element and
+never before. This may be called in
+<a class="reference internal" href="#buildstream.element.Element.configure_sandbox" title="buildstream.element.Element.configure_sandbox"><code class="xref py py-func docutils literal"><span class="pre">Element.configure_sandbox()</span></code></a>,
+<a class="reference internal" href="#buildstream.element.Element.stage" title="buildstream.element.Element.stage"><code class="xref py py-func docutils literal"><span class="pre">Element.stage()</span></code></a> and in
+<a class="reference internal" href="#buildstream.element.Element.assemble" title="buildstream.element.Element.assemble"><code class="xref py py-func docutils literal"><span class="pre">Element.assemble()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.set_public_data">
+<code class="descname">set_public_data</code><span class="sig-paren">(</span><em>domain</em>, <em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.set_public_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set public data on this element</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>domain</strong> (<em>str</em>) – A public domain name to fetch data for</li>
+<li><strong>data</strong> (<em>dict</em>) – The public data dictionary for the given domain</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This allows an element to dynamically mutate public data of
+elements or add new domains as the result of success completion
+of the <a class="reference internal" href="#buildstream.element.Element.assemble" title="buildstream.element.Element.assemble"><code class="xref py py-func docutils literal"><span class="pre">Element.assemble()</span></code></a>
+method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.get_environment">
+<code class="descname">get_environment</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.get_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the environment suitable for running in the sandbox</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A dictionary of string key/values suitable for passing
+to <code class="xref py py-func docutils literal"><span class="pre">Sandbox.run()</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(dict)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.get_variable">
+<code class="descname">get_variable</code><span class="sig-paren">(</span><em>varname</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.get_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the value of a variable resolved for this element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>varname</strong> (<em>str</em>) – The name of the variable to fetch</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The resolved value for <em>varname</em>, or None if no
+variable was declared with the given name.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(str)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.configure_sandbox">
+<code class="descname">configure_sandbox</code><span class="sig-paren">(</span><em>sandbox</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.configure_sandbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configures the the sandbox for execution</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sandbox</strong> (<a class="reference internal" href="buildstream.sandbox.sandbox.html#buildstream.sandbox.sandbox.Sandbox" title="buildstream.sandbox.sandbox.Sandbox"><code class="xref py py-class docutils literal"><span class="pre">Sandbox</span></code></a>) – The build sandbox</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">(<a class="reference internal" href="#buildstream.element.ElementError" title="buildstream.element.ElementError"><code class="xref py py-class docutils literal"><span class="pre">ElementError</span></code></a>) – When the element raises an error</td>
+</tr>
+</tbody>
+</table>
+<p>Elements must implement this method to configure the sandbox object
+for execution.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.stage">
+<code class="descname">stage</code><span class="sig-paren">(</span><em>sandbox</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stage inputs into the sandbox directories</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sandbox</strong> (<a class="reference internal" href="buildstream.sandbox.sandbox.html#buildstream.sandbox.sandbox.Sandbox" title="buildstream.sandbox.sandbox.Sandbox"><code class="xref py py-class docutils literal"><span class="pre">Sandbox</span></code></a>) – The build sandbox</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">(<a class="reference internal" href="#buildstream.element.ElementError" title="buildstream.element.ElementError"><code class="xref py py-class docutils literal"><span class="pre">ElementError</span></code></a>) – When the element raises an error</td>
+</tr>
+</tbody>
+</table>
+<p>Elements must implement this method to populate the sandbox
+directory with data. This is done either by staging <a class="reference internal" href="buildstream.source.html#buildstream.source.Source" title="buildstream.source.Source"><code class="xref py py-class docutils literal"><span class="pre">Source</span></code></a>
+objects, by staging the artifacts of the elements this element depends
+on, or both.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.generate_script">
+<code class="descname">generate_script</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.generate_script" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a build (sh) script to build this element</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A string containing the shell commands required to build the element</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(str)</td>
+</tr>
+</tbody>
+</table>
+<p>BuildStream guarantees the following environment when the
+generated script is run:</p>
+<ul class="simple">
+<li>All element variables have been exported.</li>
+<li>The cwd is <cite>self.get_variable(‘build_root’)/self.normal_name</cite>.</li>
+<li>$PREFIX is set to <cite>self.get_variable(‘install_root’)</cite>.</li>
+<li>The directory indicated by $PREFIX is an empty directory.</li>
+</ul>
+<p>Files are expected to be installed to $PREFIX.</p>
+<p>If the script fails, it is expected to return with an exit
+code != 0.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.element.Element.assemble">
+<code class="descname">assemble</code><span class="sig-paren">(</span><em>sandbox</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.element.Element.assemble" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assemble the output artifact</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sandbox</strong> (<a class="reference internal" href="buildstream.sandbox.sandbox.html#buildstream.sandbox.sandbox.Sandbox" title="buildstream.sandbox.sandbox.Sandbox"><code class="xref py py-class docutils literal"><span class="pre">Sandbox</span></code></a>) – The build sandbox</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An absolute path within the sandbox to collect the artifact from</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(str)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">(<a class="reference internal" href="#buildstream.element.ElementError" title="buildstream.element.ElementError"><code class="xref py py-class docutils literal"><span class="pre">ElementError</span></code></a>) – When the element raises an error</td>
+</tr>
+</tbody>
+</table>
+<p>Elements must implement this method to create an output
+artifact from its sources and dependencies.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Codethink Limited.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/buildstream.element.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

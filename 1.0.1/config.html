@@ -1,0 +1,248 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>User Configuration &#8212; BuildStream 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="user-configuration">
+<span id="config"></span><h1>User Configuration<a class="headerlink" href="#user-configuration" title="Permalink to this headline">¶</a></h1>
+<p>User configuration and preferences can be specified in a user provided
+configuration file, and usually also on the command line.</p>
+<p>Values specified in a user provided configuration file override the
+defaults, while command line options take precedence over any other
+specified configurations.</p>
+<div class="section" id="configuration-file">
+<h2>Configuration file<a class="headerlink" href="#configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>Users can provide a configuration file to override parameters in
+the default configuration.</p>
+<p>Unless a configuration file is explicitly specified on the command line when
+invoking <code class="docutils literal"><span class="pre">bst</span></code>, an attempt is made to load user specific configuration from
+<code class="docutils literal"><span class="pre">$XDG_CONFIG_HOME/buildstream.conf</span></code>. On most Linux based systems, the location
+will be <code class="docutils literal"><span class="pre">~/.config/buildstream.conf</span></code></p>
+</div>
+<div class="section" id="project-specific-value">
+<h2>Project Specific Value<a class="headerlink" href="#project-specific-value" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">projects</span></code> key can be used to specify project specific configurations,
+the supported configurations on a project wide basis are listed here.</p>
+<div class="section" id="artifact-server">
+<h3>Artifact Server<a class="headerlink" href="#artifact-server" title="Permalink to this headline">¶</a></h3>
+<p>The artifact server is usually specified by the project you build, but
+it can be overridden on a per project basis using the same format
+<a class="reference internal" href="projectconf.html#project-essentials-artifacts"><span class="std std-ref">described here</span></a>.</p>
+<p><strong>Example</strong></p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="n">projects</span><span class="p">:</span>
+  <span class="n">project</span><span class="o">-</span><span class="n">name</span><span class="p">:</span>
+    <span class="n">artifacts</span><span class="p">:</span>
+      <span class="n">url</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">artifacts</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">artifacts</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="strict-build-plan">
+<h3>Strict Build Plan<a class="headerlink" href="#strict-build-plan" title="Permalink to this headline">¶</a></h3>
+<p>The strict build plan option decides whether you want elements
+to rebuild when their dependencies have changed. This is enabled
+by default, but recommended to turn off in developer scenarios where
+you might want to build a large system and test it quickly after
+modifying some low level component.</p>
+<p><strong>Example</strong></p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="n">projects</span><span class="p">:</span>
+  <span class="n">project</span><span class="o">-</span><span class="n">name</span><span class="p">:</span>
+    <span class="n">strict</span><span class="p">:</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is always possible to override this at invocation time using
+the <code class="docutils literal"><span class="pre">--strict</span></code> and <code class="docutils literal"><span class="pre">--no-strict</span></code> command line options.</p>
+</div>
+</div>
+</div>
+<div class="section" id="default-configuration">
+<h2>Default Configuration<a class="headerlink" href="#default-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The default BuildStream configuration is specified here for reference:</p>
+<blockquote>
+<div><div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># Default BuildStream user configuration.</span>
+
+<span class="c1">#</span>
+<span class="c1">#    Work Directories</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="c1"># Note that BuildStream forces the XDG Base Directory names</span>
+<span class="c1"># into the environment if they are not already set, and allows</span>
+<span class="c1"># expansion of &#39;~&#39; and environment variables when specifying</span>
+<span class="c1"># paths.</span>
+<span class="c1">#</span>
+
+<span class="c1"># Location to store sources</span>
+<span class="l l-Scalar l-Scalar-Plain">sourcedir</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">${XDG_CACHE_HOME}/buildstream/sources</span>
+
+<span class="c1"># Location to perform builds</span>
+<span class="l l-Scalar l-Scalar-Plain">builddir</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">${XDG_CACHE_HOME}/buildstream/build</span>
+
+<span class="c1"># Location to store local binary artifacts</span>
+<span class="l l-Scalar l-Scalar-Plain">artifactdir</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">${XDG_CACHE_HOME}/buildstream/artifacts</span>
+
+<span class="c1"># Location to store build logs</span>
+<span class="l l-Scalar l-Scalar-Plain">logdir</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">${XDG_CACHE_HOME}/buildstream/logs</span>
+
+<span class="c1">#</span>
+<span class="c1">#    Scheduler</span>
+<span class="c1">#</span>
+<span class="l l-Scalar l-Scalar-Plain">scheduler</span><span class="p p-Indicator">:</span>
+
+  <span class="c1"># Maximum number of simultaneous source downloading tasks.</span>
+  <span class="l l-Scalar l-Scalar-Plain">fetchers</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+
+  <span class="c1"># Maximum number of simultaneous build tasks.</span>
+  <span class="l l-Scalar l-Scalar-Plain">builders</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">4</span>
+
+  <span class="c1"># Maximum number of simultaneous artifact uploading tasks.</span>
+  <span class="l l-Scalar l-Scalar-Plain">pushers</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">4</span>
+
+  <span class="c1"># Maximum number of retries for network tasks.</span>
+  <span class="l l-Scalar l-Scalar-Plain">network-retries</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+
+  <span class="c1"># What to do when an element fails, if not running in</span>
+  <span class="c1"># interactive mode:</span>
+  <span class="c1">#</span>
+  <span class="c1">#  continue  - Continue queueing jobs as much as possible</span>
+  <span class="c1">#  quit      - Exit after all ongoing jobs complete</span>
+  <span class="c1">#  terminate - Terminate any ongoing jobs and exit</span>
+  <span class="c1">#</span>
+  <span class="l l-Scalar l-Scalar-Plain">on-error</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">quit</span>
+
+<span class="c1">#</span>
+<span class="c1">#    Artifacts</span>
+<span class="c1">#</span>
+<span class="l l-Scalar l-Scalar-Plain">artifacts</span><span class="p p-Indicator">:</span>
+
+  <span class="c1"># A url from which to push and pull prebuilt artifacts.</span>
+  <span class="c1"># Some protocols only support pushing.</span>
+  <span class="l l-Scalar l-Scalar-Plain">url</span><span class="p p-Indicator">:</span> <span class="s">&#39;&#39;</span>
+
+<span class="c1">#</span>
+<span class="c1">#    Logging</span>
+<span class="c1">#</span>
+<span class="l l-Scalar l-Scalar-Plain">logging</span><span class="p p-Indicator">:</span>
+
+  <span class="c1"># The abbreviated cache key length to display in the UI</span>
+  <span class="l l-Scalar l-Scalar-Plain">key-length</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">8</span>
+
+  <span class="c1"># Whether to show extra detailed messages</span>
+  <span class="l l-Scalar l-Scalar-Plain">verbose</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="c1"># Maximum number of lines to print from the</span>
+  <span class="c1"># end of a failing build log</span>
+  <span class="l l-Scalar l-Scalar-Plain">error-lines</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+
+  <span class="c1"># Maximum number of lines to print in a detailed</span>
+  <span class="c1"># message on the console or in the master log (the full</span>
+  <span class="c1"># messages are always recorded in the individual build</span>
+  <span class="c1"># logs)</span>
+  <span class="l l-Scalar l-Scalar-Plain">message-lines</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+
+  <span class="c1"># Whether to enable debugging messages</span>
+  <span class="l l-Scalar l-Scalar-Plain">debug</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+
+  <span class="c1"># Format string for printing the pipeline at startup, this</span>
+  <span class="c1"># also determines the default display format for `bst show`</span>
+  <span class="l l-Scalar l-Scalar-Plain">element-format</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">|</span>
+
+    <span class="no">%{state: &gt;12} %{key} %{name} %{workspace-dirs}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">User Configuration</a><ul>
+<li><a class="reference internal" href="#configuration-file">Configuration file</a></li>
+<li><a class="reference internal" href="#project-specific-value">Project Specific Value</a><ul>
+<li><a class="reference internal" href="#artifact-server">Artifact Server</a></li>
+<li><a class="reference internal" href="#strict-build-plan">Strict Build Plan</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#default-configuration">Default Configuration</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Codethink Limited.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/config.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

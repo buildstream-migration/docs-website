@@ -1,0 +1,1142 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Commands &mdash; BuildStream 1.4.2+20.g89765b75 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Reference" href="main_core.html" />
+    <link rel="prev" title="User configuration" href="using_config.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BuildStream
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.4.2+20.g89765b75
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="main_about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_install.html">Install</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="main_using.html">Using</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="using_tutorial.html">Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_config.html">User configuration</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bst">bst</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bst-init">bst init</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bst-build">bst build</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bst-fetch">bst fetch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bst-track">bst track</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bst-pull">bst pull</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bst-push">bst push</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bst-show">bst show</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bst-shell">bst shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bst-checkout">bst checkout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bst-source-bundle">bst source bundle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bst-workspace">bst workspace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bst-workspace-open">bst workspace open</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bst-workspace-close">bst workspace close</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bst-workspace-reset">bst workspace reset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bst-workspace-list">bst workspace list</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="main_core.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HACKING.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BuildStream</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="main_using.html">Using</a> &raquo;</li>
+        
+      <li>Commands</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/using_commands.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="commands">
+<span id="id1"></span><h1>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h1>
+<p>This page contains documentation for each BuildStream command,
+along with their possible options and arguments. Each command can be
+invoked on the command line, where, in most cases, this will be from the
+project’s main directory.</p>
+<hr class="docutils" />
+<div class="section" id="bst">
+<span id="invoking-bst"></span><h2>bst<a class="headerlink" href="#bst" title="Permalink to this headline">¶</a></h2>
+<p>Build and manipulate BuildStream projects</p>
+<p>Most of the main options override options in the
+user preferences configuration file.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bst <span class="o">[</span>OPTIONS<span class="o">]</span> COMMAND <span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bst-version">
+<code class="descname">--version</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-c">
+<code class="descname">-c</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--config</code><code class="descclassname"> &lt;config&gt;</code><a class="headerlink" href="#cmdoption-bst-c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configuration file to use</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-directory">
+<code class="descname">-C</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--directory</code><code class="descclassname"> &lt;directory&gt;</code><a class="headerlink" href="#cmdoption-bst-directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Project directory (default: current directory)</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-on-error">
+<code class="descname">--on-error</code><code class="descclassname"> &lt;on_error&gt;</code><a class="headerlink" href="#cmdoption-bst-on-error" title="Permalink to this definition">¶</a></dt>
+<dd><p>What to do when an error is encountered</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Options:</th><td class="field-body">continue|quit|terminate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-fetchers">
+<code class="descname">--fetchers</code><code class="descclassname"> &lt;fetchers&gt;</code><a class="headerlink" href="#cmdoption-bst-fetchers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum simultaneous download tasks</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-builders">
+<code class="descname">--builders</code><code class="descclassname"> &lt;builders&gt;</code><a class="headerlink" href="#cmdoption-bst-builders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum simultaneous build tasks</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-pushers">
+<code class="descname">--pushers</code><code class="descclassname"> &lt;pushers&gt;</code><a class="headerlink" href="#cmdoption-bst-pushers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum simultaneous upload tasks</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-max-jobs">
+<code class="descname">--max-jobs</code><code class="descclassname"> &lt;max_jobs&gt;</code><a class="headerlink" href="#cmdoption-bst-max-jobs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of parallel jobs allowed for a given build task</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-network-retries">
+<code class="descname">--network-retries</code><code class="descclassname"> &lt;network_retries&gt;</code><a class="headerlink" href="#cmdoption-bst-network-retries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum retries for network tasks</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-no-interactive">
+<code class="descname">--no-interactive</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-no-interactive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Force non interactive mode, otherwise this is automatically decided</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-verbose">
+<code class="descname">--verbose</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--no-verbose</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-verbose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Be extra verbose</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-debug">
+<code class="descname">--debug</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--no-debug</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print debugging output</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-error-lines">
+<code class="descname">--error-lines</code><code class="descclassname"> &lt;error_lines&gt;</code><a class="headerlink" href="#cmdoption-bst-error-lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum number of lines to show from a task log</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-message-lines">
+<code class="descname">--message-lines</code><code class="descclassname"> &lt;message_lines&gt;</code><a class="headerlink" href="#cmdoption-bst-message-lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum number of lines to show in a detailed message</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-log-file">
+<code class="descname">--log-file</code><code class="descclassname"> &lt;log_file&gt;</code><a class="headerlink" href="#cmdoption-bst-log-file" title="Permalink to this definition">¶</a></dt>
+<dd><p>A file to store the main log (allows storing the main log while in interactive mode)</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-colors">
+<code class="descname">--colors</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--no-colors</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-colors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Force enable/disable ANSI color codes in output</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-strict">
+<code class="descname">--strict</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--no-strict</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-strict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Elements must be rebuilt when their dependencies have changed</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-o">
+<code class="descname">-o</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--option</code><code class="descclassname"> &lt;option&gt;</code><a class="headerlink" href="#cmdoption-bst-o" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify a project option</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-default-mirror">
+<code class="descname">--default-mirror</code><code class="descclassname"> &lt;default_mirror&gt;</code><a class="headerlink" href="#cmdoption-bst-default-mirror" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mirror to fetch from first, before attempting other mirrors</p>
+</dd></dl>
+
+<p class="rubric">Commands</p>
+<dl class="object">
+<dt>
+<code class="descname">build</code></dt>
+<dd><p>Build elements in a pipeline</p>
+</dd></dl>
+
+<dl class="object">
+<dt>
+<code class="descname">checkout</code></dt>
+<dd><p>Checkout a built artifact</p>
+</dd></dl>
+
+<dl class="object">
+<dt>
+<code class="descname">fetch</code></dt>
+<dd><p>Fetch sources in a pipeline</p>
+</dd></dl>
+
+<dl class="object">
+<dt>
+<code class="descname">help</code></dt>
+<dd><p>Print usage information</p>
+</dd></dl>
+
+<dl class="object">
+<dt>
+<code class="descname">init</code></dt>
+<dd><p>Initialize a new BuildStream project</p>
+</dd></dl>
+
+<dl class="object">
+<dt>
+<code class="descname">pull</code></dt>
+<dd><p>Pull a built artifact</p>
+</dd></dl>
+
+<dl class="object">
+<dt>
+<code class="descname">push</code></dt>
+<dd><p>Push a built artifact</p>
+</dd></dl>
+
+<dl class="object">
+<dt>
+<code class="descname">shell</code></dt>
+<dd><p>Shell into an element’s sandbox environment</p>
+</dd></dl>
+
+<dl class="object">
+<dt>
+<code class="descname">show</code></dt>
+<dd><p>Show elements in the pipeline</p>
+</dd></dl>
+
+<dl class="object">
+<dt>
+<code class="descname">source-bundle</code></dt>
+<dd><p>Produce a build bundle to be manually executed</p>
+</dd></dl>
+
+<dl class="object">
+<dt>
+<code class="descname">track</code></dt>
+<dd><p>Track new source references</p>
+</dd></dl>
+
+<dl class="object">
+<dt>
+<code class="descname">workspace</code></dt>
+<dd><p>Manipulate developer workspaces</p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="bst-init">
+<span id="invoking-init"></span><h2>bst init<a class="headerlink" href="#bst-init" title="Permalink to this headline">¶</a></h2>
+<p>Initialize a new BuildStream project</p>
+<p>Creates a new BuildStream project.conf in the project
+directory.</p>
+<p>Unless <cite>–project-name</cite> is specified, this will be an
+interactive session.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bst init <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bst-init-project-name">
+<code class="descname">--project-name</code><code class="descclassname"> &lt;project_name&gt;</code><a class="headerlink" href="#cmdoption-bst-init-project-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The project name to use</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-init-format-version">
+<code class="descname">--format-version</code><code class="descclassname"> &lt;format_version&gt;</code><a class="headerlink" href="#cmdoption-bst-init-format-version" title="Permalink to this definition">¶</a></dt>
+<dd><p>The required format version (default: 17)</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-init-element-path">
+<code class="descname">--element-path</code><code class="descclassname"> &lt;element_path&gt;</code><a class="headerlink" href="#cmdoption-bst-init-element-path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The subdirectory to store elements in (default: elements)</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-init-f">
+<code class="descname">-f</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--force</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-init-f" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow overwriting an existing project.conf</p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="bst-build">
+<span id="invoking-build"></span><h2>bst build<a class="headerlink" href="#bst-build" title="Permalink to this headline">¶</a></h2>
+<p>Build elements in a pipeline</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bst build <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>ELEMENTS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bst-build-all">
+<code class="descname">--all</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-build-all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build elements that would not be needed for the current build plan</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-build-track">
+<code class="descname">--track</code><code class="descclassname"> &lt;track_&gt;</code><a class="headerlink" href="#cmdoption-bst-build-track" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify elements to track during the build. Can be used repeatedly to specify multiple elements</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-build-track-all">
+<code class="descname">--track-all</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-build-track-all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Track all elements in the pipeline</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-build-track-except">
+<code class="descname">--track-except</code><code class="descclassname"> &lt;track_except&gt;</code><a class="headerlink" href="#cmdoption-bst-build-track-except" title="Permalink to this definition">¶</a></dt>
+<dd><p>Except certain dependencies from tracking</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-build-j">
+<code class="descname">-J</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--track-cross-junctions</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-build-j" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow tracking to cross junction boundaries</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-build-track-save">
+<code class="descname">--track-save</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-build-track-save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated: This is ignored</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="option">
+<dt id="cmdoption-bst-build-arg-elements">
+<code class="descname">ELEMENTS</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-build-arg-elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional argument(s)</p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="bst-fetch">
+<span id="invoking-fetch"></span><h2>bst fetch<a class="headerlink" href="#bst-fetch" title="Permalink to this headline">¶</a></h2>
+<p>Fetch sources required to build the pipeline</p>
+<p>By default this will only try to fetch sources which are
+required for the build plan of the specified target element,
+omitting sources for any elements which are already built
+and available in the artifact cache.</p>
+<p>Specify <cite>–deps</cite> to control which sources to fetch:</p>
+<div class="line-block">
+<div class="line">none:  No dependencies, just the element itself</div>
+<div class="line">plan:  Only dependencies required for the build plan</div>
+<div class="line">all:   All dependencies</div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bst fetch <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>ELEMENTS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bst-fetch-except">
+<code class="descname">--except</code><code class="descclassname"> &lt;except_&gt;</code><a class="headerlink" href="#cmdoption-bst-fetch-except" title="Permalink to this definition">¶</a></dt>
+<dd><p>Except certain dependencies from fetching</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-fetch-d">
+<code class="descname">-d</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--deps</code><code class="descclassname"> &lt;deps&gt;</code><a class="headerlink" href="#cmdoption-bst-fetch-d" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dependencies to fetch (default: plan)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Options:</th><td class="field-body">none|plan|all</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-fetch-track">
+<code class="descname">--track</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-fetch-track" title="Permalink to this definition">¶</a></dt>
+<dd><p>Track new source references before fetching</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-fetch-j">
+<code class="descname">-J</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--track-cross-junctions</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-fetch-j" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow tracking to cross junction boundaries</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="option">
+<dt id="cmdoption-bst-fetch-arg-elements">
+<code class="descname">ELEMENTS</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-fetch-arg-elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional argument(s)</p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="bst-track">
+<span id="invoking-track"></span><h2>bst track<a class="headerlink" href="#bst-track" title="Permalink to this headline">¶</a></h2>
+<p>Consults the specified tracking branches for new versions available
+to build and updates the project with any newly available references.</p>
+<p>By default this will track just the specified element, but you can also
+update a whole tree of dependencies in one go.</p>
+<p>Specify <cite>–deps</cite> to control which sources to track:</p>
+<div class="line-block">
+<div class="line">none:  No dependencies, just the specified elements</div>
+<div class="line">all:   All dependencies of all specified elements</div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bst track <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>ELEMENTS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bst-track-except">
+<code class="descname">--except</code><code class="descclassname"> &lt;except_&gt;</code><a class="headerlink" href="#cmdoption-bst-track-except" title="Permalink to this definition">¶</a></dt>
+<dd><p>Except certain dependencies from tracking</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-track-d">
+<code class="descname">-d</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--deps</code><code class="descclassname"> &lt;deps&gt;</code><a class="headerlink" href="#cmdoption-bst-track-d" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dependencies to track (default: none)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Options:</th><td class="field-body">none|all</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-track-j">
+<code class="descname">-J</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--cross-junctions</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-track-j" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow crossing junction boundaries</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="option">
+<dt id="cmdoption-bst-track-arg-elements">
+<code class="descname">ELEMENTS</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-track-arg-elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional argument(s)</p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="bst-pull">
+<span id="invoking-pull"></span><h2>bst pull<a class="headerlink" href="#bst-pull" title="Permalink to this headline">¶</a></h2>
+<p>Pull a built artifact from the configured remote artifact cache.</p>
+<p>By default the artifact will be pulled one of the configured caches
+if possible, following the usual priority order. If the <cite>–remote</cite> flag
+is given, only the specified cache will be queried.</p>
+<p>Specify <cite>–deps</cite> to control which artifacts to pull:</p>
+<div class="line-block">
+<div class="line">none:  No dependencies, just the element itself</div>
+<div class="line">all:   All dependencies</div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bst pull <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>ELEMENTS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bst-pull-d">
+<code class="descname">-d</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--deps</code><code class="descclassname"> &lt;deps&gt;</code><a class="headerlink" href="#cmdoption-bst-pull-d" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dependency artifacts to pull (default: none)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Options:</th><td class="field-body">none|all</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-pull-r">
+<code class="descname">-r</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--remote</code><code class="descclassname"> &lt;remote&gt;</code><a class="headerlink" href="#cmdoption-bst-pull-r" title="Permalink to this definition">¶</a></dt>
+<dd><p>The URL of the remote cache (defaults to the first configured cache)</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="option">
+<dt id="cmdoption-bst-pull-arg-elements">
+<code class="descname">ELEMENTS</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-pull-arg-elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional argument(s)</p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="bst-push">
+<span id="invoking-push"></span><h2>bst push<a class="headerlink" href="#bst-push" title="Permalink to this headline">¶</a></h2>
+<p>Push a built artifact to a remote artifact cache.</p>
+<p>The default destination is the highest priority configured cache. You can
+override this by passing a different cache URL with the <cite>–remote</cite> flag.</p>
+<p>Specify <cite>–deps</cite> to control which artifacts to push:</p>
+<div class="line-block">
+<div class="line">none:  No dependencies, just the element itself</div>
+<div class="line">all:   All dependencies</div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bst push <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>ELEMENTS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bst-push-d">
+<code class="descname">-d</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--deps</code><code class="descclassname"> &lt;deps&gt;</code><a class="headerlink" href="#cmdoption-bst-push-d" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dependencies to push (default: none)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Options:</th><td class="field-body">none|all</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-push-r">
+<code class="descname">-r</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--remote</code><code class="descclassname"> &lt;remote&gt;</code><a class="headerlink" href="#cmdoption-bst-push-r" title="Permalink to this definition">¶</a></dt>
+<dd><p>The URL of the remote cache (defaults to the first configured cache)</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="option">
+<dt id="cmdoption-bst-push-arg-elements">
+<code class="descname">ELEMENTS</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-push-arg-elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional argument(s)</p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="bst-show">
+<span id="invoking-show"></span><h2>bst show<a class="headerlink" href="#bst-show" title="Permalink to this headline">¶</a></h2>
+<p>Show elements in the pipeline</p>
+<p>By default this will show all of the dependencies of the
+specified target element.</p>
+<p>Specify <cite>–deps</cite> to control which elements to show:</p>
+<div class="line-block">
+<div class="line">none:  No dependencies, just the element itself</div>
+<div class="line">plan:  Dependencies required for a build plan</div>
+<div class="line">run:   Runtime dependencies, including the element itself</div>
+<div class="line">build: Build time dependencies, excluding the element itself</div>
+<div class="line">all:   All dependencies</div>
+</div>
+<div class="line-block">
+<div class="line">FORMAT</div>
+<div class="line">~~~~~~</div>
+<div class="line">The –format option controls what should be printed for each element,</div>
+<div class="line">the following symbols can be used in the format string:</div>
+</div>
+<div class="line-block">
+<div class="line">%{name}           The element name</div>
+<div class="line">%{key}            The abbreviated cache key (if all sources are consistent)</div>
+<div class="line">%{full-key}       The full cache key (if all sources are consistent)</div>
+<div class="line">%{state}          cached, buildable, waiting or inconsistent</div>
+<div class="line">%{config}         The element configuration</div>
+<div class="line">%{vars}           Variable configuration</div>
+<div class="line">%{env}            Environment settings</div>
+<div class="line">%{public}         Public domain data</div>
+<div class="line">%{workspaced}     If the element is workspaced</div>
+<div class="line">%{workspace-dirs} A list of workspace directories</div>
+</div>
+<p>The value of the %{symbol} without the leading ‘%’ character is understood
+as a pythonic formatting string, so python formatting features apply,
+examle:</p>
+<div class="line-block">
+<div class="line">bst show target.bst –format </div>
+<div class="line-block">
+<div class="line">‘Name: %{name: ^20} Key: %{key: ^8} State: %{state}’</div>
+</div>
+</div>
+<p>If you want to use a newline in a format string in bash, use the ‘$’ modifier:</p>
+<div class="line-block">
+<div class="line">bst show target.bst –format </div>
+<div class="line-block">
+<div class="line">$’———- %{name} ———-n%{vars}’</div>
+</div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bst show <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>ELEMENTS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bst-show-except">
+<code class="descname">--except</code><code class="descclassname"> &lt;except_&gt;</code><a class="headerlink" href="#cmdoption-bst-show-except" title="Permalink to this definition">¶</a></dt>
+<dd><p>Except certain dependencies</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-show-d">
+<code class="descname">-d</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--deps</code><code class="descclassname"> &lt;deps&gt;</code><a class="headerlink" href="#cmdoption-bst-show-d" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dependencies to show (default: all)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Options:</th><td class="field-body">none|plan|run|build|all</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-show-order">
+<code class="descname">--order</code><code class="descclassname"> &lt;order&gt;</code><a class="headerlink" href="#cmdoption-bst-show-order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Staging or alphabetic ordering of dependencies</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Options:</th><td class="field-body">stage|alpha</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-show-f">
+<code class="descname">-f</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--format</code><code class="descclassname"> &lt;format_&gt;</code><a class="headerlink" href="#cmdoption-bst-show-f" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format string for each element</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="option">
+<dt id="cmdoption-bst-show-arg-elements">
+<code class="descname">ELEMENTS</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-show-arg-elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional argument(s)</p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="bst-shell">
+<span id="invoking-shell"></span><h2>bst shell<a class="headerlink" href="#bst-shell" title="Permalink to this headline">¶</a></h2>
+<p>Run a command in the target element’s sandbox environment</p>
+<p>This will stage a temporary sysroot for running the target
+element, assuming it has already been built and all required
+artifacts are in the local cache.</p>
+<p>Use the –build option to create a temporary sysroot for
+building the element instead.</p>
+<p>Use the –sysroot option with an existing failed build
+directory or with a checkout of the given target, in order
+to use a specific sysroot.</p>
+<p>If no COMMAND is specified, the default is to attempt
+to run an interactive shell.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bst shell <span class="o">[</span>OPTIONS<span class="o">]</span> ELEMENT <span class="o">[</span>COMMAND<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bst-shell-b">
+<code class="descname">-b</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--build</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-shell-b" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stage dependencies and sources to build</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-shell-s">
+<code class="descname">-s</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--sysroot</code><code class="descclassname"> &lt;sysroot&gt;</code><a class="headerlink" href="#cmdoption-bst-shell-s" title="Permalink to this definition">¶</a></dt>
+<dd><p>An existing sysroot</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-shell-mount">
+<code class="descname">--mount</code><code class="descclassname"> &lt;mount&gt;</code><a class="headerlink" href="#cmdoption-bst-shell-mount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mount a file or directory into the sandbox</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-shell-isolate">
+<code class="descname">--isolate</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-shell-isolate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an isolated build sandbox</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="option">
+<dt id="cmdoption-bst-shell-arg-element">
+<code class="descname">ELEMENT</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-shell-arg-element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-shell-arg-command">
+<code class="descname">COMMAND</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-shell-arg-command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional argument(s)</p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="bst-checkout">
+<span id="invoking-checkout"></span><h2>bst checkout<a class="headerlink" href="#bst-checkout" title="Permalink to this headline">¶</a></h2>
+<p>Checkout a built artifact to the specified location</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bst checkout <span class="o">[</span>OPTIONS<span class="o">]</span> ELEMENT LOCATION
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bst-checkout-f">
+<code class="descname">-f</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--force</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-checkout-f" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow files to be overwritten</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-checkout-d">
+<code class="descname">-d</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--deps</code><code class="descclassname"> &lt;deps&gt;</code><a class="headerlink" href="#cmdoption-bst-checkout-d" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dependencies to checkout (default: run)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Options:</th><td class="field-body">run|none</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-checkout-integrate">
+<code class="descname">--integrate</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--no-integrate</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-checkout-integrate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to run integration commands</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-checkout-hardlinks">
+<code class="descname">--hardlinks</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-checkout-hardlinks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checkout hardlinks instead of copies (handle with care)</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-checkout-tar">
+<code class="descname">--tar</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-checkout-tar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a tarball from the artifact contents instead of a file tree. If LOCATION is ‘-‘, the tarball will be dumped to the standard output.</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="option">
+<dt id="cmdoption-bst-checkout-arg-element">
+<code class="descname">ELEMENT</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-checkout-arg-element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-checkout-arg-location">
+<code class="descname">LOCATION</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-checkout-arg-location" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="bst-source-bundle">
+<span id="invoking-source-bundle"></span><h2>bst source bundle<a class="headerlink" href="#bst-source-bundle" title="Permalink to this headline">¶</a></h2>
+<p>Produce a source bundle to be manually executed</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bst <span class="nb">source</span> bundle <span class="o">[</span>OPTIONS<span class="o">]</span> ELEMENT
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bst-source-bundle-except">
+<code class="descname">--except</code><code class="descclassname"> &lt;except_&gt;</code><a class="headerlink" href="#cmdoption-bst-source-bundle-except" title="Permalink to this definition">¶</a></dt>
+<dd><p>Elements to except from the tarball</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-source-bundle-compression">
+<code class="descname">--compression</code><code class="descclassname"> &lt;compression&gt;</code><a class="headerlink" href="#cmdoption-bst-source-bundle-compression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compress the tar file using the given algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Options:</th><td class="field-body">none|gz|bz2|xz</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-source-bundle-track">
+<code class="descname">--track</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-source-bundle-track" title="Permalink to this definition">¶</a></dt>
+<dd><p>Track new source references before bundling</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-source-bundle-f">
+<code class="descname">-f</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--force</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-source-bundle-f" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overwrite an existing tarball</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-source-bundle-directory">
+<code class="descname">--directory</code><code class="descclassname"> &lt;directory&gt;</code><a class="headerlink" href="#cmdoption-bst-source-bundle-directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>The directory to write the tarball to</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="option">
+<dt id="cmdoption-bst-source-bundle-arg-element">
+<code class="descname">ELEMENT</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-source-bundle-arg-element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="bst-workspace">
+<span id="invoking-workspace"></span><h2>bst workspace<a class="headerlink" href="#bst-workspace" title="Permalink to this headline">¶</a></h2>
+<p>Manipulate developer workspaces</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bst workspace <span class="o">[</span>OPTIONS<span class="o">]</span> COMMAND <span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Commands</p>
+<dl class="object">
+<dt>
+<code class="descname">close</code></dt>
+<dd><p>Close workspaces</p>
+</dd></dl>
+
+<dl class="object">
+<dt>
+<code class="descname">list</code></dt>
+<dd><p>List open workspaces</p>
+</dd></dl>
+
+<dl class="object">
+<dt>
+<code class="descname">open</code></dt>
+<dd><p>Open a new workspace</p>
+</dd></dl>
+
+<dl class="object">
+<dt>
+<code class="descname">reset</code></dt>
+<dd><p>Reset a workspace to its original state</p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="bst-workspace-open">
+<span id="invoking-workspace-open"></span><h2>bst workspace open<a class="headerlink" href="#bst-workspace-open" title="Permalink to this headline">¶</a></h2>
+<p>Open a workspace for manual source modification</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bst workspace open <span class="o">[</span>OPTIONS<span class="o">]</span> ELEMENT DIRECTORY
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bst-workspace-open-no-checkout">
+<code class="descname">--no-checkout</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-workspace-open-no-checkout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do not checkout the source, only link to the given directory</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-workspace-open-f">
+<code class="descname">-f</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--force</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-workspace-open-f" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overwrite files existing in checkout directory</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-workspace-open-track">
+<code class="descname">--track</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-workspace-open-track" title="Permalink to this definition">¶</a></dt>
+<dd><p>Track and fetch new source references before checking out the workspace</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="option">
+<dt id="cmdoption-bst-workspace-open-arg-element">
+<code class="descname">ELEMENT</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-workspace-open-arg-element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-workspace-open-arg-directory">
+<code class="descname">DIRECTORY</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-workspace-open-arg-directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="bst-workspace-close">
+<span id="invoking-workspace-close"></span><h2>bst workspace close<a class="headerlink" href="#bst-workspace-close" title="Permalink to this headline">¶</a></h2>
+<p>Close a workspace</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bst workspace close <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>ELEMENTS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bst-workspace-close-remove-dir">
+<code class="descname">--remove-dir</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-workspace-close-remove-dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the path that contains the closed workspace</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-workspace-close-a">
+<code class="descname">-a</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--all</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-workspace-close-a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close all open workspaces</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="option">
+<dt id="cmdoption-bst-workspace-close-arg-elements">
+<code class="descname">ELEMENTS</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-workspace-close-arg-elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional argument(s)</p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="bst-workspace-reset">
+<span id="invoking-workspace-reset"></span><h2>bst workspace reset<a class="headerlink" href="#bst-workspace-reset" title="Permalink to this headline">¶</a></h2>
+<p>Reset a workspace to its original state</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bst workspace reset <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>ELEMENTS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-bst-workspace-reset-soft">
+<code class="descname">--soft</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-workspace-reset-soft" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset workspace state without affecting its contents</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-workspace-reset-track">
+<code class="descname">--track</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-workspace-reset-track" title="Permalink to this definition">¶</a></dt>
+<dd><p>Track and fetch the latest source before resetting</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-bst-workspace-reset-a">
+<code class="descname">-a</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--all</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-workspace-reset-a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset all open workspaces</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="option">
+<dt id="cmdoption-bst-workspace-reset-arg-elements">
+<code class="descname">ELEMENTS</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-bst-workspace-reset-arg-elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional argument(s)</p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="bst-workspace-list">
+<span id="invoking-workspace-list"></span><h2>bst workspace list<a class="headerlink" href="#bst-workspace-list" title="Permalink to this headline">¶</a></h2>
+<p>List open workspaces</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bst workspace list <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="main_core.html" class="btn btn-neutral float-right" title="Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="using_config.html" class="btn btn-neutral float-left" title="User configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, The BuildStream Contributors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

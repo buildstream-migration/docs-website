@@ -1,0 +1,120 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>BuildStream inside Docker &#8212; BuildStream 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="buildstream-inside-docker">
+<span id="docker"></span><h1>BuildStream inside Docker<a class="headerlink" href="#buildstream-inside-docker" title="Permalink to this headline">¶</a></h1>
+<p>The BuildStream project provides
+<a class="reference external" href="https://hub.docker.com/r/buildstream/buildstream-fedora">Docker images</a>
+containing BuildStream and its dependencies.
+This gives you an easy way to get started using BuildStream on any Unix-like
+platform where Docker is available, including Mac OS X.</p>
+<p>We recommend using the
+<a class="reference external" href="https://gitlab.com/BuildStream/buildstream/blob/master/contrib/bst-here">bst-here wrapper script</a>
+which automates the necessary container setup. You can download it and make
+it executable like this:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/.</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span>
+<span class="n">curl</span> <span class="o">--</span><span class="n">get</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">gitlab</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">BuildStream</span><span class="o">/</span><span class="n">buildstream</span><span class="o">/</span><span class="n">raw</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">contrib</span><span class="o">/</span><span class="n">bst</span><span class="o">-</span><span class="n">here</span> <span class="o">&gt;</span> <span class="o">~/.</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bst</span><span class="o">-</span><span class="n">here</span>
+<span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">~/.</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bst</span><span class="o">-</span><span class="n">here</span>
+</pre></div>
+</div>
+<p>Check if <code class="docutils literal"><span class="pre">~/.local/bin</span></code> appears in your PATH environment variable – if it
+doesn’t, you should
+<a class="reference external" href="https://stackoverflow.com/questions/14637979/">edit your ~/.profile so that it does</a>.</p>
+<p>Once the script is available in your PATH, you can run <code class="docutils literal"><span class="pre">bst-here</span></code> to open a
+shell session inside a new container based off the latest version of the
+buildstream-fedora Docker image. The current working directory will be mounted
+inside the container at <code class="docutils literal"><span class="pre">/src</span></code>.</p>
+<p>You can also run individual BuildStream commands as <code class="docutils literal"><span class="pre">bst-here</span> <span class="pre">COMMAND</span></code>. For
+example: <code class="docutils literal"><span class="pre">bst-here</span> <span class="pre">show</span> <span class="pre">systems/my-system.bst</span></code>. Note that BuildStream won’t
+be able to integrate with Bash tab-completion if you invoke it in this way.</p>
+<p>Two Docker volumes are set up by the <code class="docutils literal"><span class="pre">bst-here</span></code> script:</p>
+<blockquote>
+<div><ul class="simple">
+<li>buildstream-cache – mounted at <code class="docutils literal"><span class="pre">~/.cache/buildstream</span></code></li>
+<li>buildstream-config – mounted at <code class="docutils literal"><span class="pre">~/.config/</span></code></li>
+</ul>
+</div></blockquote>
+<p>These are necessary so that your BuildStream cache and configuration files
+persist between invocations of <code class="docutils literal"><span class="pre">bst-here</span></code>.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Codethink Limited.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/docker.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

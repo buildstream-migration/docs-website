@@ -1,0 +1,15 @@
+buildstream\.sandbox package
+============================
+
+.. automodule:: buildstream.sandbox
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+
+   buildstream.sandbox.sandbox
+

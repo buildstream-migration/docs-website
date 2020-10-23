@@ -1,0 +1,369 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Source &#8212; BuildStream 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <span class="target" id="module-buildstream.source"></span><div class="section" id="source">
+<h1>Source<a class="headerlink" href="#source" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="buildstream.source.Consistency">
+<em class="property">class </em><code class="descname">Consistency</code><a class="headerlink" href="#buildstream.source.Consistency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="buildstream.source.Consistency.INCONSISTENT">
+<code class="descname">INCONSISTENT</code><em class="property"> = 0</em><a class="headerlink" href="#buildstream.source.Consistency.INCONSISTENT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inconsistent</p>
+<p>Inconsistent sources have no explicit reference set. They cannot
+produce a cache key, be fetched or staged. They can only be tracked.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.source.Consistency.RESOLVED">
+<code class="descname">RESOLVED</code><em class="property"> = 1</em><a class="headerlink" href="#buildstream.source.Consistency.RESOLVED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolved</p>
+<p>Resolved sources have a reference and can produce a cache key and
+be fetched, however they cannot be staged.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.source.Consistency.CACHED">
+<code class="descname">CACHED</code><em class="property"> = 2</em><a class="headerlink" href="#buildstream.source.Consistency.CACHED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cached</p>
+<p>Cached sources have a reference which is present in the local
+source cache. Only cached sources can be staged.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="buildstream.source.SourceError">
+<em class="property">exception </em><code class="descname">SourceError</code><span class="sig-paren">(</span><em>message</em>, <em>*</em>, <em>reason=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.source.SourceError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">buildstream._exceptions.BstError</span></code></p>
+<p>This exception should be raised by <a class="reference internal" href="#buildstream.source.Source" title="buildstream.source.Source"><code class="xref py py-class docutils literal"><span class="pre">Source</span></code></a> implementations
+to report errors to the user.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>message</strong> (<em>str</em>) – The error message to report to the user</li>
+<li><strong>reason</strong> (<em>str</em>) – An optional machine readable reason string, used for test cases</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="buildstream.source.Source">
+<em class="property">class </em><code class="descname">Source</code><a class="headerlink" href="#buildstream.source.Source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="buildstream.plugin.html#buildstream.plugin.Plugin" title="buildstream.plugin.Plugin"><code class="xref py py-class docutils literal"><span class="pre">buildstream.plugin.Plugin</span></code></a></p>
+<p>Base Source class.</p>
+<p>All Sources derive from this class, this interface defines how
+the core will be interacting with Sources.</p>
+<dl class="attribute">
+<dt id="buildstream.source.Source.COMMON_CONFIG_KEYS">
+<code class="descname">COMMON_CONFIG_KEYS</code><em class="property"> = ['kind', 'directory']</em><a class="headerlink" href="#buildstream.source.Source.COMMON_CONFIG_KEYS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Common source config keys</p>
+<p>Source config keys that must not be accessed in configure(), and
+should be checked for using node_validate().</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.source.Source.get_mirror_directory">
+<code class="descname">get_mirror_directory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.source.Source.get_mirror_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches the directory where this source should store things</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The directory belonging to this source</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(str)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.source.Source.translate_url">
+<code class="descname">translate_url</code><span class="sig-paren">(</span><em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.source.Source.translate_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translates the given url which may be specified with an alias
+into a fully qualified url.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>url</strong> (<em>str</em>) – A url, which may be using an alias</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The fully qualified url, with aliases resolved</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.source.Source.get_project_directory">
+<code class="descname">get_project_directory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.source.Source.get_project_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the project base directory</p>
+<p>This is useful for sources which need to load resources
+stored somewhere inside the project.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The project base directory</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.source.Source.tempdir">
+<code class="descname">tempdir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.source.Source.tempdir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Context manager for working in a temporary directory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body"><em>(str)</em> – A path to a temporary directory</td>
+</tr>
+</tbody>
+</table>
+<p>This should be used by source plugins directly instead of the tempfile
+module. This one will automatically cleanup in case of termination by
+catching the signal before os._exit(). It will also use the ‘mirror
+directory’ as expected for a source.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.source.Source.get_consistency">
+<code class="descname">get_consistency</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.source.Source.get_consistency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Report whether the source has a resolved reference</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The source consistency</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(<a class="reference internal" href="#buildstream.source.Consistency" title="buildstream.source.Consistency"><code class="xref py py-class docutils literal"><span class="pre">Consistency</span></code></a>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.source.Source.get_ref">
+<code class="descname">get_ref</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.source.Source.get_ref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the internal ref, however it is represented</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The internal source reference</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(simple object)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The reference is the user provided (or track resolved) value
+the plugin uses to represent a specific input, like a commit
+in a VCS or a tarball’s checksum. Usually the reference is a string,
+but the plugin may choose to represent it with a tuple or such.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.source.Source.set_ref">
+<code class="descname">set_ref</code><span class="sig-paren">(</span><em>ref</em>, <em>node</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.source.Source.set_ref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies the internal ref, however it is represented</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ref</strong> (<em>simple object</em>) – The internal source reference to set</li>
+<li><strong>node</strong> (<em>dict</em>) – The same dictionary which was previously passed
+to <code class="xref py py-func docutils literal"><span class="pre">configure()</span></code></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>See <a class="reference internal" href="#buildstream.source.Source.get_ref" title="buildstream.source.Source.get_ref"><code class="xref py py-func docutils literal"><span class="pre">get_ref()</span></code></a> for a discussion on
+the <em>ref</em> parameter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.source.Source.track">
+<code class="descname">track</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.source.Source.track" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolve a new ref from the plugin’s track option</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A new internal source reference, or None</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(simple object)</td>
+</tr>
+</tbody>
+</table>
+<p>If the backend in question supports resolving references from
+a symbolic tracking branch or tag, then this should be implemented
+to perform this task on behalf of <code class="docutils literal"><span class="pre">build-stream</span> <span class="pre">track</span></code> commands.</p>
+<p>This usually requires fetching new content from a remote origin
+to see if a new ref has appeared for your branch or tag. If the
+backend store allows one to query for a new ref from a symbolic
+tracking data without downloading then that is desirable.</p>
+<p>See <a class="reference internal" href="#buildstream.source.Source.get_ref" title="buildstream.source.Source.get_ref"><code class="xref py py-func docutils literal"><span class="pre">get_ref()</span></code></a> for a discussion on
+the <em>ref</em> parameter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.source.Source.fetch">
+<code class="descname">fetch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.source.Source.fetch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch remote sources and mirror them locally, ensuring at least
+that the specific reference is cached locally.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#buildstream.source.SourceError" title="buildstream.source.SourceError"><code class="xref py py-class docutils literal"><span class="pre">SourceError</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Implementors should raise <a class="reference internal" href="#buildstream.source.SourceError" title="buildstream.source.SourceError"><code class="xref py py-class docutils literal"><span class="pre">SourceError</span></code></a> if the there is some
+network error or if the source reference could not be matched.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.source.Source.stage">
+<code class="descname">stage</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.source.Source.stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stage the sources to a directory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directory</strong> (<em>str</em>) – Path to stage the source</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#buildstream.source.SourceError" title="buildstream.source.SourceError"><code class="xref py py-class docutils literal"><span class="pre">SourceError</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Implementors should assume that <em>directory</em> already exists
+and stage already cached sources to the passed directory.</p>
+<p>Implementors should raise <a class="reference internal" href="#buildstream.source.SourceError" title="buildstream.source.SourceError"><code class="xref py py-class docutils literal"><span class="pre">SourceError</span></code></a> when encountering
+some system error.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.source.Source.init_workspace">
+<code class="descname">init_workspace</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.source.Source.init_workspace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialises a new workspace</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directory</strong> (<em>str</em>) – Path of the workspace to init</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#buildstream.source.SourceError" title="buildstream.source.SourceError"><code class="xref py py-class docutils literal"><span class="pre">SourceError</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Default implementation is to call
+<a class="reference internal" href="#buildstream.source.Source.stage" title="buildstream.source.Source.stage"><code class="xref py py-func docutils literal"><span class="pre">stage()</span></code></a>.</p>
+<p>Implementors overriding this method should assume that <em>directory</em>
+already exists.</p>
+<p>Implementors should raise <a class="reference internal" href="#buildstream.source.SourceError" title="buildstream.source.SourceError"><code class="xref py py-class docutils literal"><span class="pre">SourceError</span></code></a> when encountering
+some system error.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Codethink Limited.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/buildstream.source.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

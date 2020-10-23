@@ -1,0 +1,132 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>compose plugin &#8212; BuildStream 0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-elements.compose">
+<span id="compose-plugin"></span><h1>compose plugin<a class="headerlink" href="#module-elements.compose" title="Permalink to this headline">¶</a></h1>
+<p>Compose element</p>
+<p>This element creates a selective composition of its dependencies.</p>
+<p>This is normally used at near the end of a pipeline to prepare
+something for later deployment.</p>
+<p>Since this element’s output includes its dependencies, it may only
+depend on elements as <cite>build</cite> type dependencies.</p>
+<dl class="docutils">
+<dt>The default configuration and possible options are as such:</dt>
+<dd><div class="first last highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># Compose element configuration</span>
+<span class="l l-Scalar l-Scalar-Plain">config</span><span class="p p-Indicator">:</span>
+
+  <span class="c1"># Whether to run the integration commands for the</span>
+  <span class="c1"># staged dependencies.</span>
+  <span class="c1">#</span>
+  <span class="l l-Scalar l-Scalar-Plain">integrate</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="c1"># A list of domains to include from each artifact, as</span>
+  <span class="c1"># they were defined in the element&#39;s &#39;split-rules&#39;.</span>
+  <span class="c1">#</span>
+  <span class="c1"># Since domains can be added, it is not an error to</span>
+  <span class="c1"># specify domains which may not exist for all of the</span>
+  <span class="c1"># elements in this composition.</span>
+  <span class="c1">#</span>
+  <span class="c1"># The default empty list indicates that all domains</span>
+  <span class="c1"># from each dependency should be included.</span>
+  <span class="c1">#</span>
+  <span class="l l-Scalar l-Scalar-Plain">include</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[]</span>
+
+  <span class="c1"># A list of domains to exclude from each artifact, as</span>
+  <span class="c1"># they were defined in the element&#39;s &#39;split-rules&#39;.</span>
+  <span class="c1">#</span>
+  <span class="c1"># In the case that a file is spoken for by a domain</span>
+  <span class="c1"># in the &#39;include&#39; list and another in the &#39;exclude&#39;</span>
+  <span class="c1"># list, then the file will be excluded.</span>
+  <span class="l l-Scalar l-Scalar-Plain">exclude</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[]</span>
+
+  <span class="c1"># Whether to include orphan files which are not</span>
+  <span class="c1"># included by any of the &#39;split-rules&#39; present on</span>
+  <span class="c1"># a given element.</span>
+  <span class="c1">#</span>
+  <span class="l l-Scalar l-Scalar-Plain">include-orphans</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Codethink Limited.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/elements/compose.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

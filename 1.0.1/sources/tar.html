@@ -1,0 +1,112 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>tar plugin &#8212; BuildStream 0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sources.tar">
+<span id="tar-plugin"></span><h1>tar plugin<a class="headerlink" href="#module-sources.tar" title="Permalink to this headline">¶</a></h1>
+<p>A source implementation for staging tar files</p>
+<p><strong>Usage:</strong></p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Specify the tar source kind</span>
+<span class="n">kind</span><span class="p">:</span> <span class="n">tar</span>
+
+<span class="c1"># Specify the tar url. Using an alias defined in your project</span>
+<span class="c1"># configuration is encouraged. &#39;bst track&#39; will update the</span>
+<span class="c1"># sha256sum in &#39;ref&#39; to the downloaded file&#39;s sha256sum.</span>
+<span class="n">url</span><span class="p">:</span> <span class="n">upstream</span><span class="p">:</span><span class="n">foo</span><span class="o">.</span><span class="n">tar</span>
+
+<span class="c1"># Specify the ref. It&#39;s a sha256sum of the file you download.</span>
+<span class="n">ref</span><span class="p">:</span> <span class="mi">6</span><span class="n">c9f6f68a131ec6381da82f2bff978083ed7f4f7991d931bfa767b7965ebc94b</span>
+
+<span class="c1"># Specify a glob pattern to indicate the base directory to extract</span>
+<span class="c1"># from the tarball. The first matching directory will be used.</span>
+<span class="c1">#</span>
+<span class="c1"># Note that this is &#39;*&#39; by default since most standard release</span>
+<span class="c1"># tarballs contain a self named subdirectory at the root which</span>
+<span class="c1"># contains the files one normally wants to extract to build.</span>
+<span class="c1">#</span>
+<span class="c1"># To extract the root of the tarball directly, this can be set</span>
+<span class="c1"># to an empty string.</span>
+<span class="n">base</span><span class="o">-</span><span class="nb">dir</span><span class="p">:</span> <span class="s1">&#39;*&#39;</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Codethink Limited.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/sources/tar.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

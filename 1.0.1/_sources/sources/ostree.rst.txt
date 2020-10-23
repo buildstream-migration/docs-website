@@ -1,0 +1,4 @@
+ostree plugin
+============================================
+
+.. automodule:: sources.ostree

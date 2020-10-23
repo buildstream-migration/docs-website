@@ -1,0 +1,938 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Plugin - Base plugin class &mdash; BuildStream 1.6.0+0.gece1192d.dirty documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Source - Base source class" href="buildstream.source.html" />
+    <link rel="prev" title="Plugin API reference" href="core_framework.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> BuildStream
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.6.0+0.gece1192d.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="main_about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_using.html">Using</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="main_core.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core_format.html">Project format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core_plugins.html">Plugin specific documentation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="core_framework.html">Plugin API reference</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Plugin - Base plugin class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abstract-methods">Abstract Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configurable-warnings">Configurable Warnings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plugin-structure">Plugin Structure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#class-reference">Class Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.source.html">Source - Base source class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.source.html#sourcefetcher-object-for-fetching-individual-urls">SourceFetcher - Object for fetching individual URLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.element.html">Element - Base element class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.buildelement.html">BuildElement - Abstract class for build elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.scriptelement.html">ScriptElement - Abstract class for scripting elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.sandbox.sandbox.html">Sandbox - The build sandbox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.utils.html">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="core_additional.html">Additional writings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="buildstream.html">buildstream package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="HACKING.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BuildStream</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="main_core.html">Reference</a> &raquo;</li>
+        
+          <li><a href="core_framework.html">Plugin API reference</a> &raquo;</li>
+        
+      <li>Plugin - Base plugin class</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/buildstream.plugin.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="module-buildstream.plugin"></span><div class="section" id="plugin-base-plugin-class">
+<h1>Plugin - Base plugin class<a class="headerlink" href="#plugin-base-plugin-class" title="Permalink to this headline">¶</a></h1>
+<p>BuildStream supports third party plugins to define additional kinds of
+<a class="reference internal" href="buildstream.element.html#module-buildstream.element" title="buildstream.element"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Elements</span></code></a> and <a class="reference internal" href="buildstream.source.html#module-buildstream.source" title="buildstream.source"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Sources</span></code></a>.</p>
+<p>The common API is documented here, along with some information on how
+external plugin packages are structured.</p>
+<div class="section" id="abstract-methods">
+<span id="core-plugin-abstract-methods"></span><h2>Abstract Methods<a class="headerlink" href="#abstract-methods" title="Permalink to this headline">¶</a></h2>
+<p>For both <a class="reference internal" href="buildstream.element.html#module-buildstream.element" title="buildstream.element"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Elements</span></code></a> and <a class="reference internal" href="buildstream.source.html#module-buildstream.source" title="buildstream.source"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Sources</span></code></a>,
+it is mandatory to implement the following abstract methods:</p>
+<ul>
+<li><p class="first"><a class="reference internal" href="#buildstream.plugin.Plugin.configure" title="buildstream.plugin.Plugin.configure"><code class="xref py py-func docutils literal notranslate"><span class="pre">Plugin.configure()</span></code></a></p>
+<p>Loads the user provided configuration YAML for the given source or element</p>
+</li>
+<li><p class="first"><a class="reference internal" href="#buildstream.plugin.Plugin.preflight" title="buildstream.plugin.Plugin.preflight"><code class="xref py py-func docutils literal notranslate"><span class="pre">Plugin.preflight()</span></code></a></p>
+<p>Early preflight checks allow plugins to bail out early with an error
+in the case that it can predict that failure is inevitable.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="#buildstream.plugin.Plugin.get_unique_key" title="buildstream.plugin.Plugin.get_unique_key"><code class="xref py py-func docutils literal notranslate"><span class="pre">Plugin.get_unique_key()</span></code></a></p>
+<p>Once all configuration has been loaded and preflight checks have passed,
+this method is used to inform the core of a plugin’s unique configuration.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="configurable-warnings">
+<h2>Configurable Warnings<a class="headerlink" href="#configurable-warnings" title="Permalink to this headline">¶</a></h2>
+<p>Warnings raised through calling <a class="reference internal" href="#buildstream.plugin.Plugin.warn" title="buildstream.plugin.Plugin.warn"><code class="xref py py-func docutils literal notranslate"><span class="pre">Plugin.warn()</span></code></a> can provide an optional
+parameter <code class="docutils literal notranslate"><span class="pre">warning_token</span></code>, this will raise a <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginError</span></code> if the warning is configured as fatal within
+the project configuration.</p>
+<p>Configurable warnings will be prefixed with <a class="reference internal" href="#buildstream.plugin.Plugin.get_kind" title="buildstream.plugin.Plugin.get_kind"><code class="xref py py-func docutils literal notranslate"><span class="pre">Plugin.get_kind()</span></code></a>
+within buildstream and must be prefixed as such in project configurations. For more detail on project configuration
+see <a class="reference internal" href="format_project.html#configurable-warnings"><span class="std std-ref">Configurable Warnings</span></a>.</p>
+<p>It is important to document these warnings in your plugin documentation to allow users to make full use of them
+while configuring their projects.</p>
+<p class="rubric">Example</p>
+<p>If the <code class="xref py py-class docutils literal notranslate"><span class="pre">git</span></code> plugin uses the warning <code class="docutils literal notranslate"><span class="pre">&quot;inconsistent-submodule&quot;</span></code>
+then it could be referenced in project configuration as <code class="docutils literal notranslate"><span class="pre">&quot;git:inconsistent-submodule&quot;</span></code>.</p>
+</div>
+<div class="section" id="plugin-structure">
+<h2>Plugin Structure<a class="headerlink" href="#plugin-structure" title="Permalink to this headline">¶</a></h2>
+<p>A plugin should consist of a <a class="reference external" href="http://setuptools.readthedocs.io/en/latest/setuptools.html">setuptools package</a> that
+advertises contained plugins using <a class="reference external" href="http://setuptools.readthedocs.io/en/latest/setuptools.html#dynamic-discovery-of-services-and-plugins">entry points</a>.</p>
+<p>A plugin entry point must be a module that extends a class in the
+<a class="reference internal" href="core_framework.html#core-framework"><span class="std std-ref">Plugin API reference</span></a> to be discovered by BuildStream. A YAML file
+defining plugin default settings with the same name as the module can
+also be defined in the same directory as the plugin module.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">BuildStream does not support function/class entry points.</p>
+</div>
+<p>A sample plugin could be structured as such:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>.
+├── elements
+│   ├── autotools.py
+│   ├── autotools.yaml
+│   └── __init__.py
+├── MANIFEST.in
+└── setup.py
+</pre></div>
+</div>
+<p>The setuptools configuration should then contain at least:</p>
+<p>setup.py:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">find_packages</span>
+
+<span class="n">setup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;BuildStream Autotools&#39;</span><span class="p">,</span>
+      <span class="n">version</span><span class="o">=</span><span class="s2">&quot;0.1&quot;</span><span class="p">,</span>
+      <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A better autotools element for BuildStream&quot;</span><span class="p">,</span>
+      <span class="n">packages</span><span class="o">=</span><span class="n">find_packages</span><span class="p">(),</span>
+      <span class="n">install_requires</span><span class="o">=</span><span class="p">[</span>
+          <span class="s1">&#39;setuptools&#39;</span>
+      <span class="p">],</span>
+      <span class="n">include_package_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+      <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+          <span class="s1">&#39;buildstream.plugins&#39;</span><span class="p">:</span> <span class="p">[</span>
+              <span class="s1">&#39;autotools = elements.autotools&#39;</span>
+          <span class="p">]</span>
+      <span class="p">})</span>
+</pre></div>
+</div>
+<p>MANIFEST.in:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>global-include *.yaml
+</pre></div>
+</div>
+</div>
+<div class="section" id="class-reference">
+<h2>Class Reference<a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="buildstream.plugin.Plugin">
+<em class="property">class </em><code class="descname">Plugin</code><a class="headerlink" href="#buildstream.plugin.Plugin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base Plugin class.</p>
+<p>Some common features to both Sources and Elements are found
+in this class.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Derivation of plugins is not supported. Plugins may only
+derive from the base <a class="reference internal" href="buildstream.source.html#module-buildstream.source" title="buildstream.source"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Source</span></code></a> and
+<a class="reference internal" href="buildstream.element.html#module-buildstream.element" title="buildstream.element"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Element</span></code></a> types, and any convenience
+subclasses (like <a class="reference internal" href="buildstream.buildelement.html#module-buildstream.buildelement" title="buildstream.buildelement"><code class="xref py py-mod docutils literal notranslate"><span class="pre">BuildElement</span></code></a>)
+which are included in the buildstream namespace.</p>
+</div>
+<dl class="attribute">
+<dt id="buildstream.plugin.Plugin.BST_REQUIRED_VERSION_MAJOR">
+<code class="descname">BST_REQUIRED_VERSION_MAJOR</code><em class="property"> = 0</em><a class="headerlink" href="#buildstream.plugin.Plugin.BST_REQUIRED_VERSION_MAJOR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Minimum required major version</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.plugin.Plugin.BST_REQUIRED_VERSION_MINOR">
+<code class="descname">BST_REQUIRED_VERSION_MINOR</code><em class="property"> = 0</em><a class="headerlink" href="#buildstream.plugin.Plugin.BST_REQUIRED_VERSION_MINOR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Minimum required minor version</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.plugin.Plugin.BST_FORMAT_VERSION">
+<code class="descname">BST_FORMAT_VERSION</code><em class="property"> = 0</em><a class="headerlink" href="#buildstream.plugin.Plugin.BST_FORMAT_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd><p>The plugin’s YAML format version</p>
+<p>This should be set to <code class="docutils literal notranslate"><span class="pre">1</span></code> the first time any new configuration
+is understood by your <a class="reference internal" href="#buildstream.plugin.Plugin.configure" title="buildstream.plugin.Plugin.configure"><code class="xref py py-func docutils literal notranslate"><span class="pre">Plugin.configure()</span></code></a>
+implementation and subsequently bumped every time your
+configuration is enhanced.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Plugins are expected to maintain backward compatibility
+in the format and configurations they expose. The versioning
+is intended to track availability of new features only.</p>
+<p class="last">For convenience, the format version for plugins maintained and
+distributed with BuildStream are revisioned with BuildStream’s
+core format version <a class="reference internal" href="format_project.html#project-format-version"><span class="std std-ref">core format version</span></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.plugin.Plugin.name">
+<code class="descname">name</code><em class="property"> = None</em><a class="headerlink" href="#buildstream.plugin.Plugin.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The plugin name</p>
+<p>For elements, this is the project relative bst filename,
+for sources this is the owning element’s name with a suffix
+indicating it’s index on the owning element.</p>
+<p>For sources this is for display purposes only.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.configure">
+<code class="descname">configure</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.configure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure the Plugin from loaded configuration data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>node</strong> (<em>dict</em>) – The loaded configuration dictionary</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="buildstream.source.html#buildstream.source.SourceError" title="buildstream.source.SourceError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SourceError</span></code></a> – If its a <a class="reference internal" href="buildstream.source.html#buildstream.source.Source" title="buildstream.source.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a> implementation</li>
+<li><a class="reference internal" href="buildstream.element.html#buildstream.element.ElementError" title="buildstream.element.ElementError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementError</span></code></a> – If its an <a class="reference internal" href="buildstream.element.html#buildstream.element.Element" title="buildstream.element.Element"><code class="xref py py-class docutils literal notranslate"><span class="pre">Element</span></code></a> implementation</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Plugin implementors should implement this method to read configuration
+data and store it.</p>
+<p>Plugins should use the <a class="reference internal" href="#buildstream.plugin.Plugin.node_get_member" title="buildstream.plugin.Plugin.node_get_member"><code class="xref py py-func docutils literal notranslate"><span class="pre">Plugin.node_get_member()</span></code></a>
+and <a class="reference internal" href="#buildstream.plugin.Plugin.node_get_list_element" title="buildstream.plugin.Plugin.node_get_list_element"><code class="xref py py-func docutils literal notranslate"><span class="pre">Plugin.node_get_list_element()</span></code></a>
+methods to fetch values from the passed <cite>node</cite>. This will ensure that a nice human readable error
+message will be raised if the expected configuration is not found, indicating the filename,
+line and column numbers.</p>
+<p>Further the <a class="reference internal" href="#buildstream.plugin.Plugin.node_validate" title="buildstream.plugin.Plugin.node_validate"><code class="xref py py-func docutils literal notranslate"><span class="pre">Plugin.node_validate()</span></code></a> method
+should be used to ensure that the user has not specified keys in <cite>node</cite> which are unsupported
+by the plugin.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For Elements, when variable substitution is desirable, the
+<a class="reference internal" href="buildstream.element.html#buildstream.element.Element.node_subst_member" title="buildstream.element.Element.node_subst_member"><code class="xref py py-func docutils literal notranslate"><span class="pre">Element.node_subst_member()</span></code></a>
+and <a class="reference internal" href="buildstream.element.html#buildstream.element.Element.node_subst_list_element" title="buildstream.element.Element.node_subst_list_element"><code class="xref py py-func docutils literal notranslate"><span class="pre">Element.node_subst_list_element()</span></code></a>
+methods can be used.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.preflight">
+<code class="descname">preflight</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.preflight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Preflight Check</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="buildstream.source.html#buildstream.source.SourceError" title="buildstream.source.SourceError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SourceError</span></code></a> – If its a <a class="reference internal" href="buildstream.source.html#buildstream.source.Source" title="buildstream.source.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a> implementation</li>
+<li><a class="reference internal" href="buildstream.element.html#buildstream.element.ElementError" title="buildstream.element.ElementError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementError</span></code></a> – If its an <a class="reference internal" href="buildstream.element.html#buildstream.element.Element" title="buildstream.element.Element"><code class="xref py py-class docutils literal notranslate"><span class="pre">Element</span></code></a> implementation</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method is run after <a class="reference internal" href="#buildstream.plugin.Plugin.configure" title="buildstream.plugin.Plugin.configure"><code class="xref py py-func docutils literal notranslate"><span class="pre">Plugin.configure()</span></code></a>
+and after the pipeline is fully constructed.</p>
+<p>Implementors should simply raise <a class="reference internal" href="buildstream.source.html#buildstream.source.SourceError" title="buildstream.source.SourceError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SourceError</span></code></a> or <a class="reference internal" href="buildstream.element.html#buildstream.element.ElementError" title="buildstream.element.ElementError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementError</span></code></a>
+with an informative message in the case that the host environment is
+unsuitable for operation.</p>
+<p>Plugins which require host tools (only sources usually) should obtain
+them with <a class="reference internal" href="buildstream.utils.html#buildstream.utils.get_host_tool" title="buildstream.utils.get_host_tool"><code class="xref py py-func docutils literal notranslate"><span class="pre">utils.get_host_tool()</span></code></a> which
+will raise an error automatically informing the user that a host tool is needed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.get_unique_key">
+<code class="descname">get_unique_key</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.get_unique_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return something which uniquely identifies the plugin input</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A string, list or dictionary which uniquely identifies the input</td>
+</tr>
+</tbody>
+</table>
+<p>This is used to construct unique cache keys for elements and sources,
+sources should return something which uniquely identifies the payload,
+such as an sha256 sum of a tarball content.</p>
+<p>Elements and Sources should implement this by collecting any configurations
+which could possibly effect the output and return a dictionary of these settings.</p>
+<p>For Sources, this is guaranteed to only be called if
+<a class="reference internal" href="buildstream.source.html#buildstream.source.Source.get_consistency" title="buildstream.source.Source.get_consistency"><code class="xref py py-func docutils literal notranslate"><span class="pre">Source.get_consistency()</span></code></a>
+has not returned <a class="reference internal" href="buildstream.source.html#buildstream.source.Consistency.INCONSISTENT" title="buildstream.source.Consistency.INCONSISTENT"><code class="xref py py-func docutils literal notranslate"><span class="pre">Consistency.INCONSISTENT</span></code></a>
+which is to say that the Source is expected to have an exact <em>ref</em> indicating
+exactly what source is going to be staged.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.get_kind">
+<code class="descname">get_kind</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.get_kind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches the kind of this plugin</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The kind of this plugin</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(str)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.node_items">
+<code class="descname">node_items</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.node_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over a dictionary loaded from YAML</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<em>dict</em>) – The YAML loaded dictionary object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">List of key/value tuples to iterate over</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+<p>BuildStream holds some private data in dictionaries loaded from
+the YAML in order to preserve information to report in errors.</p>
+<p>This convenience function should be used instead of the dict.items()
+builtin function provided by python.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.node_provenance">
+<code class="descname">node_provenance</code><span class="sig-paren">(</span><em>node</em>, <em>member_name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.node_provenance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the provenance for <cite>node</cite> and <cite>member_name</cite></p>
+<p>This reports a string with file, line and column information suitable
+for reporting an error or warning.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>node</strong> (<em>dict</em>) – The YAML loaded dictionary object</li>
+<li><strong>member_name</strong> (<em>str</em>) – The name of the member to check, or None for the node itself</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A string describing the provenance of the node and member</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(str)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.node_get_member">
+<code class="descname">node_get_member</code><span class="sig-paren">(</span><em>node</em>, <em>expected_type</em>, <em>member_name</em>, <em>default=&lt;object object&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.node_get_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the value of a node member, raising an error if the value is
+missing or incorrectly typed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>node</strong> (<em>dict</em>) – A dictionary loaded from YAML</li>
+<li><strong>expected_type</strong> (<em>type</em>) – The expected type of the node member</li>
+<li><strong>member_name</strong> (<em>str</em>) – The name of the member to fetch</li>
+<li><strong>default</strong> (<em>expected_type</em>) – A value to return when <em>member_name</em> is not specified in <em>node</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The value of <em>member_name</em> in <em>node</em>, otherwise <em>default</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoadError</span></code> – When <em>member_name</em> is not found and no <em>default</em> was provided</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Returned strings are stripped of leading and trailing whitespace</p>
+</div>
+<p><strong>Example:</strong></p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Expect a string &#39;name&#39; in &#39;node&#39;</span>
+<span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_get_member</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+
+<span class="c1"># Fetch an optional integer</span>
+<span class="n">level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_get_member</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.node_get_project_path">
+<code class="descname">node_get_project_path</code><span class="sig-paren">(</span><em>node</em>, <em>key</em>, <em>*</em>, <em>check_is_file=False</em>, <em>check_is_dir=False</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.node_get_project_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches a project path from a dictionary node and validates it</p>
+<p>Paths are asserted to never lead to a directory outside of the
+project directory. In addition, paths can not point to symbolic
+links, fifos, sockets and block/character devices.</p>
+<p>The <cite>check_is_file</cite> and <cite>check_is_dir</cite> parameters can be used to
+perform additional validations on the path. Note that an
+exception will always be raised if both parameters are set to
+<code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>node</strong> (<em>dict</em>) – A dictionary loaded from YAML</li>
+<li><strong>key</strong> (<em>str</em>) – The key whose value contains a path to validate</li>
+<li><strong>check_is_file</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> an error will also be raised
+if path does not point to a regular file.
+Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code></li>
+<li><strong>check_is_dir</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> an error will also be raised
+if path does not point to a directory.
+Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The project path</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">(str)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoadError</span></code> – In the case that the project path is not
+valid or does not exist</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><em>Since: 1.2</em></p>
+<p><strong>Example:</strong></p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_get_project_path</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;path&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.node_validate">
+<code class="descname">node_validate</code><span class="sig-paren">(</span><em>node</em>, <em>valid_keys</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.node_validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This should be used in <a class="reference internal" href="#buildstream.plugin.Plugin.configure" title="buildstream.plugin.Plugin.configure"><code class="xref py py-func docutils literal notranslate"><span class="pre">configure()</span></code></a>
+implementations to assert that users have only entered
+valid configuration keys.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>node</strong> (<em>dict</em>) – A dictionary loaded from YAML</li>
+<li><strong>valid_keys</strong> (<em>iterable</em>) – A list of valid keys for the node</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoadError</span></code> – When an invalid key is found</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ensure our node only contains valid autotools config keys</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">node_validate</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">&#39;configure-commands&#39;</span><span class="p">,</span> <span class="s1">&#39;build-commands&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;install-commands&#39;</span><span class="p">,</span> <span class="s1">&#39;strip-commands&#39;</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.node_get_list_element">
+<code class="descname">node_get_list_element</code><span class="sig-paren">(</span><em>node</em>, <em>expected_type</em>, <em>member_name</em>, <em>indices</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.node_get_list_element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the value of a list element from a node member, raising an error if the
+value is incorrectly typed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>node</strong> (<em>dict</em>) – A dictionary loaded from YAML</li>
+<li><strong>expected_type</strong> (<em>type</em>) – The expected type of the node member</li>
+<li><strong>member_name</strong> (<em>str</em>) – The name of the member to fetch</li>
+<li><strong>indices</strong> (<em>list of int</em>) – List of indices to search, in case of nested lists</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The value of the list element in <em>member_name</em> at the specified <em>indices</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoadError</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Returned strings are stripped of leading and trailing whitespace</p>
+</div>
+<p><strong>Example:</strong></p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fetch the list itself</span>
+<span class="n">things</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_get_member</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="s1">&#39;things&#39;</span><span class="p">)</span>
+
+<span class="c1"># Iterate over the list indices</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">things</span><span class="p">)):</span>
+
+    <span class="c1"># Fetch dict things</span>
+    <span class="n">thing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_get_list_element</span><span class="p">(</span>
+        <span class="n">node</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="s1">&#39;things&#39;</span><span class="p">,</span> <span class="p">[</span> <span class="n">i</span> <span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.debug">
+<code class="descname">debug</code><span class="sig-paren">(</span><em>brief</em>, <em>*</em>, <em>detail=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print a debugging message</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>brief</strong> (<em>str</em>) – The brief message</li>
+<li><strong>detail</strong> (<em>str</em>) – An optional detailed message, can be multiline output</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.status">
+<code class="descname">status</code><span class="sig-paren">(</span><em>brief</em>, <em>*</em>, <em>detail=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print a status message</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>brief</strong> (<em>str</em>) – The brief message</li>
+<li><strong>detail</strong> (<em>str</em>) – An optional detailed message, can be multiline output</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Note: Status messages tell about what a plugin is currently doing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.info">
+<code class="descname">info</code><span class="sig-paren">(</span><em>brief</em>, <em>*</em>, <em>detail=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print an informative message</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>brief</strong> (<em>str</em>) – The brief message</li>
+<li><strong>detail</strong> (<em>str</em>) – An optional detailed message, can be multiline output</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Note: Informative messages tell the user something they might want</dt>
+<dd>to know, like if refreshing an element caused it to change.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.warn">
+<code class="descname">warn</code><span class="sig-paren">(</span><em>brief</em>, <em>*</em>, <em>detail=None</em>, <em>warning_token=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.warn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print a warning message, checks warning_token against project configuration</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>brief</strong> (<em>str</em>) – The brief message</li>
+<li><strong>detail</strong> (<em>str</em>) – An optional detailed message, can be multiline output</li>
+<li><strong>warning_token</strong> (<em>str</em>) – An optional configurable warning assosciated with this warning,
+this will cause PluginError to be raised if this warning is configured as fatal.
+(<em>Since 1.4</em>)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">(<code class="xref py py-class docutils literal notranslate"><span class="pre">PluginError</span></code>) – When warning_token is considered fatal by the project configuration</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.log">
+<code class="descname">log</code><span class="sig-paren">(</span><em>brief</em>, <em>*</em>, <em>detail=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log a message into the plugin’s log file</p>
+<p>The message will not be shown in the master log at all (so it will not
+be displayed to the user on the console).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>brief</strong> (<em>str</em>) – The brief message</li>
+<li><strong>detail</strong> (<em>str</em>) – An optional detailed message, can be multiline output</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.timed_activity">
+<code class="descname">timed_activity</code><span class="sig-paren">(</span><em>activity_name</em>, <em>*</em>, <em>detail=None</em>, <em>silent_nested=False</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.timed_activity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Context manager for performing timed activities in plugins</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>activity_name</strong> (<em>str</em>) – The name of the activity</li>
+<li><strong>detail</strong> (<em>str</em>) – An optional detailed message, can be multiline output</li>
+<li><strong>silent_nested</strong> (<em>bool</em>) – If specified, nested messages will be silenced</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This function lets you perform timed tasks in your plugin,
+the core will take care of timing the duration of your
+task and printing start / fail / success messages.</p>
+<p><strong>Example</strong></p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Activity will be logged and timed</span>
+<span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">timed_activity</span><span class="p">(</span><span class="s2">&quot;Mirroring </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)):</span>
+
+    <span class="c1"># This will raise SourceError on its own</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="o">...</span> <span class="n">command</span> <span class="n">which</span> <span class="n">takes</span> <span class="n">time</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.call">
+<code class="descname">call</code><span class="sig-paren">(</span><em>*popenargs</em>, <em>fail=None</em>, <em>fail_temporarily=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.call" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for subprocess.call()</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>popenargs</strong> (<em>list</em>) – Popen() arguments</li>
+<li><strong>fail</strong> (<em>str</em>) – A message to display if the process returns
+a non zero exit code</li>
+<li><strong>fail_temporarily</strong> (<em>bool</em>) – Whether any exceptions should
+be raised as temporary. (<em>Since: 1.2</em>)</li>
+<li><strong>rest_of_args</strong> (<em>kwargs</em>) – Remaining arguments to subprocess.call()</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The process exit code.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">(int)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">(<code class="xref py py-class docutils literal notranslate"><span class="pre">PluginError</span></code>) – If a non-zero return code is received and <em>fail</em> is specified</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Note: If <em>fail</em> is not specified, then the return value of subprocess.call()</dt>
+<dd>is returned even on error, and no exception is automatically raised.</dd>
+</dl>
+<p><strong>Example</strong></p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Call some host tool</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">tool</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_host_tool</span><span class="p">(</span><span class="s1">&#39;toolname&#39;</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
+    <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tool</span><span class="p">,</span> <span class="s1">&#39;--download-ponies&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mirror_directory</span><span class="p">],</span>
+    <span class="s2">&quot;Failed to download ponies from </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mirror_directory</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.plugin.Plugin.check_output">
+<code class="descname">check_output</code><span class="sig-paren">(</span><em>*popenargs</em>, <em>fail=None</em>, <em>fail_temporarily=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.plugin.Plugin.check_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for subprocess.check_output()</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>popenargs</strong> (<em>list</em>) – Popen() arguments</li>
+<li><strong>fail</strong> (<em>str</em>) – A message to display if the process returns
+a non zero exit code</li>
+<li><strong>fail_temporarily</strong> (<em>bool</em>) – Whether any exceptions should
+be raised as temporary. (<em>Since: 1.2</em>)</li>
+<li><strong>rest_of_args</strong> (<em>kwargs</em>) – Remaining arguments to subprocess.call()</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The process exit code
+(str): The process standard output</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">(int)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">(<code class="xref py py-class docutils literal notranslate"><span class="pre">PluginError</span></code>) – If a non-zero return code is received and <em>fail</em> is specified</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Note: If <em>fail</em> is not specified, then the return value of subprocess.check_output()</dt>
+<dd>is returned even on error, and no exception is automatically raised.</dd>
+</dl>
+<p><strong>Example</strong></p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the tool at preflight time</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">tool</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_host_tool</span><span class="p">(</span><span class="s1">&#39;toolname&#39;</span><span class="p">)</span>
+
+<span class="c1"># Call the tool, automatically raise an error</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span>
+    <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tool</span><span class="p">,</span> <span class="s1">&#39;--print-ponies&#39;</span><span class="p">],</span>
+    <span class="s2">&quot;Failed to print the ponies in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mirror_directory</span><span class="p">),</span>
+    <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mirror_directory</span><span class="p">)</span>
+
+<span class="c1"># Call the tool, inspect exit code</span>
+<span class="n">exit_code</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span>
+    <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tool</span><span class="p">,</span> <span class="s1">&#39;get-ref&#39;</span><span class="p">,</span> <span class="n">tracking</span><span class="p">],</span>
+    <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mirror_directory</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">exit_code</span> <span class="o">==</span> <span class="mi">128</span><span class="p">:</span>
+    <span class="k">return</span>
+<span class="k">elif</span> <span class="n">exit_code</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{plugin}</span><span class="s2">: Failed to get ref for tracking: </span><span class="si">{track}</span><span class="s2">&quot;</span>
+    <span class="k">raise</span> <span class="n">SourceError</span><span class="p">(</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">plugin</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">track</span><span class="o">=</span><span class="n">tracking</span><span class="p">))</span> <span class="kn">from</span> <span class="nn">e</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="buildstream.source.html" class="btn btn-neutral float-right" title="Source - Base source class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="core_framework.html" class="btn btn-neutral float-left" title="Plugin API reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2017-2018, The BuildStream Contributors
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

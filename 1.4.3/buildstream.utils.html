@@ -1,0 +1,613 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Utilities &mdash; BuildStream 1.4.2+20.g89765b75 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Additional writings" href="core_additional.html" />
+    <link rel="prev" title="Sandbox - The build sandbox" href="buildstream.sandbox.sandbox.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BuildStream
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.4.2+20.g89765b75
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="main_about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_using.html">Using</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="main_core.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core_format.html">Project format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core_plugins.html">Plugin specific documentation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="core_framework.html">Plugin API reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="buildstream.plugin.html">Plugin - Base plugin class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.source.html">Source - Base source class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.source.html#sourcefetcher-object-for-fetching-individual-urls">SourceFetcher - Object for fetching individual URLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.element.html">Element - Base element class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.buildelement.html">BuildElement - Abstract class for build elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.scriptelement.html">ScriptElement - Abstract class for scripting elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.sandbox.sandbox.html">Sandbox - The build sandbox</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="core_additional.html">Additional writings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="buildstream.html">buildstream package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="HACKING.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BuildStream</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="main_core.html">Reference</a> &raquo;</li>
+        
+          <li><a href="core_framework.html">Plugin API reference</a> &raquo;</li>
+        
+      <li>Utilities</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/buildstream.utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="module-buildstream.utils"></span><div class="section" id="utilities">
+<h1>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h1>
+<dl class="exception">
+<dt id="buildstream.utils.UtilError">
+<em class="property">exception </em><code class="descname">UtilError</code><span class="sig-paren">(</span><em>message</em>, <em>reason=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.utils.UtilError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">buildstream._exceptions.BstError</span></code></p>
+<p>Raised by utility functions when system calls fail.</p>
+<p>This will be handled internally by the BuildStream core,
+if you need to handle this error, then it should be reraised,
+or either of the <a class="reference internal" href="buildstream.element.html#buildstream.element.ElementError" title="buildstream.element.ElementError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ElementError</span></code></a> or <a class="reference internal" href="buildstream.source.html#buildstream.source.SourceError" title="buildstream.source.SourceError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SourceError</span></code></a>
+exceptions should be raised from this error.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="buildstream.utils.ProgramNotFoundError">
+<em class="property">exception </em><code class="descname">ProgramNotFoundError</code><span class="sig-paren">(</span><em>message</em>, <em>reason=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.utils.ProgramNotFoundError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">buildstream._exceptions.BstError</span></code></p>
+<p>Raised if a required program is not found.</p>
+<p>It is normally unneeded to handle this exception from plugin code.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="buildstream.utils.FileListResult">
+<em class="property">class </em><code class="descname">FileListResult</code><a class="headerlink" href="#buildstream.utils.FileListResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>An object which stores the result of one of the operations
+which run on a list of files.</p>
+<dl class="attribute">
+<dt id="buildstream.utils.FileListResult.overwritten">
+<code class="descname">overwritten</code><em class="property"> = None</em><a class="headerlink" href="#buildstream.utils.FileListResult.overwritten" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of files which were overwritten in the target directory</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.utils.FileListResult.ignored">
+<code class="descname">ignored</code><em class="property"> = None</em><a class="headerlink" href="#buildstream.utils.FileListResult.ignored" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of files which were ignored, because they would have
+replaced a non empty directory</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.utils.FileListResult.failed_attributes">
+<code class="descname">failed_attributes</code><em class="property"> = None</em><a class="headerlink" href="#buildstream.utils.FileListResult.failed_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of files for which attributes could not be copied over</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.utils.FileListResult.files_written">
+<code class="descname">files_written</code><em class="property"> = None</em><a class="headerlink" href="#buildstream.utils.FileListResult.files_written" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of files that were written.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.utils.FileListResult.combine">
+<code class="descname">combine</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.utils.FileListResult.combine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new FileListResult that contains the results of both.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="buildstream.utils.list_relative_paths">
+<code class="descname">list_relative_paths</code><span class="sig-paren">(</span><em>directory</em>, <em>*</em>, <em>list_dirs=True</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.utils.list_relative_paths" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generator for walking directory relative paths</p>
+<p>This generator is useful for checking the full manifest of
+a directory.</p>
+<p>Note that directories will be yielded only if they are
+empty.</p>
+<p>Symbolic links will not be followed, but will be included
+in the manifest.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>directory</strong> (<em>str</em>) – The directory to list files in</li>
+<li><strong>list_dirs</strong> (<em>bool</em>) – Whether to list directories</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><p class="first last">Relative filenames in <cite>directory</cite></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="buildstream.utils.glob">
+<code class="descname">glob</code><span class="sig-paren">(</span><em>paths</em>, <em>pattern</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.utils.glob" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generator to yield paths which match the glob pattern</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>paths</strong> (<em>iterable</em>) – The paths to check</li>
+<li><strong>pattern</strong> (<em>str</em>) – A glob pattern</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This generator will iterate over the passed <em>paths</em> and
+yield only the filenames which matched the provided <em>pattern</em>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Meta</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>*</td>
+<td>Zero or more of any character, excepting path separators</td>
+</tr>
+<tr class="row-odd"><td>**</td>
+<td>Zero or more of any character, including path separators</td>
+</tr>
+<tr class="row-even"><td>?</td>
+<td>One of any character, except for path separators</td>
+</tr>
+<tr class="row-odd"><td>[abc]</td>
+<td>One of any of the specified characters</td>
+</tr>
+<tr class="row-even"><td>[a-z]</td>
+<td>One of the characters in the specified range</td>
+</tr>
+<tr class="row-odd"><td>[!abc]</td>
+<td>Any single character, except the specified characters</td>
+</tr>
+<tr class="row-even"><td>[!a-z]</td>
+<td>Any single character, except those in the specified range</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Escaping of the metacharacters is not possible</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="buildstream.utils.sha256sum">
+<code class="descname">sha256sum</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.utils.sha256sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the sha256sum of a file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – A path to a file on disk</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An sha256 checksum string</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(str)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#buildstream.utils.UtilError" title="buildstream.utils.UtilError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">UtilError</span></code></a> – In the case there was an issue opening
+or reading <cite>filename</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="buildstream.utils.safe_copy">
+<code class="descname">safe_copy</code><span class="sig-paren">(</span><em>src</em>, <em>dest</em>, <em>*</em>, <em>result=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.utils.safe_copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy a file while preserving attributes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>src</strong> (<em>str</em>) – The source filename</li>
+<li><strong>dest</strong> (<em>str</em>) – The destination filename</li>
+<li><strong>result</strong> (<a class="reference internal" href="#buildstream.utils.FileListResult" title="buildstream.utils.FileListResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileListResult</span></code></a>) – An optional collective result</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#buildstream.utils.UtilError" title="buildstream.utils.UtilError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">UtilError</span></code></a> – In the case of unexpected system call failures</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This is almost the same as shutil.copy2(), except that
+we unlink <em>dest</em> before overwriting it if it exists, just
+incase <em>dest</em> is a hardlink to a different file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="buildstream.utils.safe_link">
+<code class="descname">safe_link</code><span class="sig-paren">(</span><em>src</em>, <em>dest</em>, <em>*</em>, <em>result=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.utils.safe_link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to create a hardlink, but resort to copying in the case of cross device links.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>src</strong> (<em>str</em>) – The source filename</li>
+<li><strong>dest</strong> (<em>str</em>) – The destination filename</li>
+<li><strong>result</strong> (<a class="reference internal" href="#buildstream.utils.FileListResult" title="buildstream.utils.FileListResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileListResult</span></code></a>) – An optional collective result</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#buildstream.utils.UtilError" title="buildstream.utils.UtilError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">UtilError</span></code></a> – In the case of unexpected system call failures</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="buildstream.utils.safe_remove">
+<code class="descname">safe_remove</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.utils.safe_remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a file or directory</p>
+<p>This will remove a file if it exists, and will
+remove a directory if the directory is empty.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – The path to remove</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if <cite>path</cite> was removed or did not exist, False
+if <cite>path</cite> was a non empty directory.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#buildstream.utils.UtilError" title="buildstream.utils.UtilError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">UtilError</span></code></a> – In the case of unexpected system call failures</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="buildstream.utils.copy_files">
+<code class="descname">copy_files</code><span class="sig-paren">(</span><em>src</em>, <em>dest</em>, <em>*</em>, <em>files=None</em>, <em>ignore_missing=False</em>, <em>report_written=False</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.utils.copy_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy files from source to destination.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>src</strong> (<em>str</em>) – The source file or directory</li>
+<li><strong>dest</strong> (<em>str</em>) – The destination directory</li>
+<li><strong>files</strong> (<em>list</em>) – Optional list of files in <cite>src</cite> to copy</li>
+<li><strong>ignore_missing</strong> (<em>bool</em>) – Dont raise any error if a source file is missing</li>
+<li><strong>report_written</strong> (<em>bool</em>) – Add to the result object the full list of files written</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The result describing what happened during this file operation</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">(<a class="reference internal" href="#buildstream.utils.FileListResult" title="buildstream.utils.FileListResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileListResult</span></code></a>)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#buildstream.utils.UtilError" title="buildstream.utils.UtilError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">UtilError</span></code></a> – In the case of unexpected system call failures</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Directories in <cite>dest</cite> are replaced with files from <cite>src</cite>,
+unless the existing directory in <cite>dest</cite> is not empty in which
+case the path will be reported in the return value.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="buildstream.utils.link_files">
+<code class="descname">link_files</code><span class="sig-paren">(</span><em>src</em>, <em>dest</em>, <em>*</em>, <em>files=None</em>, <em>ignore_missing=False</em>, <em>report_written=False</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.utils.link_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hardlink files from source to destination.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>src</strong> (<em>str</em>) – The source file or directory</li>
+<li><strong>dest</strong> (<em>str</em>) – The destination directory</li>
+<li><strong>files</strong> (<em>list</em>) – Optional list of files in <cite>src</cite> to link</li>
+<li><strong>ignore_missing</strong> (<em>bool</em>) – Dont raise any error if a source file is missing</li>
+<li><strong>report_written</strong> (<em>bool</em>) – Add to the result object the full list of files written</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The result describing what happened during this file operation</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">(<a class="reference internal" href="#buildstream.utils.FileListResult" title="buildstream.utils.FileListResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileListResult</span></code></a>)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#buildstream.utils.UtilError" title="buildstream.utils.UtilError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">UtilError</span></code></a> – In the case of unexpected system call failures</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Directories in <cite>dest</cite> are replaced with files from <cite>src</cite>,
+unless the existing directory in <cite>dest</cite> is not empty in which
+case the path will be reported in the return value.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If a hardlink cannot be created due to crossing filesystems,
+then the file will be copied instead.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="buildstream.utils.get_host_tool">
+<code class="descname">get_host_tool</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.utils.get_host_tool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the full path of a host tool</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>str</em>) – The name of the program to search for</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The full path to the program, if found</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#buildstream.utils.ProgramNotFoundError" title="buildstream.utils.ProgramNotFoundError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProgramNotFoundError</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="buildstream.utils.url_directory_name">
+<code class="descname">url_directory_name</code><span class="sig-paren">(</span><em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.utils.url_directory_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalizes a url into a directory name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>url</strong> (<em>str</em>) – A url string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A string which can be used as a directory name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="buildstream.utils.get_bst_version">
+<code class="descname">get_bst_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.utils.get_bst_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the major, minor release portion of the
+BuildStream version.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The major version
+(int): The minor version</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(int)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="buildstream.utils.save_file_atomic">
+<code class="descname">save_file_atomic</code><span class="sig-paren">(</span><em>filename</em>, <em>mode='w'</em>, <em>*</em>, <em>buffering=-1</em>, <em>encoding=None</em>, <em>errors=None</em>, <em>newline=None</em>, <em>closefd=True</em>, <em>opener=None</em>, <em>tempdir=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.utils.save_file_atomic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a file with a temporary name and rename it into place when ready.</p>
+<p>This is a context manager which is meant for saving data to files.
+The data is written to a temporary file, which gets renamed to the target
+name when the context is closed. This avoids readers of the file from
+getting an incomplete file.</p>
+<p><strong>Example:</strong></p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">save_file_atomic</span><span class="p">(</span><span class="s1">&#39;/path/to/foo&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">stuff</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The file will be called something like <code class="docutils literal notranslate"><span class="pre">tmpCAFEBEEF</span></code> until the
+context block ends, at which point it gets renamed to <code class="docutils literal notranslate"><span class="pre">foo</span></code>. The
+temporary file will be created in the same directory as the output file.
+The <code class="docutils literal notranslate"><span class="pre">filename</span></code> parameter must be an absolute path.</p>
+<p>If an exception occurs or the process is terminated, the temporary file will
+be deleted.</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="core_additional.html" class="btn btn-neutral float-right" title="Additional writings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="buildstream.sandbox.sandbox.html" class="btn btn-neutral float-left" title="Sandbox - The build sandbox" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, The BuildStream Contributors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

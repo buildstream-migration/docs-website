@@ -1,0 +1,243 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Sandbox &#8212; BuildStream 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <span class="target" id="module-buildstream.sandbox.sandbox"></span><div class="section" id="sandbox">
+<h1>Sandbox<a class="headerlink" href="#sandbox" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="buildstream.element.html#buildstream.element.Element" title="buildstream.element.Element"><code class="xref py py-class docutils literal"><span class="pre">Element</span></code></a> plugins which want to interface with the sandbox
+need only understand this interface, while it may be given a different
+sandbox implementation, any sandbox implementation it is given will
+conform to this interface.</p>
+<dl class="class">
+<dt id="buildstream.sandbox.sandbox.SandboxFlags">
+<em class="property">class </em><code class="descname">SandboxFlags</code><a class="headerlink" href="#buildstream.sandbox.sandbox.SandboxFlags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Flags indicating how the sandbox should be run.</p>
+<dl class="attribute">
+<dt id="buildstream.sandbox.sandbox.SandboxFlags.ROOT_READ_ONLY">
+<code class="descname">ROOT_READ_ONLY</code><em class="property"> = 1</em><a class="headerlink" href="#buildstream.sandbox.sandbox.SandboxFlags.ROOT_READ_ONLY" title="Permalink to this definition">¶</a></dt>
+<dd><p>The root filesystem is read only.</p>
+<p>This is normally true except when running integration commands
+on staged dependencies, where we have to update caches and run
+things such as ldconfig.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.sandbox.sandbox.SandboxFlags.NETWORK_ENABLED">
+<code class="descname">NETWORK_ENABLED</code><em class="property"> = 2</em><a class="headerlink" href="#buildstream.sandbox.sandbox.SandboxFlags.NETWORK_ENABLED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to expose host network.</p>
+<p>This should not be set when running builds, but can
+be allowed for running a shell in a sandbox.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.sandbox.sandbox.SandboxFlags.INTERACTIVE">
+<code class="descname">INTERACTIVE</code><em class="property"> = 4</em><a class="headerlink" href="#buildstream.sandbox.sandbox.SandboxFlags.INTERACTIVE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to run the sandbox interactively</p>
+<p>This determines if the sandbox should attempt to connect
+the terminal through to the calling process, or detach
+the terminal entirely.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="buildstream.sandbox.sandbox.Sandbox">
+<em class="property">class </em><code class="descname">Sandbox</code><a class="headerlink" href="#buildstream.sandbox.sandbox.Sandbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Sandbox programming interface for <a class="reference internal" href="buildstream.element.html#buildstream.element.Element" title="buildstream.element.Element"><code class="xref py py-class docutils literal"><span class="pre">Element</span></code></a> plugins.</p>
+<dl class="attribute">
+<dt id="buildstream.sandbox.sandbox.Sandbox.DEVICES">
+<code class="descname">DEVICES</code><em class="property"> = ['/dev/urandom', '/dev/random', '/dev/zero', '/dev/null']</em><a class="headerlink" href="#buildstream.sandbox.sandbox.Sandbox.DEVICES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="buildstream.sandbox.sandbox.Sandbox.get_directory">
+<code class="descname">get_directory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.sandbox.sandbox.Sandbox.get_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches the sandbox root directory</p>
+<p>The root directory is where artifacts for the base
+runtime environment should be staged.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The sandbox root directory</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(str)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.sandbox.sandbox.Sandbox.set_environment">
+<code class="descname">set_environment</code><span class="sig-paren">(</span><em>environment</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.sandbox.sandbox.Sandbox.set_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the environment variables for the sandbox</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directory</strong> (<em>dict</em>) – The environment variables to use in the sandbox</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.sandbox.sandbox.Sandbox.set_work_directory">
+<code class="descname">set_work_directory</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.sandbox.sandbox.Sandbox.set_work_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the work directory for commands run in the sandbox</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directory</strong> (<em>str</em>) – An absolute path within the sandbox</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.sandbox.sandbox.Sandbox.mark_directory">
+<code class="descname">mark_directory</code><span class="sig-paren">(</span><em>directory</em>, <em>*</em>, <em>artifact=False</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.sandbox.sandbox.Sandbox.mark_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Marks a sandbox directory and ensures it will exist</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>directory</strong> (<em>str</em>) – An absolute path within the sandbox to mark</li>
+<li><strong>artifact</strong> (<em>bool</em>) – Whether the content staged at this location
+contains artifacts</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Any marked directories will be read-write in the sandboxed
+environment, only the root directory is allowed to be readonly.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.sandbox.sandbox.Sandbox.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>command</em>, <em>flags</em>, <em>*</em>, <em>cwd=None</em>, <em>env=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.sandbox.sandbox.Sandbox.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a command in the sandbox.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>command</strong> (<em>list</em>) – The command to run in the sandboxed environment, as a list
+of strings starting with the binary to run.</li>
+<li><strong>flags</strong> (<a class="reference internal" href="#buildstream.sandbox.sandbox.SandboxFlags" title="buildstream.sandbox.sandbox.SandboxFlags"><code class="xref py py-class docutils literal"><span class="pre">SandboxFlags</span></code></a>) – The flags for running this command.</li>
+<li><strong>cwd</strong> (<em>str</em>) – The sandbox relative working directory in which to run the command.</li>
+<li><strong>env</strong> (<em>dict</em>) – A dictionary of string key, value pairs to set as environment
+variables inside the sandbox environment.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The program exit code.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">(int)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">(<a class="reference internal" href="buildstream.utils.html#buildstream.utils.ProgramNotFoundError" title="buildstream.utils.ProgramNotFoundError"><code class="xref py py-class docutils literal"><span class="pre">ProgramNotFoundError</span></code></a>) – If a host tool which the given sandbox
+implementation requires is not found.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The optional <em>cwd</em> argument will default to the value set with
+<code class="xref py py-func docutils literal"><span class="pre">set_work_directory()</span></code></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Codethink Limited.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/buildstream.sandbox.sandbox.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,4 @@
+makemaker plugin
+============================================
+
+.. automodule:: elements.makemaker

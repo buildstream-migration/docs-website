@@ -1,0 +1,4 @@
+modulebuild plugin
+============================================
+
+.. automodule:: elements.modulebuild

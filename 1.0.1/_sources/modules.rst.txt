@@ -1,0 +1,7 @@
+buildstream
+===========
+
+.. toctree::
+   :maxdepth: 4
+
+   buildstream

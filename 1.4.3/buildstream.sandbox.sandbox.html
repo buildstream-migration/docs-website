@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sandbox - The build sandbox &mdash; BuildStream 1.4.2+20.g89765b75 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Utilities" href="buildstream.utils.html" />
+    <link rel="prev" title="ScriptElement - Abstract class for scripting elements" href="buildstream.scriptelement.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BuildStream
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.4.2+20.g89765b75
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="main_about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_using.html">Using</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="main_core.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core_format.html">Project format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core_plugins.html">Plugin specific documentation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="core_framework.html">Plugin API reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="buildstream.plugin.html">Plugin - Base plugin class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.source.html">Source - Base source class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.source.html#sourcefetcher-object-for-fetching-individual-urls">SourceFetcher - Object for fetching individual URLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.element.html">Element - Base element class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.buildelement.html">BuildElement - Abstract class for build elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.scriptelement.html">ScriptElement - Abstract class for scripting elements</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Sandbox - The build sandbox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildstream.utils.html">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="core_additional.html">Additional writings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="buildstream.html">buildstream package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="HACKING.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BuildStream</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="main_core.html">Reference</a> &raquo;</li>
+        
+          <li><a href="core_framework.html">Plugin API reference</a> &raquo;</li>
+        
+      <li>Sandbox - The build sandbox</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/buildstream.sandbox.sandbox.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="module-buildstream.sandbox.sandbox"></span><div class="section" id="sandbox-the-build-sandbox">
+<h1>Sandbox - The build sandbox<a class="headerlink" href="#sandbox-the-build-sandbox" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="buildstream.element.html#buildstream.element.Element" title="buildstream.element.Element"><code class="xref py py-class docutils literal notranslate"><span class="pre">Element</span></code></a> plugins which want to interface with the sandbox
+need only understand this interface, while it may be given a different
+sandbox implementation, any sandbox implementation it is given will
+conform to this interface.</p>
+<p>See also: <a class="reference internal" href="additional_sandboxing.html#sandboxing"><span class="std std-ref">Sandboxing</span></a>.</p>
+<dl class="class">
+<dt id="buildstream.sandbox.sandbox.SandboxFlags">
+<em class="property">class </em><code class="descname">SandboxFlags</code><a class="headerlink" href="#buildstream.sandbox.sandbox.SandboxFlags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Flags indicating how the sandbox should be run.</p>
+<dl class="attribute">
+<dt id="buildstream.sandbox.sandbox.SandboxFlags.ROOT_READ_ONLY">
+<code class="descname">ROOT_READ_ONLY</code><em class="property"> = 1</em><a class="headerlink" href="#buildstream.sandbox.sandbox.SandboxFlags.ROOT_READ_ONLY" title="Permalink to this definition">¶</a></dt>
+<dd><p>The root filesystem is read only.</p>
+<p>This is normally true except when running integration commands
+on staged dependencies, where we have to update caches and run
+things such as ldconfig.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.sandbox.sandbox.SandboxFlags.NETWORK_ENABLED">
+<code class="descname">NETWORK_ENABLED</code><em class="property"> = 2</em><a class="headerlink" href="#buildstream.sandbox.sandbox.SandboxFlags.NETWORK_ENABLED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to expose host network.</p>
+<p>This should not be set when running builds, but can
+be allowed for running a shell in a sandbox.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.sandbox.sandbox.SandboxFlags.INTERACTIVE">
+<code class="descname">INTERACTIVE</code><em class="property"> = 4</em><a class="headerlink" href="#buildstream.sandbox.sandbox.SandboxFlags.INTERACTIVE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to run the sandbox interactively</p>
+<p>This determines if the sandbox should attempt to connect
+the terminal through to the calling process, or detach
+the terminal entirely.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="buildstream.sandbox.sandbox.SandboxFlags.INHERIT_UID">
+<code class="descname">INHERIT_UID</code><em class="property"> = 8</em><a class="headerlink" href="#buildstream.sandbox.sandbox.SandboxFlags.INHERIT_UID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to use the user id and group id from the host environment</p>
+<p>This determines if processes in the sandbox should run with the
+same user id and group id as BuildStream itself. By default,
+processes run with user id and group id 0, protected by a user
+namespace where available.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="buildstream.sandbox.sandbox.Sandbox">
+<em class="property">class </em><code class="descname">Sandbox</code><a class="headerlink" href="#buildstream.sandbox.sandbox.Sandbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Sandbox programming interface for <a class="reference internal" href="buildstream.element.html#buildstream.element.Element" title="buildstream.element.Element"><code class="xref py py-class docutils literal notranslate"><span class="pre">Element</span></code></a> plugins.</p>
+<dl class="attribute">
+<dt id="buildstream.sandbox.sandbox.Sandbox.DEVICES">
+<code class="descname">DEVICES</code><em class="property"> = ['/dev/urandom', '/dev/random', '/dev/zero', '/dev/null']</em><a class="headerlink" href="#buildstream.sandbox.sandbox.Sandbox.DEVICES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="buildstream.sandbox.sandbox.Sandbox.get_directory">
+<code class="descname">get_directory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.sandbox.sandbox.Sandbox.get_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches the sandbox root directory</p>
+<p>The root directory is where artifacts for the base
+runtime environment should be staged.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The sandbox root directory</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(str)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.sandbox.sandbox.Sandbox.set_environment">
+<code class="descname">set_environment</code><span class="sig-paren">(</span><em>environment</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.sandbox.sandbox.Sandbox.set_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the environment variables for the sandbox</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directory</strong> (<em>dict</em>) – The environment variables to use in the sandbox</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.sandbox.sandbox.Sandbox.set_work_directory">
+<code class="descname">set_work_directory</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.sandbox.sandbox.Sandbox.set_work_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the work directory for commands run in the sandbox</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directory</strong> (<em>str</em>) – An absolute path within the sandbox</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.sandbox.sandbox.Sandbox.mark_directory">
+<code class="descname">mark_directory</code><span class="sig-paren">(</span><em>directory</em>, <em>*</em>, <em>artifact=False</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.sandbox.sandbox.Sandbox.mark_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Marks a sandbox directory and ensures it will exist</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>directory</strong> (<em>str</em>) – An absolute path within the sandbox to mark</li>
+<li><strong>artifact</strong> (<em>bool</em>) – Whether the content staged at this location
+contains artifacts</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Any marked directories will be read-write in the sandboxed
+environment, only the root directory is allowed to be readonly.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildstream.sandbox.sandbox.Sandbox.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>command</em>, <em>flags</em>, <em>*</em>, <em>cwd=None</em>, <em>env=None</em><span class="sig-paren">)</span><a class="headerlink" href="#buildstream.sandbox.sandbox.Sandbox.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a command in the sandbox.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>command</strong> (<em>list</em>) – The command to run in the sandboxed environment, as a list
+of strings starting with the binary to run.</li>
+<li><strong>flags</strong> (<a class="reference internal" href="#buildstream.sandbox.sandbox.SandboxFlags" title="buildstream.sandbox.sandbox.SandboxFlags"><code class="xref py py-class docutils literal notranslate"><span class="pre">SandboxFlags</span></code></a>) – The flags for running this command.</li>
+<li><strong>cwd</strong> (<em>str</em>) – The sandbox relative working directory in which to run the command.</li>
+<li><strong>env</strong> (<em>dict</em>) – A dictionary of string key, value pairs to set as environment
+variables inside the sandbox environment.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The program exit code.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">(int)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">(<a class="reference internal" href="buildstream.utils.html#buildstream.utils.ProgramNotFoundError" title="buildstream.utils.ProgramNotFoundError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProgramNotFoundError</span></code></a>) – If a host tool which the given sandbox
+implementation requires is not found.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The optional <em>cwd</em> argument will default to the value set with
+<code class="xref py py-func docutils literal notranslate"><span class="pre">set_work_directory()</span></code></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="buildstream.utils.html" class="btn btn-neutral float-right" title="Utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="buildstream.scriptelement.html" class="btn btn-neutral float-left" title="ScriptElement - Abstract class for scripting elements" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, The BuildStream Contributors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

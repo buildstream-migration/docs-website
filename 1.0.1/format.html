@@ -1,0 +1,389 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Element Constructs &#8212; BuildStream 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="element-constructs">
+<span id="format"></span><h1>Element Constructs<a class="headerlink" href="#element-constructs" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="element-basics">
+<span id="format-basics"></span><h2>Element Basics<a class="headerlink" href="#element-basics" title="Permalink to this headline">¶</a></h2>
+<p>Here is a rather complete example using the autotools element kind and git source kind:</p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Specify the kind of element this is</span>
+<span class="n">kind</span><span class="p">:</span> <span class="n">autotools</span>
+
+<span class="c1"># Specify some dependencies</span>
+<span class="n">depends</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">elements</span><span class="o">/</span><span class="n">element1</span><span class="o">.</span><span class="n">bst</span>
+<span class="o">-</span> <span class="n">elements</span><span class="o">/</span><span class="n">element2</span><span class="o">.</span><span class="n">bst</span>
+
+<span class="c1"># Specify the source which should be built</span>
+<span class="n">sources</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">kind</span><span class="p">:</span> <span class="n">git</span>
+  <span class="n">url</span><span class="p">:</span> <span class="n">upstream</span><span class="p">:</span><span class="n">modulename</span><span class="o">.</span><span class="n">git</span>
+  <span class="n">track</span><span class="p">:</span> <span class="n">master</span>
+  <span class="n">ref</span><span class="p">:</span> <span class="n">d0b38561afb8122a3fc6bafc5a733ec502fcaed6</span>
+
+<span class="c1"># Override some variables</span>
+<span class="n">variables</span><span class="p">:</span>
+  <span class="n">sysconfdir</span><span class="p">:</span> <span class="o">%</span><span class="p">{</span><span class="n">prefix</span><span class="p">}</span><span class="o">/</span><span class="n">etc</span>
+
+<span class="c1"># Tweak the sandbox shell environment</span>
+<span class="n">environment</span><span class="p">:</span>
+  <span class="n">LD_LIBRARY_PATH</span><span class="p">:</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">custom</span><span class="o">/</span><span class="n">path</span>
+
+<span class="c1"># Specify the configuration of the element</span>
+<span class="n">config</span><span class="p">:</span>
+
+  <span class="c1"># Override autotools element default configure-commands</span>
+  <span class="n">configure</span><span class="o">-</span><span class="n">commands</span><span class="p">:</span>
+  <span class="o">-</span> <span class="s2">&quot;%</span><span class="si">{configure}</span><span class="s2"> --enable-fancy-feature&quot;</span>
+
+<span class="c1"># Specify public domain data, visible to other elements.</span>
+<span class="n">public</span><span class="p">:</span>
+  <span class="n">bst</span><span class="p">:</span>
+    <span class="n">integration</span><span class="o">-</span><span class="n">commands</span><span class="p">:</span>
+    <span class="o">-</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">update</span><span class="o">-</span><span class="n">fancy</span><span class="o">-</span><span class="n">feature</span><span class="o">-</span><span class="n">cache</span>
+</pre></div>
+</div>
+<p>For most use cases you would not need to specify this much detail, we’ve provided
+details here in order to have a more complete initial example.</p>
+<p>Let’s break down the above and give a brief explanation of what these attributes mean.</p>
+<div class="section" id="kind">
+<h3>Kind<a class="headerlink" href="#kind" title="Permalink to this headline">¶</a></h3>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Specify the kind of element this is</span>
+<span class="n">kind</span><span class="p">:</span> <span class="n">autotools</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">kind</span></code> attribute specifies which plugin will be operating on the element’s input to
+produce its output. Plugins define element types and each of them can be referred to by
+name with the <code class="docutils literal"><span class="pre">kind</span></code> attribute.</p>
+<p>To refer to a third party plugin, prefix the plugin with its package, for example:</p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="n">kind</span><span class="p">:</span> <span class="n">buildstream</span><span class="o">-</span><span class="n">plugins</span><span class="p">:</span><span class="n">dpkg_build</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="depends">
+<h3>Depends<a class="headerlink" href="#depends" title="Permalink to this headline">¶</a></h3>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Specify some dependencies</span>
+<span class="n">depends</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">elements</span><span class="o">/</span><span class="n">element1</span><span class="o">.</span><span class="n">bst</span>
+<span class="o">-</span> <span class="n">elements</span><span class="o">/</span><span class="n">element2</span><span class="o">.</span><span class="n">bst</span>
+</pre></div>
+</div>
+<p>Relationships between elements are specified with the <code class="docutils literal"><span class="pre">depends</span></code> attribute. Element
+definitions may depend on other elements by specifying the project relative path
+to the elements on which they depend here. See <a class="reference internal" href="#dependencies">Dependencies</a> for more information
+on the dependency model.</p>
+</div>
+<div class="section" id="sources">
+<h3>Sources<a class="headerlink" href="#sources" title="Permalink to this headline">¶</a></h3>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Specify the source which should be built</span>
+<span class="n">sources</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">kind</span><span class="p">:</span> <span class="n">git</span>
+  <span class="n">url</span><span class="p">:</span> <span class="n">upstream</span><span class="p">:</span><span class="n">modulename</span><span class="o">.</span><span class="n">git</span>
+  <span class="n">track</span><span class="p">:</span> <span class="n">master</span>
+  <span class="n">ref</span><span class="p">:</span> <span class="n">d0b38561afb8122a3fc6bafc5a733ec502fcaed6</span>
+</pre></div>
+</div>
+<p>Here we specify some input for the element, any number of sources may be specified.
+By default the sources will be staged in the root of the element’s build directory
+in the build sandbox, but sources may specify a <code class="docutils literal"><span class="pre">directory</span></code> attribute to control
+where the sources will be staged. The <code class="docutils literal"><span class="pre">directory</span></code> attribute may specify a build
+sandbox relative subdirectory.</p>
+<p>For example, one might encounter a component which requires a separate data package
+in order to build itself, in this case the sources might be listed as:</p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="n">sources</span><span class="p">:</span>
+
+<span class="c1"># Specify the source which should be built</span>
+<span class="o">-</span> <span class="n">kind</span><span class="p">:</span> <span class="n">git</span>
+  <span class="n">url</span><span class="p">:</span> <span class="n">upstream</span><span class="p">:</span><span class="n">modulename</span><span class="o">.</span><span class="n">git</span>
+  <span class="n">track</span><span class="p">:</span> <span class="n">master</span>
+  <span class="n">ref</span><span class="p">:</span> <span class="n">d0b38561afb8122a3fc6bafc5a733ec502fcaed6</span>
+
+<span class="c1"># Specify the data package we need for build frobnication,</span>
+<span class="c1"># we need it to be unpacked in a src/frobdir</span>
+<span class="o">-</span> <span class="n">kind</span><span class="p">:</span> <span class="n">tarball</span>
+  <span class="n">directory</span><span class="p">:</span> <span class="n">src</span><span class="o">/</span><span class="n">frobdir</span>
+  <span class="n">url</span><span class="p">:</span> <span class="n">data</span><span class="p">:</span><span class="n">frobs</span><span class="o">.</span><span class="n">tgz</span>
+  <span class="n">sha256sum</span><span class="p">:</span> <span class="mi">9</span><span class="n">d4b1147f8cf244b0002ba74bfb0b8dfb3</span><span class="o">...</span>
+</pre></div>
+</div>
+<p>Like Elements, Source types are plugins which are indicated by the <code class="docutils literal"><span class="pre">kind</span></code> attribute.
+Asides from the common <code class="docutils literal"><span class="pre">kind</span></code> and <code class="docutils literal"><span class="pre">directory</span></code> attributes which may be applied to all
+Sources, refer to the Source specific documentation for meaningful attributes for the
+particular Source.</p>
+</div>
+<div class="section" id="variables">
+<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Override some variables</span>
+<span class="n">variables</span><span class="p">:</span>
+  <span class="n">sysconfdir</span><span class="p">:</span> <span class="s2">&quot;%</span><span class="si">{prefix}</span><span class="s2">/etc&quot;</span>
+</pre></div>
+</div>
+<p>Variables can be declared or overridden from an element. Variables can also be
+declared and overridden in the <a class="reference internal" href="projectconf.html#projectconf"><span class="std std-ref">Project Configuration</span></a></p>
+<p>See <a class="reference internal" href="#using-variables">Using Variables</a> below for a more in depth discussion on variables in BuildStream.</p>
+</div>
+<div class="section" id="environment">
+<h3>Environment<a class="headerlink" href="#environment" title="Permalink to this headline">¶</a></h3>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Tweak the sandbox shell environment</span>
+<span class="n">environment</span><span class="p">:</span>
+  <span class="n">LD_LIBRARY_PATH</span><span class="p">:</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">custom</span><span class="o">/</span><span class="n">path</span>
+</pre></div>
+</div>
+<p>Environment variables can be set to literal values here, these environment
+variables will be effective in the <a class="reference internal" href="buildstream.sandbox.html#module-buildstream.sandbox" title="buildstream.sandbox"><code class="xref py py-mod docutils literal"><span class="pre">Sandbox</span></code></a> where
+build instructions are run for this element.</p>
+<p>Environment variables can also be declared and overridden in the <a class="reference internal" href="projectconf.html#projectconf"><span class="std std-ref">Project Configuration</span></a></p>
+</div>
+<div class="section" id="config">
+<h3>Config<a class="headerlink" href="#config" title="Permalink to this headline">¶</a></h3>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Specify the configuration of the element</span>
+<span class="n">config</span><span class="p">:</span>
+
+  <span class="c1"># Override autotools element default configure-commands</span>
+  <span class="n">configure</span><span class="o">-</span><span class="n">commands</span><span class="p">:</span>
+  <span class="o">-</span> <span class="s2">&quot;%</span><span class="si">{configure}</span><span class="s2"> --enable-fancy-feature&quot;</span>
+</pre></div>
+</div>
+<p>Here we configure the element itself. The autotools element provides sane defaults for
+building sources which use autotools. Element default configurations can be overridden
+in the <code class="docutils literal"><span class="pre">project.conf</span></code> file and additionally overridden in the declaration of an element.</p>
+<p>For meaningful documentation on what can be specified in the <code class="docutils literal"><span class="pre">config</span></code> section for a given
+element <code class="docutils literal"><span class="pre">kind</span></code>, refer to the element specific documentation.</p>
+</div>
+<div class="section" id="public">
+<span id="format-public"></span><h3>Public<a class="headerlink" href="#public" title="Permalink to this headline">¶</a></h3>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Specify public domain data, visible to other elements.</span>
+<span class="n">public</span><span class="p">:</span>
+  <span class="n">bst</span><span class="p">:</span>
+    <span class="n">integration</span><span class="o">-</span><span class="n">commands</span><span class="p">:</span>
+    <span class="o">-</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">update</span><span class="o">-</span><span class="n">fancy</span><span class="o">-</span><span class="n">feature</span><span class="o">-</span><span class="n">cache</span>
+</pre></div>
+</div>
+<p>Metadata declared in the <code class="docutils literal"><span class="pre">public</span></code> section of an element is visible to
+any other element which depends on the declaring element in a given pipeline.
+BuildStream itself consumes public data from the <code class="docutils literal"><span class="pre">bst</span></code> domain. The <code class="docutils literal"><span class="pre">integration-commands</span></code>
+demonstrated above for example, describe commands which should be run in an
+environment where the given element is installed but before anything should be run.</p>
+<p>An element is allowed to read domain data from any element it depends on, and users
+may specify additional domains to be understood and processed by their own element
+plugins.</p>
+</div>
+</div>
+<div class="section" id="dependencies">
+<span id="format-dependencies"></span><h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>The dependency model in BuildStream is simplified by treating software distribution
+and software building as separate problem spaces. This is to say that one element
+can only ever depend on another element but never on a subset of the product which
+another element produces.</p>
+<p>In this section we’ll quickly go over the few features BuildStream offers in its
+dependency model.</p>
+<div class="section" id="expressing-dependencies">
+<h3>Expressing Dependencies<a class="headerlink" href="#expressing-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>Dependencies in BuildStream are parameterizable objects, however as demonstrated
+in the above example, they can also be expressed as strings as a convenience
+shorthand whenever the default dependency attributes are suitable.</p>
+<p>Shorthand:</p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Shorthand Dependencies</span>
+<span class="n">depends</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">elements</span><span class="o">/</span><span class="n">foo</span><span class="o">.</span><span class="n">bst</span>
+<span class="o">-</span> <span class="n">elements</span><span class="o">/</span><span class="n">bar</span><span class="o">.</span><span class="n">bst</span>
+</pre></div>
+</div>
+<p>Dependency dictionary:</p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Fully specified dependency</span>
+<span class="n">depends</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">filename</span><span class="p">:</span> <span class="n">elements</span><span class="o">/</span><span class="n">foo</span><span class="o">.</span><span class="n">bst</span>
+  <span class="nb">type</span><span class="p">:</span> <span class="n">build</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">type</span></code> attribute can be used to express the dependency type.</p>
+</div>
+<div class="section" id="dependency-types">
+<h3>Dependency Types<a class="headerlink" href="#dependency-types" title="Permalink to this headline">¶</a></h3>
+<p>The dependency <code class="docutils literal"><span class="pre">type</span></code> attribute defines what the dependency is required for
+and is essential to how BuildStream plots a build plan.</p>
+<p>There are two types which one can specify for a dependency, <code class="docutils literal"><span class="pre">build</span></code> and <code class="docutils literal"><span class="pre">runtime</span></code>.</p>
+<p>A <code class="docutils literal"><span class="pre">build</span></code> dependency type states that the given element’s product must
+be staged in order to build the depending element. Depending on an element
+which has <code class="docutils literal"><span class="pre">build</span></code> dependencies will not implicitly depend on that element’s
+<code class="docutils literal"><span class="pre">build</span></code> dependencies.</p>
+<p>A <code class="docutils literal"><span class="pre">runtime</span></code> dependency type states that the given element’s product
+must be present for the depending element to function. An element’s
+<code class="docutils literal"><span class="pre">runtime</span></code> dependencies need not be staged in order to build the element.</p>
+<p>If <code class="docutils literal"><span class="pre">type</span></code> is not specified, then it is assumed that the dependency is
+required both at build time and runtime.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is assumed that a dependency which is required for building an
+element must run while building the depending element. This means that
+<code class="docutils literal"><span class="pre">build</span></code> depending on a given element implies that that element’s
+<code class="docutils literal"><span class="pre">runtime</span></code> dependencies will also be staged for the purpose of building.</p>
+</div>
+</div>
+</div>
+<div class="section" id="using-variables">
+<span id="format-variables"></span><h2>Using Variables<a class="headerlink" href="#using-variables" title="Permalink to this headline">¶</a></h2>
+<p>Variables in BuildStream are a way to make your build instructions and
+element configurations more dynamic.</p>
+<div class="section" id="referring-to-variables">
+<h3>Referring to Variables<a class="headerlink" href="#referring-to-variables" title="Permalink to this headline">¶</a></h3>
+<p>Variables are expressed as <code class="docutils literal"><span class="pre">%{...}</span></code>, where <code class="docutils literal"><span class="pre">...</span></code> must contain only
+alphanumeric characters and the separators <code class="docutils literal"><span class="pre">_</span></code> and <code class="docutils literal"><span class="pre">-</span></code>. Further, the
+first letter of <code class="docutils literal"><span class="pre">...</span></code> must be an alphabetic character.</p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="ow">is</span> <span class="n">release</span> <span class="n">version</span> <span class="o">%</span><span class="p">{</span><span class="n">version</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="declaring-and-overriding-variables">
+<h3>Declaring and Overriding Variables<a class="headerlink" href="#declaring-and-overriding-variables" title="Permalink to this headline">¶</a></h3>
+<p>To declare or override a variable, one need only specify a value
+in the relevant <em>variables</em> section:</p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="n">variables</span><span class="p">:</span>
+  <span class="n">hello</span><span class="p">:</span> <span class="n">Hello</span> <span class="n">World</span>
+</pre></div>
+</div>
+<p>You can refer to another variable while declaring a variable:</p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="n">variables</span><span class="p">:</span>
+  <span class="n">release</span><span class="o">-</span><span class="n">text</span><span class="p">:</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">release</span> <span class="n">version</span> <span class="o">%</span><span class="p">{</span><span class="n">version</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The order in which you declare variables is arbitrary, so long as there is no cyclic
+dependency and that all referenced variables are declared, the following is fine:</p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="n">variables</span><span class="p">:</span>
+  <span class="n">release</span><span class="o">-</span><span class="n">text</span><span class="p">:</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">release</span> <span class="n">version</span> <span class="o">%</span><span class="p">{</span><span class="n">version</span><span class="p">}</span>
+  <span class="n">version</span><span class="p">:</span> <span class="mf">5.5</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>It should be noted that variable resolution only happens after all
+<a class="reference internal" href="formatintro.html#format-composition"><span class="std std-ref">Element Composition</span></a> has already taken place.</p>
+<p class="last">This is to say that overriding <code class="docutils literal"><span class="pre">%{version}</span></code> at a higher priority will effect
+the final result of <code class="docutils literal"><span class="pre">%{release-text}</span></code>.</p>
+</div>
+<p><strong>Example:</strong></p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="n">kind</span><span class="p">:</span> <span class="n">autotools</span>
+
+<span class="c1"># Declare variable, expect %{version} was already declared</span>
+<span class="n">variables</span><span class="p">:</span>
+  <span class="n">release</span><span class="o">-</span><span class="n">text</span><span class="p">:</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">release</span> <span class="n">version</span> <span class="o">%</span><span class="p">{</span><span class="n">version</span><span class="p">}</span>
+
+<span class="n">config</span><span class="p">:</span>
+
+  <span class="c1"># Customize the installation</span>
+  <span class="n">install</span><span class="o">-</span><span class="n">commands</span><span class="p">:</span>
+  <span class="o">-</span> <span class="o">|</span>
+    <span class="o">%</span><span class="p">{</span><span class="n">make</span><span class="o">-</span><span class="n">install</span><span class="p">}</span> <span class="n">RELEASE_TEXT</span><span class="o">=</span><span class="s2">&quot;%{release-text}&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Element Constructs</a><ul>
+<li><a class="reference internal" href="#element-basics">Element Basics</a><ul>
+<li><a class="reference internal" href="#kind">Kind</a></li>
+<li><a class="reference internal" href="#depends">Depends</a></li>
+<li><a class="reference internal" href="#sources">Sources</a></li>
+<li><a class="reference internal" href="#variables">Variables</a></li>
+<li><a class="reference internal" href="#environment">Environment</a></li>
+<li><a class="reference internal" href="#config">Config</a></li>
+<li><a class="reference internal" href="#public">Public</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a><ul>
+<li><a class="reference internal" href="#expressing-dependencies">Expressing Dependencies</a></li>
+<li><a class="reference internal" href="#dependency-types">Dependency Types</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-variables">Using Variables</a><ul>
+<li><a class="reference internal" href="#referring-to-variables">Referring to Variables</a></li>
+<li><a class="reference internal" href="#declaring-and-overriding-variables">Declaring and Overriding Variables</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Codethink Limited.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/format.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

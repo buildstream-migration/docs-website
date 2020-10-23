@@ -1,0 +1,4 @@
+manual plugin
+============================================
+
+.. automodule:: elements.manual
